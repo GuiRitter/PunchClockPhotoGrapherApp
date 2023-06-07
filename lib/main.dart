@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/home.page.dart';
 
-void showSnackBar(BuildContext context, String message) => ScaffoldMessenger.of(
+void showSnackBar(BuildContext context, String? message) =>
+    ScaffoldMessenger.of(
       context,
     ).showSnackBar(
       SnackBar(
         content: Text(
-          message,
+          message ?? "",
         ),
       ),
     );
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Punch Clock Photo Grapher',
       theme: ThemeData.dark(),
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }

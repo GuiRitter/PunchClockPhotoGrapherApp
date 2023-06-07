@@ -29,92 +29,100 @@ class _CameraPageState extends State<CameraPage> {
   var _isLoading = false;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Column(
-            children: [
-              Text("Punch Clock Photo Grapher",
-                  style: Theme.of(context).textTheme.bodySmall),
-              const Text(
-                "Camera",
+  Widget build(BuildContext context) => WillPopScope(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Column(
+              children: [
+                Text("Punch Clock Photo Grapher",
+                    style: Theme.of(context).textTheme.bodySmall),
+                const Text(
+                  "Camera",
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                child: _isLoading
+                    ? const CircularProgressIndicator()
+                    : const Icon(
+                        Icons.api,
+                      ),
+                onPressed: () async {
+                  if (_isLoading) {
+                    return;
+                  }
+
+                  var prefs = await SharedPreferences.getInstance();
+                  var token = prefs.getString(
+                    "token",
+                  );
+
+                  if ((token == null) || (token.isEmpty)) {
+                    if (context.mounted) {
+                      showSnackBar(context, "Token not found.");
+                      navigate(
+                        context,
+                        HomePage(),
+                      );
+                    }
+                    return;
+                  }
+
+                  setState(() {
+                    _isLoading = true;
+                  });
+
+                  var response = await http.get(
+                    Uri.parse(
+                      "https://guilherme-alan-ritter.net/punch_clock_photo_grapher/api/photo/",
+                    ),
+                    headers: {
+                      "token": token,
+                    },
+                  );
+
+                  setState(() {
+                    _isLoading = false;
+                  });
+
+                  var body = jsonDecode(response.body);
+
+                  if (response.statusCode == HttpStatus.ok) {
+                    if (context.mounted) {
+                      showSnackBar(context, response.body);
+                    }
+                  } else {
+                    var error = body["error"];
+                    var message = "${error ?? "Unknown error."}";
+
+                    if (context.mounted) {
+                      showSnackBar(context, message);
+                      navigate(
+                        context,
+                        HomePage(),
+                      );
+                    }
+                  }
+                },
+              ),
+              TextButton(
+                child: const Icon(
+                  Icons.navigate_next,
+                ),
+                onPressed: () => navigate(
+                  context,
+                  const SubmitPage(),
+                ),
               ),
             ],
           ),
-          actions: [
-            TextButton(
-              child: _isLoading
-                  ? const CircularProgressIndicator()
-                  : const Icon(
-                      Icons.api,
-                    ),
-              onPressed: () async {
-                if (_isLoading) {
-                  return;
-                }
-
-                var prefs = await SharedPreferences.getInstance();
-                var token = prefs.getString(
-                  "token",
-                );
-
-                if ((token == null) || (token.isEmpty)) {
-                  if (context.mounted) {
-                    showSnackBar(context, "Token not found.");
-                    navigate(
-                      context,
-                      const HomePage(),
-                    );
-                  }
-                  return;
-                }
-
-                setState(() {
-                  _isLoading = true;
-                });
-
-                var response = await http.get(
-                  Uri.parse(
-                    "https://guilherme-alan-ritter.net/punch_clock_photo_grapher/api/photo/",
-                  ),
-                  headers: {
-                    "token": token,
-                  },
-                );
-
-                setState(() {
-                  _isLoading = false;
-                });
-
-                var body = jsonDecode(response.body);
-
-                if (response.statusCode == HttpStatus.ok) {
-                  if (context.mounted) {
-                    showSnackBar(context, response.body);
-                  }
-                } else {
-                  var error = body["error"];
-                  var message = "${error ?? "Unknown error."}";
-
-                  if (context.mounted) {
-                    showSnackBar(context, message);
-                    navigate(
-                      context,
-                      const HomePage(),
-                    );
-                  }
-                }
-              },
-            ),
-            TextButton(
-              child: const Icon(
-                Icons.navigate_next,
-              ),
-              onPressed: () => navigate(
-                context,
-                const SubmitPage(),
-              ),
-            ),
-          ],
         ),
+        onWillPop: () async {
+          var prefs = await SharedPreferences.getInstance();
+          prefs.setString("token", "");
+
+          return true;
+        },
       );
 }
