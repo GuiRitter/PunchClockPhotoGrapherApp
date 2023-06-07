@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:punch_clock_photo_grapher_mobile/main.dart';
 import 'package:punch_clock_photo_grapher_mobile/models/sign_in.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/camera.page.dart';
 import 'package:http/http.dart' as http;
@@ -101,15 +102,7 @@ class _HomePageState extends State<HomePage> {
                               var message = "${error ?? "Unknown error."}";
 
                               if (context.mounted) {
-                                ScaffoldMessenger.of(
-                                  context,
-                                ).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      message,
-                                    ),
-                                  ),
-                                );
+                                showSnackBar(context, message);
                               }
 
                               return;
@@ -119,14 +112,15 @@ class _HomePageState extends State<HomePage> {
                             var token = data["token"];
 
                             var prefs = await SharedPreferences.getInstance();
-                            await prefs.setString('token', token);
+                            await prefs.setString(
+                              "token",
+                              token,
+                            );
 
                             if (context.mounted) {
-                              Navigator.push(
+                              navigate(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => const CameraPage(),
-                                ),
+                                const CameraPage(),
                               );
                             }
                           },
