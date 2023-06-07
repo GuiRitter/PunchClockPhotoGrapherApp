@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+/*
+	set date/time and send
+year/month/day or picker
+hour:minute or picker
+save button
+back button
+*/
+
 class SubmitPage extends StatelessWidget {
   const SubmitPage({super.key});
 

@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/home.page.dart';
 
-/*
-	set date/time and send
-year/month/day or picker
-hour:minute or picker
-save button
-back button
-*/
-
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
