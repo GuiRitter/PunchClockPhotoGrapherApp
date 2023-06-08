@@ -23,7 +23,14 @@ class HomePage extends StatelessWidget {
     SharedPreferences.getInstance().then((prefs) {
       var token = prefs.getString("token");
       if ((token != null) && (token.isNotEmpty)) {
-        navigate(context, const CameraPage());
+        getCamera().then(
+          (camera) => navigate(
+            context,
+            CameraPage(
+              camera: camera,
+            ),
+          ),
+        );
       }
     });
 
@@ -145,7 +152,7 @@ class HomePage extends StatelessWidget {
                     if (context.mounted) {
                       navigate(
                         context,
-                        const CameraPage(),
+                        CameraPage(camera: await getCamera()),
                       );
                     }
                   },
