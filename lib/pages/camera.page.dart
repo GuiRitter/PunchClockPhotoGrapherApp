@@ -3,9 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:punch_clock_photo_grapher_mobile/main.dart';
+import 'package:punch_clock_photo_grapher_mobile/models/on_pressed_step_data.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/home.page.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/submit.page.dart';
 import 'package:http/http.dart' as http;
+import 'package:punch_clock_photo_grapher_mobile/widgets/button-with-loading.widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /*
@@ -18,15 +20,8 @@ next button? or tap image
 sign out button
 */
 
-class CameraPage extends StatefulWidget {
+class CameraPage extends StatelessWidget {
   const CameraPage({super.key});
-
-  @override
-  State<CameraPage> createState() => _CameraPageState();
-}
-
-class _CameraPageState extends State<CameraPage> {
-  var _isLoading = false;
 
   @override
   Widget build(BuildContext context) => WillPopScope(
@@ -42,17 +37,17 @@ class _CameraPageState extends State<CameraPage> {
               ],
             ),
             actions: [
-              TextButton(
-                child: _isLoading
-                    ? const CircularProgressIndicator()
-                    : const Icon(
-                        Icons.api,
-                      ),
-                onPressed: () async {
-                  if (_isLoading) {
-                    return;
-                  }
-
+              ButtonWithLoading(
+                buttonBuilder: ({
+                  required VoidCallback onPressed,
+                  required Widget child,
+                }) =>
+                    TextButton(
+                  onPressed: onPressed,
+                  child: child,
+                ),
+                loadingIndicator: const CircularProgressIndicator(),
+                beforeLoading: () async {
                   var prefs = await SharedPreferences.getInstance();
                   var token = prefs.getString(
                     "token",
@@ -66,12 +61,16 @@ class _CameraPageState extends State<CameraPage> {
                         HomePage(),
                       );
                     }
-                    return;
+                    return OnPressedStepData(shouldContinue: false);
                   }
 
-                  setState(() {
-                    _isLoading = true;
-                  });
+                  return OnPressedStepData(
+                    data: {"token": token},
+                    shouldContinue: true,
+                  );
+                },
+                duringLoading: (OnPressedStepData beforeData) async {
+                  var token = beforeData.data!["token"];
 
                   var response = await http.get(
                     Uri.parse(
@@ -82,9 +81,14 @@ class _CameraPageState extends State<CameraPage> {
                     },
                   );
 
-                  setState(() {
-                    _isLoading = false;
-                  });
+                  return OnPressedStepData(
+                    data: {"response": response},
+                    shouldContinue: true,
+                  );
+                },
+                afterLoading: (OnPressedStepData beforeData,
+                    OnPressedStepData duringData) async {
+                  var response = duringData.data!["response"];
 
                   var body = jsonDecode(response.body);
 
@@ -105,6 +109,9 @@ class _CameraPageState extends State<CameraPage> {
                     }
                   }
                 },
+                child: const Icon(
+                  Icons.api,
+                ),
               ),
               TextButton(
                 child: const Icon(
