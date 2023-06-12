@@ -5,7 +5,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:punch_clock_photo_grapher_mobile/main.dart';
 import 'package:punch_clock_photo_grapher_mobile/models/on_pressed_step_data.dart';
-import 'package:punch_clock_photo_grapher_mobile/pages/home.page.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/submit.page.dart';
 import 'package:http/http.dart' as http;
 import 'package:punch_clock_photo_grapher_mobile/widgets/button-with-loading.widget.dart';
@@ -90,7 +89,7 @@ class _CameraPageState extends State<CameraPage> {
                       showSnackBar(context, "Token not found.");
                       navigate(
                         context,
-                        HomePage(),
+                        null,
                       );
                     }
                     return OnPressedStepData(shouldContinue: false);
@@ -129,6 +128,9 @@ class _CameraPageState extends State<CameraPage> {
                       showSnackBar(context, response.body);
                     }
                   } else {
+                    var prefs = await SharedPreferences.getInstance();
+                    prefs.setString("token", "");
+
                     var error = body["error"];
                     var message = "${error ?? "Unknown error."}";
 
@@ -136,7 +138,7 @@ class _CameraPageState extends State<CameraPage> {
                       showSnackBar(context, message);
                       navigate(
                         context,
-                        HomePage(),
+                        null,
                       );
                     }
                   }

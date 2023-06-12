@@ -15,12 +15,18 @@ void showSnackBar(BuildContext context, String? message) =>
       ),
     );
 
-void navigate(BuildContext context, Widget widget) => Navigator.push(
+void navigate(BuildContext context, Widget? widget) {
+  if (widget == null) {
+    Navigator.pop(context);
+  } else {
+    Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => widget,
       ),
     );
+  }
+}
 
 Future<CameraDescription> getCamera() async {
   // Obtain a list of the available cameras on the device.
