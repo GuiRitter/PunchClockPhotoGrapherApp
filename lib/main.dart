@@ -1,5 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:punch_clock_photo_grapher_mobile/models/date_time_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/home.page.dart';
 
 void showSnackBar(BuildContext context, String? message) =>
@@ -37,6 +39,38 @@ Future<CameraDescription> getCamera() async {
 
   return firstCamera;
 }
+
+TimeOfDay? buildTimeOfDay(String text) {
+  RegExpMatch? match = DateTimeConstants.hourMinuteRegex.firstMatch(
+    text,
+  );
+  if ((match == null) ||
+      (match.groupCount != 2) ||
+      (match[1] == null) ||
+      (match[2] == null)) {
+    return null;
+  }
+  return TimeOfDay(
+    hour: int.parse(
+      match[1]!,
+    ),
+    minute: int.parse(
+      match[2]!,
+    ),
+  );
+}
+
+String printTimeOfDay(TimeOfDay timeOfDay) => DateFormat(
+      DateTimeConstants.timeFormat,
+    ).format(
+      DateTime(
+        DateTimeConstants.min.year,
+        DateTimeConstants.min.month,
+        DateTimeConstants.min.day,
+        timeOfDay.hour,
+        timeOfDay.minute,
+      ),
+    );
 
 void main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
