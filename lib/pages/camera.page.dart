@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:punch_clock_photo_grapher_mobile/main.dart';
 import 'package:punch_clock_photo_grapher_mobile/models/on_pressed_step_data.dart';
+import 'package:punch_clock_photo_grapher_mobile/models/system_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/submit.page.dart';
 import 'package:http/http.dart' as http;
 import 'package:punch_clock_photo_grapher_mobile/widgets/button-with-loading.widget.dart';
@@ -55,13 +56,20 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   @override
-  Widget build(BuildContext context) => WillPopScope(
+  Widget build(
+    BuildContext context,
+  ) =>
+      WillPopScope(
         child: Scaffold(
           appBar: AppBar(
             title: Column(
               children: [
-                Text("Punch Clock Photo Grapher",
-                    style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  "Punch Clock Photo Grapher",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall,
+                ),
                 const Text(
                   "Camera",
                 ),
@@ -81,34 +89,43 @@ class _CameraPageState extends State<CameraPage> {
                 beforeLoading: () async {
                   var prefs = await SharedPreferences.getInstance();
                   var token = prefs.getString(
-                    "token",
+                    SystemConstants.token,
                   );
 
                   if ((token == null) || (token.isEmpty)) {
                     if (context.mounted) {
-                      showSnackBar(context, "Token not found.");
+                      showSnackBar(
+                        context,
+                        "Token not found.",
+                      );
                       navigate(
                         context,
                         null,
                       );
                     }
-                    return OnPressedStepData(shouldContinue: false);
+                    return OnPressedStepData(
+                      shouldContinue: false,
+                    );
                   }
 
                   return OnPressedStepData(
-                    data: {"token": token},
+                    data: {
+                      SystemConstants.token: token,
+                    },
                     shouldContinue: true,
                   );
                 },
-                duringLoading: (OnPressedStepData beforeData) async {
-                  var token = beforeData.data!["token"];
+                duringLoading: (
+                  OnPressedStepData beforeData,
+                ) async {
+                  var token = beforeData.data![SystemConstants.token];
 
                   var response = await http.get(
                     Uri.parse(
                       "https://guilherme-alan-ritter.net/punch_clock_photo_grapher/api/photo/",
                     ),
                     headers: {
-                      "token": token,
+                      SystemConstants.token: token,
                     },
                   );
 
@@ -117,25 +134,38 @@ class _CameraPageState extends State<CameraPage> {
                     shouldContinue: true,
                   );
                 },
-                afterLoading: (OnPressedStepData beforeData,
-                    OnPressedStepData duringData) async {
+                afterLoading: (
+                  OnPressedStepData beforeData,
+                  OnPressedStepData duringData,
+                ) async {
                   var response = duringData.data!["response"];
 
-                  var body = jsonDecode(response.body);
+                  var body = jsonDecode(
+                    response.body,
+                  );
 
                   if (response.statusCode == HttpStatus.ok) {
                     if (context.mounted) {
-                      showSnackBar(context, response.body);
+                      showSnackBar(
+                        context,
+                        response.body,
+                      );
                     }
                   } else {
                     var prefs = await SharedPreferences.getInstance();
-                    prefs.setString("token", "");
+                    prefs.setString(
+                      SystemConstants.token,
+                      "",
+                    );
 
                     var error = body["error"];
                     var message = "${error ?? "Unknown error."}";
 
                     if (context.mounted) {
-                      showSnackBar(context, message);
+                      showSnackBar(
+                        context,
+                        message,
+                      );
                       navigate(
                         context,
                         null,
@@ -215,15 +245,13 @@ class _CameraPageState extends State<CameraPage> {
                         } else {
                           // Otherwise, display a loading indicator.
                           return SizedBox(
-                            width: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge
-                                    ?.fontSize ??
+                            width: Theme.of(
+                                  context,
+                                ).textTheme.displayLarge?.fontSize ??
                                 0,
-                            height: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge
-                                    ?.fontSize ??
+                            height: Theme.of(
+                                  context,
+                                ).textTheme.displayLarge?.fontSize ??
                                 0,
                             child: const CircularProgressIndicator(),
                           );
@@ -251,7 +279,10 @@ class _CameraPageState extends State<CameraPage> {
         ),
         onWillPop: () async {
           var prefs = await SharedPreferences.getInstance();
-          prefs.setString("token", "");
+          prefs.setString(
+            SystemConstants.token,
+            "",
+          );
 
           return true;
         },

@@ -5,13 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:punch_clock_photo_grapher_mobile/main.dart';
 import 'package:punch_clock_photo_grapher_mobile/models/on_pressed_step_data.dart';
 import 'package:punch_clock_photo_grapher_mobile/models/sign_in.dart';
+import 'package:punch_clock_photo_grapher_mobile/models/system_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/camera.page.dart';
 import 'package:http/http.dart' as http;
 import 'package:punch_clock_photo_grapher_mobile/widgets/button-with-loading.widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
+  HomePage({
+    super.key,
+  });
 
   static String? _userId;
   static String? _password;
@@ -19,12 +22,21 @@ class HomePage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
-    SharedPreferences.getInstance().then((prefs) {
-      var token = prefs.getString("token");
+  Widget build(
+    BuildContext context,
+  ) {
+    SharedPreferences.getInstance().then((
+      prefs,
+    ) {
+      var token = prefs.getString(
+        SystemConstants.token,
+      );
       if ((token != null) && (token.isNotEmpty)) {
         getCamera().then(
-          (camera) => navigate(
+          (
+            camera,
+          ) =>
+              navigate(
             context,
             CameraPage(
               camera: camera,
@@ -43,7 +55,10 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(
-            Theme.of(context).textTheme.titleLarge?.fontSize ?? 0,
+            Theme.of(
+                  context,
+                ).textTheme.titleLarge?.fontSize ??
+                0,
           ),
           child: Form(
             key: _formKey,
@@ -54,15 +69,23 @@ class HomePage extends StatelessWidget {
                     labelText: "User ID",
                   ),
                   keyboardType: TextInputType.text,
-                  onSaved: (input) => _userId = input,
-                  validator: (value) => ((value == null) || (value.isEmpty))
-                      ? "Invalid user ID."
-                      : null,
+                  onSaved: (
+                    input,
+                  ) =>
+                      _userId = input,
+                  validator: (
+                    value,
+                  ) =>
+                      ((value == null) || (value.isEmpty))
+                          ? "Invalid user ID."
+                          : null,
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom:
-                        Theme.of(context).textTheme.titleLarge?.fontSize ?? 0,
+                    bottom: Theme.of(
+                          context,
+                        ).textTheme.titleLarge?.fontSize ??
+                        0,
                   ),
                   child: TextFormField(
                     decoration: const InputDecoration(
@@ -86,11 +109,18 @@ class HomePage extends StatelessWidget {
                     child: child,
                   ),
                   loadingIndicator: SizedBox(
-                    height:
-                        Theme.of(context).textTheme.bodySmall?.fontSize ?? 0,
-                    width: Theme.of(context).textTheme.bodySmall?.fontSize ?? 0,
+                    height: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.fontSize ??
+                        0,
+                    width: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.fontSize ??
+                        0,
                     child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onPrimary,
                     ),
                   ),
                   beforeLoading: () async {
@@ -107,7 +137,9 @@ class HomePage extends StatelessWidget {
                       shouldContinue: true,
                     );
                   },
-                  duringLoading: (OnPressedStepData beforeData) async {
+                  duringLoading: (
+                    OnPressedStepData beforeData,
+                  ) async {
                     var response = await http.post(
                       Uri.parse(
                         "https://guilherme-alan-ritter.net/punch_clock_photo_grapher/api/user/sign_in",
@@ -123,36 +155,45 @@ class HomePage extends StatelessWidget {
                       shouldContinue: true,
                     );
                   },
-                  afterLoading: (OnPressedStepData beforeData,
-                      OnPressedStepData duringData) async {
+                  afterLoading: (
+                    OnPressedStepData beforeData,
+                    OnPressedStepData duringData,
+                  ) async {
                     var response = duringData.data!["response"];
 
-                    var body = jsonDecode(response.body);
+                    var body = jsonDecode(
+                      response.body,
+                    );
 
                     if (response.statusCode != HttpStatus.ok) {
                       var error = body["error"];
                       var message = "${error ?? "Unknown error."}";
 
                       if (context.mounted) {
-                        showSnackBar(context, message);
+                        showSnackBar(
+                          context,
+                          message,
+                        );
                       }
 
                       return;
                     }
 
                     var data = body["data"];
-                    var token = data["token"];
+                    var token = data[SystemConstants.token];
 
                     var prefs = await SharedPreferences.getInstance();
                     await prefs.setString(
-                      "token",
+                      SystemConstants.token,
                       token,
                     );
 
                     if (context.mounted) {
                       navigate(
                         context,
-                        CameraPage(camera: await getCamera()),
+                        CameraPage(
+                          camera: await getCamera(),
+                        ),
                       );
                     }
                   },
