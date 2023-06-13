@@ -4,7 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:punch_clock_photo_grapher_mobile/models/date_time_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/home.page.dart';
 
-void showSnackBar(BuildContext context, String? message) =>
+void showSnackBar(
+  BuildContext context,
+  String? message,
+) =>
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(
@@ -15,14 +18,22 @@ void showSnackBar(BuildContext context, String? message) =>
       ),
     );
 
-void navigate(BuildContext context, Widget? widget) {
+void navigate(
+  BuildContext context,
+  Widget? widget,
+) {
   if (widget == null) {
-    Navigator.pop(context);
+    Navigator.pop(
+      context,
+    );
   } else {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => widget,
+        builder: (
+          context,
+        ) =>
+            widget,
       ),
     );
   }
@@ -34,7 +45,10 @@ Future<CameraDescription> getCamera() async {
 
   // Get a specific camera from the list of available cameras.
   final firstCamera = cameras.firstWhere(
-    (wCamera) => wCamera.lensDirection == CameraLensDirection.back,
+    (
+      wCamera,
+    ) =>
+        wCamera.lensDirection == CameraLensDirection.back,
   );
 
   // final macroCamera = CameraDescription(
@@ -46,7 +60,9 @@ Future<CameraDescription> getCamera() async {
   return firstCamera;
 }
 
-TimeOfDay? buildTimeOfDay(String text) {
+TimeOfDay? buildTimeOfDay(
+  String text,
+) {
   RegExpMatch? match = DateTimeConstants.hourMinuteRegex.firstMatch(
     text,
   );
@@ -66,7 +82,43 @@ TimeOfDay? buildTimeOfDay(String text) {
   );
 }
 
-String printTimeOfDay(TimeOfDay timeOfDay) => DateFormat(
+String getISO8601TimeZone(
+  int timeZoneOffsetInMinutes,
+) {
+  var hour = timeZoneOffsetInMinutes ~/ 60;
+  var minute = timeZoneOffsetInMinutes % 60;
+
+  return "${NumberFormat(
+    "+00;-00",
+  ).format(
+    hour,
+  )}:${NumberFormat(
+    "00",
+  ).format(
+    minute,
+  )}";
+}
+
+String getISO8601(
+  String date,
+  String time,
+) {
+  var dateTime = DateTime.parse(
+    "${date}T$time",
+  );
+  return DateFormat(
+    "yyyy-MM-ddTHH:mm:ss${getISO8601TimeZone(
+      dateTime.timeZoneOffset.inMinutes,
+    )}",
+  ).format(
+    dateTime,
+  );
+}
+
+String printTimeOfDay(
+  TimeOfDay timeOfDay,
+) =>
+    DateFormat(
       DateTimeConstants.timeFormat,
     ).format(
       DateTime(
@@ -83,15 +135,21 @@ void main() async {
   // can be called before `runApp()`
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+  });
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return MaterialApp(
       title: 'Punch Clock Photo Grapher',
       theme: ThemeData.dark(),

@@ -1,9 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:punch_clock_photo_grapher_mobile/main.dart';
 import 'package:punch_clock_photo_grapher_mobile/models/date_time_constants.dart';
+import 'package:punch_clock_photo_grapher_mobile/models/on_pressed_step_data.dart';
+import 'package:punch_clock_photo_grapher_mobile/models/post_photo.dart';
+import 'package:punch_clock_photo_grapher_mobile/models/system_constants.dart';
+import 'package:punch_clock_photo_grapher_mobile/widgets/button-with-loading.widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 /*
 	set date/time and send
@@ -39,7 +46,13 @@ class _SubmitPageState extends State<SubmitPage> {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
+    var imageFile = File(
+      widget.photoPath!,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -54,12 +67,113 @@ class _SubmitPageState extends State<SubmitPage> {
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () {},
+          ButtonWithLoading(
+            buttonBuilder: ({
+              required VoidCallback onPressed,
+              required Widget child,
+            }) =>
+                TextButton(
+              onPressed: onPressed,
+              child: child,
+            ),
+            loadingIndicator: const CircularProgressIndicator(),
+            beforeLoading: () async {
+              var prefs = await SharedPreferences.getInstance();
+              var token = prefs.getString(
+                SystemConstants.token,
+              );
+
+              if ((token == null) || (token.isEmpty)) {
+                if (context.mounted) {
+                  showSnackBar(
+                    context,
+                    "Token not found.",
+                  );
+                  navigate(
+                    context,
+                    null,
+                  );
+                }
+                return OnPressedStepData(
+                  shouldContinue: false,
+                );
+              }
+
+              return OnPressedStepData(
+                data: {
+                  SystemConstants.token: token,
+                },
+                shouldContinue: true,
+              );
+            },
+            duringLoading: (
+              OnPressedStepData beforeData,
+            ) async {
+              var imageBytes = imageFile.readAsBytesSync();
+              var base64Image = base64Encode(
+                imageBytes,
+              );
+
+              var dateTime = getISO8601(
+                _date,
+                _time,
+              );
+
+              var token = beforeData.data![SystemConstants.token];
+
+              var response = await http.post(
+                Uri.parse(
+                  "https://guilherme-alan-ritter.net/punch_clock_photo_grapher/api/photo/",
+                ),
+                body: PostPhoto(
+                  dateTime: dateTime,
+                  dataURI: "data:image/png;base64,$base64Image",
+                ).toJson(),
+                headers: {
+                  SystemConstants.token: token,
+                },
+              );
+
+              return OnPressedStepData(
+                data: {
+                  "response": response,
+                },
+                shouldContinue: true,
+              );
+            },
+            afterLoading: (
+              OnPressedStepData beforeData,
+              OnPressedStepData duringData,
+            ) async {
+              var response = duringData.data!["response"];
+
+              var body = jsonDecode(
+                response.body,
+              );
+
+              if (response.statusCode == HttpStatus.ok) {
+                if (context.mounted) {
+                  navigate(
+                    context,
+                    null,
+                  );
+                }
+              } else {
+                var error = body["error"];
+                var message = "${error ?? "Unknown error."}";
+
+                if (context.mounted) {
+                  showSnackBar(
+                    context,
+                    message,
+                  );
+                }
+              }
+            },
             child: const Icon(
               Icons.send,
             ),
-          ),
+          )
         ],
       ),
       body: Center(
@@ -68,9 +182,7 @@ class _SubmitPageState extends State<SubmitPage> {
             child: Column(
               children: [
                 Image.file(
-                  File(
-                    widget.photoPath!,
-                  ),
+                  imageFile,
                 ),
                 ElevatedButton(
                   onPressed: () async {
