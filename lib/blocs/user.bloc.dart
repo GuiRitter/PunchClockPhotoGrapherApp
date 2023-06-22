@@ -45,7 +45,10 @@ class UserBloc extends ChangeNotifier {
       }
 
       token = response.data["data"]["token"];
-      prefs.setString(Settings.token, token!);
+      prefs.setString(
+        Settings.token,
+        token!,
+      );
 
       notifyListeners();
     } catch (_) {
