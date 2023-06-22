@@ -40,7 +40,9 @@ class HomePage extends StatelessWidget {
     //     );
     //   }
     // });
-    var bloc = Provider.of<UserBloc>(context);
+    var bloc = Provider.of<UserBloc>(
+      context,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -72,9 +74,7 @@ class HomePage extends StatelessWidget {
                   validator: (
                     value,
                   ) =>
-                      ((value == null) || (value.isEmpty))
-                          ? "Invalid user ID."
-                          : null,
+                      (value?.isEmpty ?? true) ? "Invalid user ID." : null,
                 ),
                 TextFormField(
                   decoration: const InputDecoration(
@@ -82,10 +82,14 @@ class HomePage extends StatelessWidget {
                   ),
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
-                  onSaved: (input) => _password = input,
-                  validator: (value) => ((value == null) || (value.isEmpty))
-                      ? "Invalid password."
-                      : null,
+                  onSaved: (
+                    input,
+                  ) =>
+                      _password = input,
+                  validator: (
+                    value,
+                  ) =>
+                      (value?.isEmpty ?? true) ? "Invalid password." : null,
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -96,20 +100,26 @@ class HomePage extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                     onPressed: () async {
-                      if ((_formKey.currentState == null) ||
-                          (!_formKey.currentState!.validate())) {
+                      if (!(_formKey.currentState?.validate() ?? false)) {
                         return;
                       }
 
                       _formKey.currentState?.save();
 
                       try {
-                        await bloc.signIn(SignInModel(
-                          userId: _userId ?? "",
-                          password: _password ?? "",
-                        ));
+                        await bloc.signIn(
+                          SignInModel(
+                            userId: _userId ?? "",
+                            password: _password ?? "",
+                          ),
+                        );
                       } catch (exception) {
-                        showSnackBar(context, treatException(exception));
+                        showSnackBar(
+                          context: context,
+                          message: treatException(
+                            exception: exception,
+                          ),
+                        );
                       }
 
                       // TODO if return success, "navigate" to camera

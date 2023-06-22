@@ -2,9 +2,14 @@ class PostPhoto {
   late String dateTime;
   late String dataURI;
 
-  PostPhoto({required this.dateTime, required this.dataURI});
+  PostPhoto({
+    required this.dateTime,
+    required this.dataURI,
+  });
 
-  PostPhoto.fromJson(Map<String, dynamic> json) {
+  PostPhoto.fromJson(
+    Map<String, dynamic> json,
+  ) {
     dateTime = json['dateTime'];
     dataURI = json['dataURI'];
   }

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
 class LoadingPage extends StatelessWidget {
-  const LoadingPage({super.key});
+  const LoadingPage({
+    super.key,
+  });
 
   // TODO cancel request
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(
+    BuildContext context,
+  ) =>
+      Scaffold(
         appBar: AppBar(
           title: Column(
             children: [

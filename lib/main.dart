@@ -7,10 +7,10 @@ import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/user.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/date_time_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/pages/tabs.page.dart';
 
-void showSnackBar(
-  BuildContext context,
-  String? message,
-) =>
+void showSnackBar({
+  required BuildContext context,
+  required String? message,
+}) =>
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(
@@ -21,10 +21,10 @@ void showSnackBar(
       ),
     );
 
-void navigate(
-  BuildContext context,
-  Widget? widget,
-) {
+void navigate({
+  required BuildContext context,
+  required Widget? widget,
+}) {
   if (widget == null) {
     Navigator.pop(
       context,
@@ -85,9 +85,9 @@ TimeOfDay? buildTimeOfDay(
   );
 }
 
-String getISO8601TimeZone(
-  int timeZoneOffsetInMinutes,
-) {
+String getISO8601TimeZone({
+  required int timeZoneOffsetInMinutes,
+}) {
   var hour = timeZoneOffsetInMinutes ~/ 60;
   var minute = timeZoneOffsetInMinutes % 60;
 
@@ -102,25 +102,25 @@ String getISO8601TimeZone(
   )}";
 }
 
-String getISO8601(
-  String date,
-  String time,
-) {
+String getISO8601({
+  required String date,
+  required String time,
+}) {
   var dateTime = DateTime.parse(
     "${date}T$time",
   );
   return DateFormat(
     "yyyy-MM-ddTHH:mm:ss${getISO8601TimeZone(
-      dateTime.timeZoneOffset.inMinutes,
+      timeZoneOffsetInMinutes: dateTime.timeZoneOffset.inMinutes,
     )}",
   ).format(
     dateTime,
   );
 }
 
-String printTimeOfDay(
-  TimeOfDay timeOfDay,
-) =>
+String printTimeOfDay({
+  required TimeOfDay timeOfDay,
+}) =>
     DateFormat(
       DateTimeConstants.timeFormat,
     ).format(
@@ -133,11 +133,15 @@ String printTimeOfDay(
       ),
     );
 
-String treatException(dynamic exception) {
+String treatException({
+  required dynamic exception,
+}) {
   if (exception is DioException) {
     if (exception.response != null) {
       if (exception.response!.data is Map) {
-        if ((exception.response!.data as Map).containsKey("error")) {
+        if ((exception.response!.data as Map).containsKey(
+          "error",
+        )) {
           return exception.response!.data["error"];
         }
       }
