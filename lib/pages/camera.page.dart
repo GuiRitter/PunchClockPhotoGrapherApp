@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/user.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/main.dart';
 
 class CameraPage extends StatefulWidget {
@@ -27,7 +29,9 @@ class _CameraPageState extends State<CameraPage> {
   ) =>
       Scaffold(
         appBar: AppBar(
-          leading: const BackButton(),
+          leading: BackButton(
+            onPressed: onBackPressed,
+          ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -89,6 +93,15 @@ class _CameraPageState extends State<CameraPage> {
           ),
         ),
       );
+
+  onBackPressed() {
+    var bloc = Provider.of<UserBloc>(
+      context,
+      listen: false,
+    );
+
+    bloc.validateAndSetToken(null);
+  }
 
   Widget buildCamera(
     context,
