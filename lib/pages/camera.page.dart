@@ -29,6 +29,7 @@ class _CameraPageState extends State<CameraPage> {
         appBar: AppBar(
           leading: const BackButton(),
           title: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 "Punch Clock Photo Grapher",

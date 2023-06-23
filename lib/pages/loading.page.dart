@@ -14,6 +14,7 @@ class LoadingPage extends StatelessWidget {
       Scaffold(
         appBar: AppBar(
           title: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 "Punch Clock Photo Grapher",
