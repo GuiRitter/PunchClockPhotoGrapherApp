@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:punch_clock_photo_grapher_mobile_bloc/settings.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/constants/settings.dart';
 
 class CustomDio extends DioForNative {
   CustomDio() {

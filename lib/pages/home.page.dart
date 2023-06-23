@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/user.bloc.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/constants/settings.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/main.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/sign_in.model.dart';
-import 'package:punch_clock_photo_grapher_mobile_bloc/models/system_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatelessWidget {
+  static String? _userId;
+
+  static String? _password;
+  final _formKey = GlobalKey<FormState>();
+
   HomePage({
     super.key,
   });
-
-  static String? _userId;
-  static String? _password;
-
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(
@@ -24,16 +24,29 @@ class HomePage extends StatelessWidget {
       context,
     );
 
-    // TODO fix this: should validate the token first
     SharedPreferences.getInstance().then(
       (
         prefs,
       ) {
         var token = prefs.getString(
-          SystemConstants.token,
+          Settings.token,
         );
         if (token?.isNotEmpty ?? false) {
-          bloc.token = token;
+          bloc
+              .validateAndSetToken(
+            token,
+          )
+              .catchError(
+            (
+              error,
+            ) {
+              showSnackBar(
+                message: treatException(
+                  exception: error,
+                ),
+              );
+            },
+          );
         }
       },
     );
@@ -109,7 +122,6 @@ class HomePage extends StatelessWidget {
                         );
                       } catch (exception) {
                         showSnackBar(
-                          context: context,
                           message: treatException(
                             exception: exception,
                           ),

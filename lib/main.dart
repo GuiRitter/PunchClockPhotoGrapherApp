@@ -4,62 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/user.bloc.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/constants/settings.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/date_time_constants.dart';
-import 'package:punch_clock_photo_grapher_mobile_bloc/models/system_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/pages/tabs.page.dart';
 
-void showSnackBar({
-  required BuildContext context,
-  required String? message,
-}) =>
-    SystemConstants.snackState.currentState!.showSnackBar(
-      SnackBar(
-        content: Text(
-          message ?? "",
-        ),
-      ),
-    );
+void main() async {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+  // can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
 
-void navigate({
-  required BuildContext context,
-  required Widget? widget,
-}) {
-  if (widget == null) {
-    Navigator.pop(
-      context,
-    );
-  } else {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (
-          context,
-        ) =>
-            widget,
-      ),
-    );
-  }
-}
-
-Future<CameraDescription> getCamera() async {
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.firstWhere(
-    (
-      wCamera,
-    ) =>
-        wCamera.lensDirection == CameraLensDirection.back,
+  runApp(
+    const MyApp(),
   );
-
-  // final macroCamera = CameraDescription(
-  //   name: "2",
-  //   lensDirection: firstCamera.lensDirection,
-  //   sensorOrientation: firstCamera.sensorOrientation,
-  // );
-
-  return firstCamera;
 }
 
 TimeOfDay? buildTimeOfDay(
@@ -84,21 +40,25 @@ TimeOfDay? buildTimeOfDay(
   );
 }
 
-String getISO8601TimeZone({
-  required int timeZoneOffsetInMinutes,
-}) {
-  var hour = timeZoneOffsetInMinutes ~/ 60;
-  var minute = timeZoneOffsetInMinutes % 60;
+Future<CameraDescription> getCamera() async {
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
 
-  return "${NumberFormat(
-    "+00;-00",
-  ).format(
-    hour,
-  )}:${NumberFormat(
-    "00",
-  ).format(
-    minute,
-  )}";
+  // Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.firstWhere(
+    (
+      wCamera,
+    ) =>
+        wCamera.lensDirection == CameraLensDirection.back,
+  );
+
+  // final macroCamera = CameraDescription(
+  //   name: "2",
+  //   lensDirection: firstCamera.lensDirection,
+  //   sensorOrientation: firstCamera.sensorOrientation,
+  // );
+
+  return firstCamera;
 }
 
 String getISO8601({
@@ -117,6 +77,23 @@ String getISO8601({
   );
 }
 
+String getISO8601TimeZone({
+  required int timeZoneOffsetInMinutes,
+}) {
+  var hour = timeZoneOffsetInMinutes ~/ 60;
+  var minute = timeZoneOffsetInMinutes % 60;
+
+  return "${NumberFormat(
+    "+00;-00",
+  ).format(
+    hour,
+  )}:${NumberFormat(
+    "00",
+  ).format(
+    minute,
+  )}";
+}
+
 String printTimeOfDay({
   required TimeOfDay timeOfDay,
 }) =>
@@ -132,32 +109,41 @@ String printTimeOfDay({
       ),
     );
 
+void showSnackBar({
+  required String? message,
+}) =>
+    Settings.snackState.currentState!.showSnackBar(
+      SnackBar(
+        content: Text(
+          message ?? "",
+        ),
+      ),
+    );
+
+String treatDioResponse({
+  required dynamic response,
+}) {
+  if (response!.data is Map) {
+    if ((response!.data as Map).containsKey(
+      "error",
+    )) {
+      return response!.data["error"];
+    }
+  }
+  return response!.data.toString();
+}
+
 String treatException({
   required dynamic exception,
 }) {
   if (exception is DioException) {
     if (exception.response != null) {
-      if (exception.response!.data is Map) {
-        if ((exception.response!.data as Map).containsKey(
-          "error",
-        )) {
-          return exception.response!.data["error"];
-        }
-      }
-      return exception.response!.data.toString();
+      return treatDioResponse(
+        response: exception.response,
+      );
     }
   }
   return exception.toString();
-}
-
-void main() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
-  WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(
-    const MyApp(),
-  );
 }
 
 class MyApp extends StatelessWidget {
@@ -180,7 +166,7 @@ class MyApp extends StatelessWidget {
           title: 'Punch Clock Photo Grapher',
           theme: ThemeData.dark(),
           home: const TabsPage(),
-          scaffoldMessengerKey: SystemConstants.snackState,
+          scaffoldMessengerKey: Settings.snackState,
         ),
       );
 }

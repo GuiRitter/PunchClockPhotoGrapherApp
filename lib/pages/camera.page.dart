@@ -115,14 +115,6 @@ class _CameraPageState extends State<CameraPage> {
     }
   }
 
-  void onSubmitPressed() {
-    // TODO
-  }
-
-  void onApiTestPressed() {
-    // TODO
-  }
-
   @override
   void dispose() {
     photoPath = null;
@@ -150,6 +142,10 @@ class _CameraPageState extends State<CameraPage> {
     photoPath = null;
   }
 
+  void onApiTestPressed() {
+    // TODO
+  }
+
   onCameraTapped() async {
     // Take the Picture in a try / catch block. If anything goes wrong,
     // catch the error.
@@ -168,9 +164,12 @@ class _CameraPageState extends State<CameraPage> {
     } catch (e) {
       // If an error occurs, log the error to the console.
       showSnackBar(
-        context: context,
         message: e.toString(),
       );
     }
+  }
+
+  void onSubmitPressed() {
+    // TODO
   }
 }

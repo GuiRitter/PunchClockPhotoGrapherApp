@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/constants/api_url.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/constants/settings.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/sign_in.model.dart';
-import 'package:punch_clock_photo_grapher_mobile_bloc/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserBloc extends ChangeNotifier {
@@ -13,12 +15,59 @@ class UserBloc extends ChangeNotifier {
 
   String? get token => _token;
 
-  set token(String? newToken) {
+  clearToken() async {
+    _token = null;
+
+    _api.options.headers.remove(
+      Settings.token,
+    );
+
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setString(
+      Settings.token,
+      "",
+    );
+  }
+
+  Future validateAndSetToken(
+    String? newToken,
+  ) async {
     if (_token == newToken) {
       return;
     }
-    _token = newToken;
-    notifyListeners();
+
+    if (newToken == null) {
+      await clearToken();
+      notifyListeners();
+      return;
+    }
+
+    _api.options.headers[Settings.token] = newToken;
+
+    try {
+      isLoading = true;
+      notifyListeners();
+
+      var response = await _api.get(
+        ApiUrl.photo.path,
+      );
+
+      if (response.statusCode != HttpStatus.ok) {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
+
+      isLoading = false;
+      _token = newToken;
+      notifyListeners();
+    } catch (_) {
+      isLoading = false;
+      await clearToken();
+      notifyListeners();
+      rethrow;
+    }
   }
 
   Future<void> signIn(
@@ -35,7 +84,7 @@ class UserBloc extends ChangeNotifier {
       notifyListeners();
 
       final response = await _api.post(
-        Settings.apiSignInUrl,
+        ApiUrl.signIn.path,
         data: signInModel.toJson(),
       );
 
@@ -54,7 +103,7 @@ class UserBloc extends ChangeNotifier {
         throw response;
       }
 
-      token = response.data["data"]["token"];
+      _token = response.data["data"]["token"];
       prefs.setString(
         Settings.token,
         _token!,
