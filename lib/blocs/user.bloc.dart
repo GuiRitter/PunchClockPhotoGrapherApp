@@ -6,10 +6,20 @@ import 'package:punch_clock_photo_grapher_mobile_bloc/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserBloc extends ChangeNotifier {
-  String? token;
+  String? _token;
   bool isLoading = false;
 
   final _api = Settings.api;
+
+  String? get token => _token;
+
+  set token(String? newToken) {
+    if (_token == newToken) {
+      return;
+    }
+    _token = newToken;
+    notifyListeners();
+  }
 
   Future<void> signIn(
     SignInModel signInModel,
@@ -47,7 +57,7 @@ class UserBloc extends ChangeNotifier {
       token = response.data["data"]["token"];
       prefs.setString(
         Settings.token,
-        token!,
+        _token!,
       );
 
       notifyListeners();

@@ -5,15 +5,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/user.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/date_time_constants.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/models/system_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/pages/tabs.page.dart';
 
 void showSnackBar({
   required BuildContext context,
   required String? message,
 }) =>
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(
+    SystemConstants.snackState.currentState!.showSnackBar(
       SnackBar(
         content: Text(
           message ?? "",
@@ -181,6 +180,7 @@ class MyApp extends StatelessWidget {
           title: 'Punch Clock Photo Grapher',
           theme: ThemeData.dark(),
           home: const TabsPage(),
+          scaffoldMessengerKey: SystemConstants.snackState,
         ),
       );
 }

@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/user.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/main.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/sign_in.model.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/models/system_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({
@@ -18,30 +20,22 @@ class HomePage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    // TODO auto login when token is in the storage
-    // TODO fix this: should validate the token first
-    // SharedPreferences.getInstance().then((
-    //   prefs,
-    // ) {
-    //   var token = prefs.getString(
-    //     SystemConstants.token,
-    //   );
-    //   if ((token != null) && (token.isNotEmpty)) {
-    //     getCamera().then(
-    //       (
-    //         camera,
-    //       ) =>
-    //           navigate(
-    //         context,
-    //         CameraPage(
-    //           camera: camera,
-    //         ),
-    //       ),
-    //     );
-    //   }
-    // });
     var bloc = Provider.of<UserBloc>(
       context,
+    );
+
+    // TODO fix this: should validate the token first
+    SharedPreferences.getInstance().then(
+      (
+        prefs,
+      ) {
+        var token = prefs.getString(
+          SystemConstants.token,
+        );
+        if (token?.isNotEmpty ?? false) {
+          bloc.token = token;
+        }
+      },
     );
 
     return Scaffold(
@@ -121,8 +115,6 @@ class HomePage extends StatelessWidget {
                           ),
                         );
                       }
-
-                      // TODO if return success, "navigate" to camera
                     },
                     child: const Text(
                       "Sign in",
