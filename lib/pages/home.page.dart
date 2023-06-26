@@ -36,15 +36,15 @@ class HomePage extends StatelessWidget {
               .validateAndSetToken(
             token,
           )
-              .catchError(
+              .then(
             (
-              error,
+              result,
             ) {
-              showSnackBar(
-                message: treatException(
-                  exception: error,
-                ),
-              );
+              if (result.message != null) {
+                showSnackBar(
+                  message: result.message,
+                );
+              }
             },
           );
         }

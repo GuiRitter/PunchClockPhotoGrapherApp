@@ -94,15 +94,6 @@ class _CameraPageState extends State<CameraPage> {
         ),
       );
 
-  onBackPressed() {
-    var bloc = Provider.of<UserBloc>(
-      context,
-      listen: false,
-    );
-
-    bloc.validateAndSetToken(null);
-  }
-
   Widget buildCamera(
     context,
     snapshot,
@@ -155,8 +146,23 @@ class _CameraPageState extends State<CameraPage> {
     photoPath = null;
   }
 
-  void onApiTestPressed() {
+  onApiTestPressed() {
     // TODO
+    // var bloc = Provider.of<UserBloc>(
+    //   context,
+    //   listen: false,
+    // );
+
+    // bloc.validateAndSetToken(bloc.token);
+  }
+
+  onBackPressed() {
+    var bloc = Provider.of<UserBloc>(
+      context,
+      listen: false,
+    );
+
+    bloc.validateAndSetToken(null);
   }
 
   onCameraTapped() async {
@@ -182,7 +188,7 @@ class _CameraPageState extends State<CameraPage> {
     }
   }
 
-  void onSubmitPressed() {
+  onSubmitPressed() {
     // TODO
   }
 }
