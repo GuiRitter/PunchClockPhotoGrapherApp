@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
         if (token?.isNotEmpty ?? false) {
           bloc
               .validateAndSetToken(
-            token,
+            newToken: token,
           )
               .then(
             (
@@ -65,6 +65,7 @@ class HomePage extends StatelessWidget {
                 ).textTheme.titleLarge?.fontSize ??
                 0,
           ),
+          // TODO remember password
           child: Form(
             key: _formKey,
             child: Column(

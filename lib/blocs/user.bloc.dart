@@ -65,10 +65,13 @@ class UserBloc extends ChangeNotifier {
     }
   }
 
-  Future<Result<String?>> validateAndSetToken(
+  Future<Result<String?>> validateAndSetToken({
     String? newToken,
-  ) async {
-    if (_token == newToken) {
+    bool revalidate = false,
+  }) async {
+    if (revalidate) {
+      newToken = _token;
+    } else if (_token == newToken) {
       return Result(
         status: ResultStatus.success,
       );

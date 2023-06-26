@@ -8,6 +8,8 @@ import 'package:punch_clock_photo_grapher_mobile_bloc/constants/settings.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/date_time_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/pages/tabs.page.dart';
 
+// TODO i18n
+
 void main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
   // can be called before `runApp()`

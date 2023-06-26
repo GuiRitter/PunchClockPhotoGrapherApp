@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/user.bloc.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/constants/result_status.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/main.dart';
 
 class CameraPage extends StatefulWidget {
@@ -146,14 +147,21 @@ class _CameraPageState extends State<CameraPage> {
     photoPath = null;
   }
 
-  onApiTestPressed() {
-    // TODO
-    // var bloc = Provider.of<UserBloc>(
-    //   context,
-    //   listen: false,
-    // );
+  onApiTestPressed() async {
+    var bloc = Provider.of<UserBloc>(
+      context,
+      listen: false,
+    );
 
-    // bloc.validateAndSetToken(bloc.token);
+    final response = await bloc.validateAndSetToken(
+      revalidate: true,
+    );
+
+    showSnackBar(
+      message: (response.status == ResultStatus.success)
+          ? response.data
+          : response.message,
+    );
   }
 
   onBackPressed() {
@@ -162,7 +170,9 @@ class _CameraPageState extends State<CameraPage> {
       listen: false,
     );
 
-    bloc.validateAndSetToken(null);
+    bloc.validateAndSetToken(
+      newToken: null,
+    );
   }
 
   onCameraTapped() async {
