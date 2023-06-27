@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/date_time.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/user.bloc.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/constants/result_status.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/main.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/date_time_constants.dart';
 
@@ -49,7 +50,10 @@ class SubmitPage extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: onSendPressed,
+            onPressed: () => onSendPressed(
+              context: context,
+              imageFile: imageFile,
+            ),
             child: const Icon(
               Icons.send,
             ),
@@ -115,10 +119,6 @@ class SubmitPage extends StatelessWidget {
     );
   }
 
-  onSendPressed() {
-    // TODO
-  }
-
   onBackPressed(
     BuildContext context,
   ) {
@@ -127,5 +127,28 @@ class SubmitPage extends StatelessWidget {
       listen: false,
     );
     userBloc.photoPath = null;
+  }
+
+  onSendPressed({
+    required BuildContext context,
+    required File imageFile,
+  }) async {
+    final userBloc = Provider.of<UserBloc>(
+      context,
+      listen: false,
+    );
+
+    final result = await userBloc.submitPhoto(
+      context: context,
+      imageBytes: imageFile.readAsBytesSync(),
+    );
+
+    if (result.status == ResultStatus.success) {
+      userBloc.photoPath = null;
+    } else {
+      showSnackBar(
+        message: result.message,
+      );
+    }
   }
 }

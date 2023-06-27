@@ -1,6 +1,6 @@
 enum ResultStatus {
   success,
-  failure,
+  unauthorized,
   warning,
   error,
 }

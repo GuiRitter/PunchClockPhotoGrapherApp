@@ -55,6 +55,7 @@ Future<CameraDescription> getCamera() async {
         wCamera.lensDirection == CameraLensDirection.back,
   );
 
+  // TODO get macro lens
   // final macroCamera = CameraDescription(
   //   name: "2",
   //   lensDirection: firstCamera.lensDirection,

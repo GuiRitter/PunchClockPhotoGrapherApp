@@ -11,4 +11,9 @@ class Settings {
 
   static final GlobalKey<ScaffoldMessengerState> snackState =
       GlobalKey<ScaffoldMessengerState>();
+
+  static String pngDataURI(
+    String base64Data,
+  ) =>
+      "data:image/png;base64,$base64Data";
 }

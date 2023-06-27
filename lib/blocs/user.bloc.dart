@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:punch_clock_photo_grapher_mobile_bloc/constants/result_status.da
 import 'package:punch_clock_photo_grapher_mobile_bloc/constants/settings.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/main.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/date_time_constants.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/models/post_photo.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/result.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/sign_in.model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,6 +94,7 @@ class UserBloc extends ChangeNotifier {
         Settings.token,
         _token!,
       );
+      _api.options.headers[Settings.token] = _token;
 
       notifyListeners();
     } catch (_) {
@@ -98,6 +102,45 @@ class UserBloc extends ChangeNotifier {
       notifyListeners();
       rethrow;
     }
+  }
+
+  Future<Result<void>> submitPhoto({
+    required BuildContext context,
+    required Uint8List imageBytes,
+  }) async {
+    final base64Image = base64Encode(
+      imageBytes,
+    );
+
+    final dateTimeBloc = Provider.of<DateTimeBloc>(
+      context,
+      listen: false,
+    );
+
+    var dateTime = getISO8601(
+      date: dateTimeBloc.date,
+      time: dateTimeBloc.time,
+    );
+
+    isLoading = true;
+    notifyListeners();
+
+    var response = await _submitPhoto(
+      dateTime: dateTime,
+      dataURI: Settings.pngDataURI(
+        base64Image,
+      ),
+    );
+
+    isLoading = false;
+
+    if (response.status == ResultStatus.unauthorized) {
+      await _clearToken();
+    }
+
+    notifyListeners();
+
+    return response;
   }
 
   Future<Result<String?>> validateAndSetToken({
@@ -129,7 +172,7 @@ class UserBloc extends ChangeNotifier {
 
     isLoading = false;
 
-    if (response.status == ResultStatus.failure) {
+    if (response.status == ResultStatus.unauthorized) {
       await _clearToken();
     } else {
       _token = newToken;
@@ -154,6 +197,36 @@ class UserBloc extends ChangeNotifier {
     );
   }
 
+  Future<Result<String?>> _submitPhoto({
+    required String dateTime,
+    required String dataURI,
+  }) async {
+    try {
+      final response = await _api.post(
+        ApiUrl.photo.path,
+        data: PostPhoto(
+          dateTime: dateTime,
+          dataURI: dataURI,
+        ).toJson(),
+      );
+
+      return Result(
+        status: ResultStatus.success,
+        data: response.data.toString(),
+      );
+    } catch (exception) {
+      return Result(
+        status: ((exception is DioException) &&
+                (exception.response?.statusCode == HttpStatus.unauthorized))
+            ? ResultStatus.unauthorized
+            : ResultStatus.error,
+        message: treatException(
+          exception: exception,
+        ),
+      );
+    }
+  }
+
   Future<Result<String?>> _validateToken() async {
     try {
       final response = await _api.get(
@@ -168,7 +241,7 @@ class UserBloc extends ChangeNotifier {
       return Result(
         status: ((exception is DioException) &&
                 (exception.response?.statusCode == HttpStatus.unauthorized))
-            ? ResultStatus.failure
+            ? ResultStatus.unauthorized
             : ResultStatus.error,
         message: treatException(
           exception: exception,
