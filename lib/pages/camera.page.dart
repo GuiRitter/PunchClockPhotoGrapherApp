@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile/blocs/user.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile/constants/result_status.dart';
@@ -27,73 +28,76 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(
     BuildContext context,
-  ) =>
-      Scaffold(
-        appBar: AppBar(
-          leading: BackButton(
-            onPressed: onBackPressed,
+  ) {
+    var l10n = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(
+          onPressed: onBackPressed,
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l10n.title,
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall,
+            ),
+            Text(
+              l10n.camera,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: onApiTestPressed,
+            child: const Icon(
+              Icons.api,
+            ),
           ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                "Punch Clock Photo Grapher",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall,
-              ),
-              const Text(
-                "Camera",
-              ),
-            ],
+          TextButton(
+            onPressed: onSubmitPressed,
+            child: const Icon(
+              Icons.navigate_next,
+            ),
           ),
-          actions: [
-            TextButton(
-              onPressed: onApiTestPressed,
-              child: const Icon(
-                Icons.api,
+        ],
+      ),
+      body: GestureDetector(
+        onTap: onCameraTapped,
+        child: Column(
+          children: [
+            Expanded(
+              // You must wait until the controller is initialized before displaying the
+              // camera preview. Use a FutureBuilder to display a loading spinner until the
+              // controller has finished initializing.
+              child: Center(
+                child: FutureBuilder<void>(
+                  future: _initializeControllerFuture,
+                  builder: buildCamera,
+                ),
               ),
             ),
-            TextButton(
-              onPressed: onSubmitPressed,
-              child: const Icon(
-                Icons.navigate_next,
+            Expanded(
+              child: Center(
+                child: (photoPath?.isNotEmpty ?? false)
+                    ? Image.file(
+                        File(
+                          photoPath!,
+                        ),
+                      )
+                    : Text(
+                        l10n.waitingForPhoto,
+                      ),
               ),
             ),
           ],
         ),
-        body: GestureDetector(
-          onTap: onCameraTapped,
-          child: Column(
-            children: [
-              Expanded(
-                // You must wait until the controller is initialized before displaying the
-                // camera preview. Use a FutureBuilder to display a loading spinner until the
-                // controller has finished initializing.
-                child: Center(
-                  child: FutureBuilder<void>(
-                    future: _initializeControllerFuture,
-                    builder: buildCamera,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Center(
-                  child: (photoPath?.isNotEmpty ?? false)
-                      ? Image.file(
-                          File(
-                            photoPath!,
-                          ),
-                        )
-                      : const Text(
-                          "Waiting for photo",
-                        ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+      ),
+    );
+  }
 
   Widget buildCamera(
     context,

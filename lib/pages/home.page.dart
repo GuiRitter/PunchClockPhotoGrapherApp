@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile/blocs/user.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile/constants/settings.dart';
@@ -52,10 +53,15 @@ class HomePage extends StatelessWidget {
       },
     );
 
+    var l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Punch Clock Photo Grapher",
+        title: Text(
+          AppLocalizations.of(
+            context,
+          )!
+              .title,
         ),
       ),
       body: Center(
@@ -75,8 +81,8 @@ class HomePage extends StatelessWidget {
                     autofillHints: const [
                       AutofillHints.username,
                     ],
-                    decoration: const InputDecoration(
-                      labelText: "User ID",
+                    decoration: InputDecoration(
+                      labelText: l10n.userID,
                     ),
                     keyboardType: TextInputType.text,
                     onSaved: (
@@ -86,14 +92,14 @@ class HomePage extends StatelessWidget {
                     validator: (
                       value,
                     ) =>
-                        (value?.isEmpty ?? true) ? "Invalid user ID." : null,
+                        (value?.isEmpty ?? true) ? l10n.invalidUserID : null,
                   ),
                   TextFormField(
                     autofillHints: const [
                       AutofillHints.password,
                     ],
-                    decoration: const InputDecoration(
-                      labelText: "Password",
+                    decoration: InputDecoration(
+                      labelText: l10n.password,
                     ),
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
@@ -104,7 +110,7 @@ class HomePage extends StatelessWidget {
                     validator: (
                       value,
                     ) =>
-                        (value?.isEmpty ?? true) ? "Invalid password." : null,
+                        (value?.isEmpty ?? true) ? l10n.invalidPassword : null,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -138,8 +144,8 @@ class HomePage extends StatelessWidget {
                           );
                         }
                       },
-                      child: const Text(
-                        "Sign in",
+                      child: Text(
+                        l10n.signIn,
                       ),
                     ),
                   ),

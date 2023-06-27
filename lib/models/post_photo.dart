@@ -10,14 +10,14 @@ class PostPhoto {
   PostPhoto.fromJson(
     Map<String, dynamic> json,
   ) {
-    dateTime = json['dateTime'];
-    dataURI = json['dataURI'];
+    dateTime = json["dateTime"];
+    dataURI = json["dataURI"];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['dateTime'] = dateTime;
-    data['dataURI'] = dataURI;
+    data["dateTime"] = dateTime;
+    data["dataURI"] = dataURI;
     return data;
   }
 }

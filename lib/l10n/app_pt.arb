@@ -1,0 +1,12 @@
+{
+  "camera": "Câmera",
+  "invalidUserID": "ID de usuário inválida.",
+  "invalidPassword": "Senha inválida.",
+  "loading": "Carregando",
+  "password": "Senha",
+  "signIn": "Autenticar",
+  "submit": "Enviar",
+  "title": "Foto Relógio Ponto",
+  "userID": "ID do usuário",
+  "waitingForPhoto": "Esperando pela foto"
+}

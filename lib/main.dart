@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile/blocs/date_time.bloc.dart';
@@ -8,8 +9,6 @@ import 'package:punch_clock_photo_grapher_mobile/blocs/user.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile/constants/settings.dart';
 import 'package:punch_clock_photo_grapher_mobile/models/date_time_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile/pages/tabs.page.dart';
-
-// TODO i18n
 
 void main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -129,9 +128,9 @@ String treatDioResponse({
 }) {
   if (response!.data is Map) {
     if ((response!.data as Map).containsKey(
-      "error",
+      Settings.error,
     )) {
-      return response!.data["error"];
+      return response!.data[Settings.error];
     }
   }
   return response!.data.toString();
@@ -170,10 +169,21 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
-          title: 'Punch Clock Photo Grapher',
+          title: getTitle(context),
           theme: ThemeData.dark(),
           home: const TabsPage(),
           scaffoldMessengerKey: Settings.snackState,
+          // flutter gen-l10n
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
         ),
       );
+
+  /// Only needed here
+  getTitle(context) {
+    var a = AppLocalizations.of(
+      context,
+    );
+    return a?.title ?? "";
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_mobile/blocs/date_time.bloc.dart';
@@ -29,6 +30,8 @@ class SubmitPage extends StatelessWidget {
       userBloc.photoPath!,
     );
 
+    var l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -40,11 +43,14 @@ class SubmitPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "Punch Clock Photo Grapher",
+              AppLocalizations.of(
+                context,
+              )!
+                  .title,
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            const Text(
-              "Submit",
+            Text(
+              l10n.submit,
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({
@@ -10,26 +11,32 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(
     BuildContext context,
-  ) =>
-      Scaffold(
-        appBar: AppBar(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                "Punch Clock Photo Grapher",
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall,
-              ),
-              const Text(
-                "Loading",
-              ),
-            ],
-          ),
+  ) {
+    var l10n = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              AppLocalizations.of(
+                context,
+              )!
+                  .title,
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall,
+            ),
+            Text(
+              l10n.loading,
+            ),
+          ],
         ),
-        body: const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+      ),
+      body: const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
 }

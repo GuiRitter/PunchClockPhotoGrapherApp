@@ -1,0 +1,12 @@
+{
+  "camera": "Camera",
+  "invalidUserID": "Invalid user ID.",
+  "invalidPassword": "Invalid password.",
+  "loading": "Loading",
+  "password": "Password",
+  "signIn": "Sign in",
+  "submit": "Submit",
+  "title": "Punch Clock Photo Grapher",
+  "userID": "User ID",
+  "waitingForPhoto": "Waiting for photo"
+}

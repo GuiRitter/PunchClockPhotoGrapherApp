@@ -80,16 +80,16 @@ class UserBloc extends ChangeNotifier {
       if ((response.statusCode != HttpStatus.ok) ||
           (response.data is! Map) ||
           (!(response.data as Map).containsKey(
-            "data",
+            Settings.data,
           )) ||
-          ((response.data as Map)["data"] is! Map) ||
-          (!((response.data as Map)["data"] as Map).containsKey(
-            "token",
+          ((response.data as Map)[Settings.data] is! Map) ||
+          (!((response.data as Map)[Settings.data] as Map).containsKey(
+            Settings.token,
           ))) {
         throw response;
       }
 
-      _token = response.data["data"]["token"];
+      _token = response.data[Settings.data][Settings.token];
       prefs.setString(
         Settings.token,
         _token!,

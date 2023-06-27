@@ -5,6 +5,8 @@ class Settings {
   static String apiUrl =
       "https://guilherme-alan-ritter.net/punch_clock_photo_grapher/api/";
 
+  static String data = "data";
+  static String error = "error";
   static String token = "token";
 
   static CustomDio api = CustomDio();
