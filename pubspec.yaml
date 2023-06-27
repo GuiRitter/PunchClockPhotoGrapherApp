@@ -47,6 +47,10 @@ dependencies:
 
   intl:
 
+  dio:
+
+  provider:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

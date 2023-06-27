@@ -1,63 +1,24 @@
 import 'package:camera/camera.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:punch_clock_photo_grapher_mobile/blocs/date_time.bloc.dart';
+import 'package:punch_clock_photo_grapher_mobile/blocs/user.bloc.dart';
+import 'package:punch_clock_photo_grapher_mobile/constants/settings.dart';
 import 'package:punch_clock_photo_grapher_mobile/models/date_time_constants.dart';
-import 'package:punch_clock_photo_grapher_mobile/pages/home.page.dart';
+import 'package:punch_clock_photo_grapher_mobile/pages/tabs.page.dart';
 
-void showSnackBar(
-  BuildContext context,
-  String? message,
-) =>
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(
-      SnackBar(
-        content: Text(
-          message ?? "",
-        ),
-      ),
-    );
+// TODO i18n
 
-void navigate(
-  BuildContext context,
-  Widget? widget,
-) {
-  if (widget == null) {
-    Navigator.pop(
-      context,
-    );
-  } else {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (
-          context,
-        ) =>
-            widget,
-      ),
-    );
-  }
-}
+void main() async {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+  // can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
 
-Future<CameraDescription> getCamera() async {
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.firstWhere(
-    (
-      wCamera,
-    ) =>
-        wCamera.lensDirection == CameraLensDirection.back,
+  runApp(
+    const MyApp(),
   );
-
-  // final macroCamera = CameraDescription(
-  //   name: "2",
-  //   lensDirection: firstCamera.lensDirection,
-  //   sensorOrientation: firstCamera.sensorOrientation,
-  // );
-
-  return firstCamera;
 }
 
 TimeOfDay? buildTimeOfDay(
@@ -82,9 +43,47 @@ TimeOfDay? buildTimeOfDay(
   );
 }
 
-String getISO8601TimeZone(
-  int timeZoneOffsetInMinutes,
-) {
+Future<CameraDescription> getCamera() async {
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
+
+  // Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.firstWhere(
+    (
+      wCamera,
+    ) =>
+        wCamera.lensDirection == CameraLensDirection.back,
+  );
+
+  // TODO get macro lens
+  // final macroCamera = CameraDescription(
+  //   name: "2",
+  //   lensDirection: firstCamera.lensDirection,
+  //   sensorOrientation: firstCamera.sensorOrientation,
+  // );
+
+  return firstCamera;
+}
+
+String getISO8601({
+  required String date,
+  required String time,
+}) {
+  var dateTime = DateTime.parse(
+    "${date}T$time",
+  );
+  return DateFormat(
+    "yyyy-MM-ddTHH:mm:ss${getISO8601TimeZone(
+      timeZoneOffsetInMinutes: dateTime.timeZoneOffset.inMinutes,
+    )}",
+  ).format(
+    dateTime,
+  );
+}
+
+String getISO8601TimeZone({
+  required int timeZoneOffsetInMinutes,
+}) {
   var hour = timeZoneOffsetInMinutes ~/ 60;
   var minute = timeZoneOffsetInMinutes % 60;
 
@@ -99,25 +98,9 @@ String getISO8601TimeZone(
   )}";
 }
 
-String getISO8601(
-  String date,
-  String time,
-) {
-  var dateTime = DateTime.parse(
-    "${date}T$time",
-  );
-  return DateFormat(
-    "yyyy-MM-ddTHH:mm:ss${getISO8601TimeZone(
-      dateTime.timeZoneOffset.inMinutes,
-    )}",
-  ).format(
-    dateTime,
-  );
-}
-
-String printTimeOfDay(
-  TimeOfDay timeOfDay,
-) =>
+String printTimeOfDay({
+  required TimeOfDay timeOfDay,
+}) =>
     DateFormat(
       DateTimeConstants.timeFormat,
     ).format(
@@ -130,14 +113,41 @@ String printTimeOfDay(
       ),
     );
 
-void main() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
-  WidgetsFlutterBinding.ensureInitialized();
+void showSnackBar({
+  required String? message,
+}) =>
+    Settings.snackState.currentState!.showSnackBar(
+      SnackBar(
+        content: Text(
+          message ?? "",
+        ),
+      ),
+    );
 
-  runApp(
-    const MyApp(),
-  );
+String treatDioResponse({
+  required dynamic response,
+}) {
+  if (response!.data is Map) {
+    if ((response!.data as Map).containsKey(
+      "error",
+    )) {
+      return response!.data["error"];
+    }
+  }
+  return response!.data.toString();
+}
+
+String treatException({
+  required dynamic exception,
+}) {
+  if (exception is DioException) {
+    if (exception.response != null) {
+      return treatDioResponse(
+        response: exception.response,
+      );
+    }
+  }
+  return exception.toString();
 }
 
 class MyApp extends StatelessWidget {
@@ -149,11 +159,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(
     BuildContext context,
-  ) {
-    return MaterialApp(
-      title: 'Punch Clock Photo Grapher',
-      theme: ThemeData.dark(),
-      home: HomePage(),
-    );
-  }
+  ) =>
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<UserBloc>.value(
+            value: UserBloc(),
+          ),
+          ChangeNotifierProvider<DateTimeBloc>.value(
+            value: DateTimeBloc(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Punch Clock Photo Grapher',
+          theme: ThemeData.dark(),
+          home: const TabsPage(),
+          scaffoldMessengerKey: Settings.snackState,
+        ),
+      );
 }

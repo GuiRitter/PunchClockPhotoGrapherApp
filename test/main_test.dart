@@ -107,7 +107,7 @@ void main() {
     () {
       expect(
         getISO8601TimeZone(
-          345,
+          timeZoneOffsetInMinutes: 345,
         ),
         "+05:45",
       );
@@ -119,7 +119,7 @@ void main() {
     () {
       expect(
         getISO8601TimeZone(
-          0,
+          timeZoneOffsetInMinutes: 0,
         ),
         "+00:00",
       );
@@ -131,7 +131,7 @@ void main() {
     () {
       expect(
         getISO8601TimeZone(
-          -570,
+          timeZoneOffsetInMinutes: -570,
         ),
         "-09:30",
       );
@@ -189,8 +189,8 @@ void main() {
 
       expect(
         getISO8601(
-          date,
-          time,
+          date: date,
+          time: time,
         ),
         "${date}T$time:00-03:00",
       );

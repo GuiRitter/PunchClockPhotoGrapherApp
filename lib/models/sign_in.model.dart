@@ -1,10 +1,15 @@
-class SignIn {
+class SignInModel {
   late String userId;
   late String password;
 
-  SignIn({required this.userId, required this.password});
+  SignInModel({
+    required this.userId,
+    required this.password,
+  });
 
-  SignIn.fromJson(Map<String, dynamic> json) {
+  SignInModel.fromJson(
+    Map<String, dynamic> json,
+  ) {
     userId = json['login'];
     password = json['password'];
   }
