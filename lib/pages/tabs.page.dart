@@ -5,6 +5,7 @@ import 'package:punch_clock_photo_grapher_mobile_bloc/main.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/pages/camera.page.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/pages/home.page.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/pages/loading.page.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/pages/submit.page.dart';
 
 class TabsPage extends StatelessWidget {
   const TabsPage({
@@ -22,17 +23,21 @@ class TabsPage extends StatelessWidget {
     if (userBloc.isLoading) {
       return const LoadingPage();
     } else if (userBloc.token != null) {
-      return FutureBuilder(
-        future: getCamera(),
-        builder: (
-          context,
-          snapshot,
-        ) =>
-            buildCameraPage(
-          context: context,
-          snapshot: snapshot,
-        ),
-      );
+      if (userBloc.photoPath != null) {
+        return const SubmitPage();
+      } else {
+        return FutureBuilder(
+          future: getCamera(),
+          builder: (
+            context,
+            snapshot,
+          ) =>
+              buildCameraPage(
+            context: context,
+            snapshot: snapshot,
+          ),
+        );
+      }
     } else {
       return HomePage();
     }

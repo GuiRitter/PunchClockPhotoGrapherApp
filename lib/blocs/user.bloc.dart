@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/date_time.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/constants/api_url.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/constants/result_status.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/constants/settings.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/main.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/models/date_time_constants.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/result.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/sign_in.model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,10 +16,42 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserBloc extends ChangeNotifier {
   String? _token;
   bool isLoading = false;
+  String? _photoPath;
 
   final _api = Settings.api;
 
+  String? get photoPath => _photoPath;
+  set photoPath(
+    String? newPhotoPath,
+  ) {
+    _photoPath = newPhotoPath;
+    notifyListeners();
+  }
+
   String? get token => _token;
+
+  setUpSubmit({
+    required BuildContext context,
+    required String? photoPath,
+  }) {
+    final dateTimeBloc = Provider.of<DateTimeBloc>(
+      context,
+      listen: false,
+    );
+
+    dateTimeBloc.setDate(
+      newDate: DateTimeConstants.nowDate,
+      isNotify: false,
+    );
+
+    dateTimeBloc.setTime(
+      newTime: DateTimeConstants.nowTime,
+      isNotify: false,
+    );
+
+    _photoPath = photoPath;
+    notifyListeners();
+  }
 
   Future<void> signIn(
     SignInModel signInModel,

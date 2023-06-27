@@ -63,7 +63,7 @@ class _CameraPageState extends State<CameraPage> {
           ],
         ),
         body: GestureDetector(
-          onTap: () => onCameraTapped(),
+          onTap: onCameraTapped,
           child: Column(
             children: [
               Expanded(
@@ -121,11 +121,12 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   @override
-  void dispose() {
+  void dispose() async {
     photoPath = null;
 
+    // FIXME _CameraPageState.dispose failed to call super.dispose. dispose() implementations must always call their superclass dispose() method, to ensure that all the resources used by the widget are fully released.
     // Dispose of the controller when the widget is disposed.
-    _controller.dispose();
+    await _controller.dispose();
     super.dispose();
   }
 
@@ -148,7 +149,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   onApiTestPressed() async {
-    var bloc = Provider.of<UserBloc>(
+    final bloc = Provider.of<UserBloc>(
       context,
       listen: false,
     );
@@ -165,7 +166,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   onBackPressed() {
-    var bloc = Provider.of<UserBloc>(
+    final bloc = Provider.of<UserBloc>(
       context,
       listen: false,
     );
@@ -199,6 +200,14 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   onSubmitPressed() {
-    // TODO
+    final userBloc = Provider.of<UserBloc>(
+      context,
+      listen: false,
+    );
+
+    userBloc.setUpSubmit(
+      context: context,
+      photoPath: photoPath,
+    );
   }
 }

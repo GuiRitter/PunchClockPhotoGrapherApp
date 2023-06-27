@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    var bloc = Provider.of<UserBloc>(
+    final bloc = Provider.of<UserBloc>(
       context,
     );
 

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/date_time.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/blocs/user.bloc.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/constants/settings.dart';
 import 'package:punch_clock_photo_grapher_mobile_bloc/models/date_time_constants.dart';
@@ -162,6 +163,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<UserBloc>.value(
             value: UserBloc(),
+          ),
+          ChangeNotifierProvider<DateTimeBloc>.value(
+            value: DateTimeBloc(),
           ),
         ],
         child: MaterialApp(
