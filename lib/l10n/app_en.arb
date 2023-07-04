@@ -1,5 +1,6 @@
 {
   "camera": "Camera",
+  "cancel": "Cancel",
   "invalidUserID": "Invalid user ID.",
   "invalidPassword": "Invalid password.",
   "loading": "Loading",

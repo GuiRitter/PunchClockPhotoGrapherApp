@@ -53,7 +53,9 @@ class HomePage extends StatelessWidget {
       },
     );
 
-    var l10n = AppLocalizations.of(context)!;
+    var l10n = AppLocalizations.of(
+      context,
+    )!;
 
     return Scaffold(
       appBar: AppBar(

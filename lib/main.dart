@@ -144,6 +144,8 @@ String treatException({
       return treatDioResponse(
         response: exception.response,
       );
+    } else if (exception.message != null) {
+      return exception.message!;
     }
   }
   return exception.toString();
@@ -169,7 +171,9 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
-          title: getTitle(context),
+          title: getTitle(
+            context,
+          ),
           theme: ThemeData.dark(),
           home: const TabsPage(),
           scaffoldMessengerKey: Settings.snackState,

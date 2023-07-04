@@ -29,7 +29,9 @@ class _CameraPageState extends State<CameraPage> {
   Widget build(
     BuildContext context,
   ) {
-    var l10n = AppLocalizations.of(context)!;
+    var l10n = AppLocalizations.of(
+      context,
+    )!;
 
     return Scaffold(
       appBar: AppBar(

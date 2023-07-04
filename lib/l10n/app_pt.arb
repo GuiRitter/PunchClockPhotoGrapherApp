@@ -1,5 +1,6 @@
 {
   "camera": "Câmera",
+  "cancel": "Cancelar",
   "invalidUserID": "ID de usuário inválida.",
   "invalidPassword": "Senha inválida.",
   "loading": "Carregando",

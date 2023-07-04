@@ -19,6 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserBloc extends ChangeNotifier {
   String? _token;
   bool isLoading = false;
+  CancelToken? _cancelToken;
   String? _photoPath;
 
   final _api = Settings.api;
@@ -32,6 +33,11 @@ class UserBloc extends ChangeNotifier {
   }
 
   String? get token => _token;
+
+  cancelRequest() {
+    _cancelToken?.cancel();
+    _cancelToken = null;
+  }
 
   setUpSubmit({
     required BuildContext context,
@@ -67,14 +73,17 @@ class UserBloc extends ChangeNotifier {
       );
 
       isLoading = true;
+      _cancelToken = CancelToken();
       notifyListeners();
 
       final response = await _api.post(
         ApiUrl.signIn.path,
         data: signInModel.toJson(),
+        cancelToken: _cancelToken,
       );
 
       isLoading = false;
+      _cancelToken = null;
       notifyListeners();
 
       if ((response.statusCode != HttpStatus.ok) ||
@@ -123,6 +132,7 @@ class UserBloc extends ChangeNotifier {
     );
 
     isLoading = true;
+    _cancelToken = CancelToken();
     notifyListeners();
 
     var response = await _submitPhoto(
@@ -130,9 +140,11 @@ class UserBloc extends ChangeNotifier {
       dataURI: Settings.pngDataURI(
         base64Image,
       ),
+      cancelToken: _cancelToken!,
     );
 
     isLoading = false;
+    _cancelToken = null;
 
     if (response.status == ResultStatus.unauthorized) {
       await _clearToken();
@@ -166,11 +178,15 @@ class UserBloc extends ChangeNotifier {
     _api.options.headers[Settings.token] = newToken;
 
     isLoading = true;
+    _cancelToken = CancelToken();
     notifyListeners();
 
-    var response = await _validateToken();
+    var response = await _validateToken(
+      cancelToken: _cancelToken!,
+    );
 
     isLoading = false;
+    _cancelToken = null;
 
     if (response.status == ResultStatus.unauthorized) {
       await _clearToken();
@@ -200,6 +216,7 @@ class UserBloc extends ChangeNotifier {
   Future<Result<String?>> _submitPhoto({
     required String dateTime,
     required String dataURI,
+    required CancelToken cancelToken,
   }) async {
     try {
       final response = await _api.post(
@@ -208,6 +225,7 @@ class UserBloc extends ChangeNotifier {
           dateTime: dateTime,
           dataURI: dataURI,
         ).toJson(),
+        cancelToken: cancelToken,
       );
 
       return Result(
@@ -227,10 +245,13 @@ class UserBloc extends ChangeNotifier {
     }
   }
 
-  Future<Result<String?>> _validateToken() async {
+  Future<Result<String?>> _validateToken({
+    required CancelToken cancelToken,
+  }) async {
     try {
       final response = await _api.get(
         ApiUrl.photo.path,
+        cancelToken: cancelToken,
       );
 
       return Result(
