@@ -174,7 +174,11 @@ class MyApp extends StatelessWidget {
           title: getTitle(
             context,
           ),
-          theme: ThemeData.dark(),
+          theme: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.white,
+            ),
+          ),
           home: const TabsPage(),
           scaffoldMessengerKey: Settings.snackState,
           // flutter gen-l10n
@@ -188,6 +192,7 @@ class MyApp extends StatelessWidget {
     var a = AppLocalizations.of(
       context,
     );
+
     return a?.title ?? "";
   }
 }

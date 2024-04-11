@@ -55,14 +55,16 @@ class _CameraPageState extends State<CameraPage> {
         actions: [
           TextButton(
             onPressed: onApiTestPressed,
-            child: const Icon(
+            child: Icon(
               Icons.api,
+              color: Theme.of(context).textTheme.bodyLarge!.color,
             ),
           ),
           TextButton(
             onPressed: onSubmitPressed,
-            child: const Icon(
+            child: Icon(
               Icons.navigate_next,
+              color: Theme.of(context).textTheme.bodyLarge!.color,
             ),
           ),
         ],
