@@ -1,0 +1,4 @@
+enum OperationEnum {
+  add,
+  remove;
+}

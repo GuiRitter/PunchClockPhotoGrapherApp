@@ -1,0 +1,22 @@
+{
+  "appTheme": "🎨 App theme",
+  "cancel": "Cancel",
+  "chooseTheme": "Choose the app''s theme:",
+  "connect": "Connect",
+  "darkTheme": "🌙 Dark",
+  "dismiss": "Dismiss",
+  "invalidPassword": "Invalid password.",
+  "invalidUserID": "Invalid user ID.",
+  "lightTheme": "☀ Light",
+  "password": "Password",
+  "reload": "🔄 Reload data",
+  "signIn": "Sign in",
+  "signOut": "⛔ Sign out",
+  "systemTheme": "⚙ System",
+  "title": "Punch Clock Photo Grapher",
+  "userID": "User ID",
+  "userName": "User name",
+  "userNameInvalid": "User name must be filled",
+  "loadingTag_signIn": "Signing in",
+  "loadingTag_validateAndSetToken": "Checking saved credential"
+}
