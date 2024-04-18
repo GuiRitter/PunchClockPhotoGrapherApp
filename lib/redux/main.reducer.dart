@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:punch_clock_photo_grapher_app/common/operation.enum.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart';
 import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart';
@@ -33,18 +32,12 @@ StateModel reducer(
     AuthenticationAction: () => stateModel.withToken(
           token: (action as AuthenticationAction).token,
         ),
-    LoadingAction: () {
-      final loadingAction = action as LoadingAction;
-
-      return {
-        OperationEnum.add: () => stateModel.withLoadingTagList(
-              newLoadingTagList: loadingAction.tagList,
-            ),
-        OperationEnum.remove: () => stateModel.withoutLoadingTagList(
-              oldLoadingTagList: loadingAction.tagList,
-            ),
-      }[loadingAction.operation]!();
-    },
+    AddLoadingAction: () => stateModel.withLoadingTagList(
+          newLoadingTagList: (action as AddLoadingAction).list,
+        ),
+    RemoveLoadingAction: () => stateModel.withoutLoadingTagList(
+          idList: (action as RemoveLoadingAction).idList,
+        ),
     ThemeAction: () => stateModel.withThemeMode(
           themeMode: (action as ThemeAction).themeMode,
         ),

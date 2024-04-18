@@ -24,7 +24,7 @@ class LoadingPage extends StatelessWidget {
         0.0;
 
     return Scaffold(
-      appBar: AppBarCustomWidget(),
+      appBar: const AppBarCustomWidget(),
       body: Center(
         child: Wrap(
           direction: Axis.vertical,

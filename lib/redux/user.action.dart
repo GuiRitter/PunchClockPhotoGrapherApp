@@ -48,6 +48,12 @@ ThunkAction<StateModel> signIn({
     ) async {
       _log("signIn").map("signInModel", signInModel).print();
 
+      final context = navigatorState.currentContext!;
+
+      final l10n = AppLocalizations.of(
+        context,
+      )!;
+
       var prefs = await SharedPreferences.getInstance();
 
       prefs.setString(
@@ -57,19 +63,14 @@ ThunkAction<StateModel> signIn({
 
       final cancelToken = CancelToken();
 
-      final context = navigatorState.currentContext!;
-
-      final l10n = AppLocalizations.of(
-        context,
-      )!;
-
       final loadingTag = buildLoadingTag(
-        suffix: l10n.loadingTag_validateAndSetToken,
+        userFriendlyName: l10n.loadingTag_validateAndSetToken,
+        cancelToken: cancelToken,
       );
 
       store.dispatch(
         addLoading(
-          tagList: [
+          list: [
             loadingTag,
           ],
         ),
@@ -83,8 +84,8 @@ ThunkAction<StateModel> signIn({
 
       store.dispatch(
         removeLoading(
-          tagList: [
-            loadingTag,
+          idList: [
+            loadingTag.id,
           ],
         ),
       );
@@ -114,13 +115,6 @@ ThunkAction<StateModel> signIn({
       // final searchResults = await new Future.delayed(
       //   new Duration(seconds: secondsToWait),
       //   () => "Search Results",
-      // );
-
-      // TODO
-      // store.dispatch(
-      //   const AuthenticationAction(
-      //     token: lalala,
-      //   ),
       // );
     };
 
@@ -167,12 +161,13 @@ ThunkAction<StateModel> validateAndSetToken({
       )!;
 
       final loadingTag = buildLoadingTag(
-        suffix: l10n.loadingTag_validateAndSetToken,
+        userFriendlyName: l10n.loadingTag_validateAndSetToken,
+        cancelToken: cancelToken,
       );
 
       store.dispatch(
         addLoading(
-          tagList: [
+          list: [
             loadingTag,
           ],
         ),
@@ -185,8 +180,8 @@ ThunkAction<StateModel> validateAndSetToken({
 
       store.dispatch(
         removeLoading(
-          tagList: [
-            loadingTag,
+          idList: [
+            loadingTag.id,
           ],
         ),
       );

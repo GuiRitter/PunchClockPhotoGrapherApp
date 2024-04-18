@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
+import 'package:punch_clock_photo_grapher_app/models/loading_cancel_token.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
 import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart';
@@ -19,7 +20,7 @@ void main() {
   final store = Store<StateModel>(
     reducer,
     initialState: StateModel(
-      loadingTagList: <String>[],
+      loadingTagList: <LoadingTagModel>[],
       themeMode: ThemeMode.system,
       token: null,
     ),

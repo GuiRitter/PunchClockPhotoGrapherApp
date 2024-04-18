@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:punch_clock_photo_grapher_app/models/loading_cancel_token.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/tabs.model.dart';
 import 'package:redux/redux.dart';
 
 class StateModel {
-  final List<String> loadingTagList;
+  final List<LoadingTagModel> loadingTagList;
   final ThemeMode themeMode;
   final String? token;
 
@@ -14,7 +15,7 @@ class StateModel {
   });
 
   StateModel withLoadingTagList({
-    required List<String> newLoadingTagList,
+    required List<LoadingTagModel> newLoadingTagList,
   }) =>
       StateModel(
         loadingTagList: loadingTagList + newLoadingTagList,
@@ -23,19 +24,19 @@ class StateModel {
       );
 
   StateModel withoutLoadingTagList({
-    required List<String> oldLoadingTagList,
+    required List<String> idList,
   }) {
-    final newLoadingTagList = List<String>.from(loadingTagList);
+    final newLoadingTagList = List<LoadingTagModel>.from(loadingTagList);
 
-    for (final oldLoadingTag in oldLoadingTagList) {
-      final loadingTagIndex = newLoadingTagList.indexWhere(
+    for (final id in idList) {
+      final index = newLoadingTagList.indexWhere(
         (
-          newLoadingTag,
+          loadingTag,
         ) =>
-            oldLoadingTag == newLoadingTag,
+            id == loadingTag.id,
       );
 
-      newLoadingTagList.removeAt(loadingTagIndex);
+      newLoadingTagList.removeAt(index);
     }
 
     return StateModel(
