@@ -33,6 +33,7 @@ class LoadingPage extends StatelessWidget {
           spacing: padding,
           children: [
             const CircularProgressIndicator(),
+            // TODO actually not finished; need one button per loading tag (cancel token)
             ElevatedButton(
               onPressed: () => onCancelPressed(
                 context: context,
