@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:punch_clock_photo_grapher_app/models/loading_cancel_token.model.dart';
+import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_custom.widget.dart';
 import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
 
@@ -12,27 +15,20 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(
     BuildContext context,
+  ) =>
+      StoreConnector<StateModel, List<LoadingTagModel>>(
+        distinct: true,
+        converter: StateModel.selectLoadingTagList,
+        builder: connectorBuilder,
+      );
+
+  Widget connectorBuilder(
+    BuildContext context,
+    List<LoadingTagModel> loadingTagList,
   ) {
     final mediaSize = MediaQuery.of(
       context,
     ).size;
-
-    // TODO
-    final testList = List.generate(
-      16,
-      (
-        int index,
-      ) =>
-          const Align(
-        child: ElevatedButton(
-          onPressed: null,
-          child: Text(
-            "Checking saved credential",
-          ),
-        ),
-      ),
-      growable: false,
-    );
 
     return Scaffold(
       appBar: const AppBarCustomWidget(),
@@ -53,15 +49,21 @@ class LoadingPage extends StatelessWidget {
                 ],
               ),
             ),
-            // const CircularProgressIndicator(),
             Expanded(
               child: ListView.builder(
-                itemCount: testList.length,
+                itemCount: loadingTagList.length,
                 itemBuilder: (
                   context,
                   index,
                 ) =>
-                    testList[index],
+                    Align(
+                  child: ElevatedButton(
+                    onPressed: null,
+                    child: Text(
+                      "🛑 ${loadingTagList[index].userFriendlyName} 🛑",
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

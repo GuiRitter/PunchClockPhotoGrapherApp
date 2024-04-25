@@ -74,6 +74,11 @@ class StateModel {
   ) =>
       store.state.token?.isNotEmpty ?? false;
 
+  static List<LoadingTagModel> selectLoadingTagList(
+    Store<StateModel> store,
+  ) =>
+      store.state.loadingTagList;
+
   static TabsModel selectTabsModel(
     Store<StateModel> store,
   ) =>
