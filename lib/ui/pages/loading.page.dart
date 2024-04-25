@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_custom.widget.dart';
 import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
 
@@ -14,32 +13,55 @@ class LoadingPage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    var l10n = AppLocalizations.of(
+    final mediaSize = MediaQuery.of(
       context,
-    )!;
+    ).size;
 
-    final padding = Theme.of(
-          context,
-        ).textTheme.titleLarge?.fontSize ??
-        0.0;
+    // TODO
+    final testList = List.generate(
+      16,
+      (
+        int index,
+      ) =>
+          const Align(
+        child: ElevatedButton(
+          onPressed: null,
+          child: Text(
+            "Checking saved credential",
+          ),
+        ),
+      ),
+      growable: false,
+    );
 
     return Scaffold(
       appBar: const AppBarCustomWidget(),
-      body: Center(
-        child: Wrap(
-          direction: Axis.vertical,
-          alignment: WrapAlignment.center,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: padding,
+      body: SizedBox(
+        height: mediaSize.height,
+        width: mediaSize.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CircularProgressIndicator(),
-            // TODO actually not finished; need one button per loading tag (cancel token)
-            ElevatedButton(
-              onPressed: () => onCancelPressed(
-                context: context,
+            const Expanded(
+              child: Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  Positioned(
+                    child: CircularProgressIndicator(),
+                  ),
+                ],
               ),
-              child: Text(
-                l10n.cancel,
+            ),
+            // const CircularProgressIndicator(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: testList.length,
+                itemBuilder: (
+                  context,
+                  index,
+                ) =>
+                    testList[index],
               ),
             ),
           ],
