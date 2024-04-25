@@ -29,6 +29,27 @@ LoadingTagModel buildLoadingTag({
       cancelToken: cancelToken,
     );
 
+ThunkAction<StateModel> cancelLoading({
+  required String id,
+}) =>
+    (
+      Store<StateModel> store,
+    ) async {
+      final loadingTag = store.state.loadingTagList.firstWhere(
+        LoadingTagModel.idEquals(
+          id,
+        ),
+      );
+
+      loadingTag.cancelToken.cancel();
+
+      return store.dispatch(
+        CancelLoadingAction(
+          id: id,
+        ),
+      );
+    };
+
 ThunkAction<StateModel> removeLoading({
   required List<String> idList,
 }) =>
@@ -46,6 +67,14 @@ class AddLoadingAction {
 
   const AddLoadingAction({
     required this.list,
+  });
+}
+
+class CancelLoadingAction {
+  final String id;
+
+  const CancelLoadingAction({
+    required this.id,
   });
 }
 

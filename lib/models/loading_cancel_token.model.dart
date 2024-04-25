@@ -12,4 +12,12 @@ class LoadingTagModel {
     required this.id,
     required this.cancelToken,
   });
+
+  static idEquals(
+    String id,
+  ) =>
+      (
+        LoadingTagModel element,
+      ) =>
+          element.id == id;
 }

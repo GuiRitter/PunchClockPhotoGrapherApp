@@ -36,6 +36,7 @@ class StateModel {
             id == loadingTag.id,
       );
 
+      // FIXME not finding the index above
       newLoadingTagList.removeAt(index);
     }
 

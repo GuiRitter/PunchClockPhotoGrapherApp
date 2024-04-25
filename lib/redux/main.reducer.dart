@@ -35,6 +35,11 @@ StateModel reducer(
     AddLoadingAction: () => stateModel.withLoadingTagList(
           newLoadingTagList: (action as AddLoadingAction).list,
         ),
+    CancelLoadingAction: () => stateModel.withoutLoadingTagList(
+          idList: [
+            (action as CancelLoadingAction).id,
+          ],
+        ),
     RemoveLoadingAction: () => stateModel.withoutLoadingTagList(
           idList: (action as RemoveLoadingAction).idList,
         ),
