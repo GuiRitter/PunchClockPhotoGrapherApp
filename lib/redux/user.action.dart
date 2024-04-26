@@ -105,6 +105,10 @@ ThunkAction<StateModel> signIn({
             token: token,
           ),
         );
+      } else {
+        showSnackBar(
+          message: result.message,
+        );
       }
 
       // TODO

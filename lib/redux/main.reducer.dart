@@ -25,8 +25,7 @@ StateModel reducer(
   StateModel stateModel,
   dynamic action,
 ) {
-  // TODO
-  // _log("reducer").raw("action", action.runtimeType).print();
+  _log("reducer").asString("action", action.runtimeType).print();
 
   return {
     AuthenticationAction: () => stateModel.withToken(

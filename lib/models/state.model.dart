@@ -35,7 +35,6 @@ class StateModel {
         ),
       );
 
-      // FIXME not finding the index above
       newLoadingTagList.removeAt(index);
     }
 
