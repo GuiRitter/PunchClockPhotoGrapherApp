@@ -30,10 +30,9 @@ class StateModel {
 
     for (final id in idList) {
       final index = newLoadingTagList.indexWhere(
-        (
-          loadingTag,
-        ) =>
-            id == loadingTag.id,
+        LoadingTagModel.idEquals(
+          id,
+        ),
       );
 
       // FIXME not finding the index above

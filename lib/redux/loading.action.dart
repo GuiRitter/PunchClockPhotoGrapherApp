@@ -42,12 +42,6 @@ ThunkAction<StateModel> cancelLoading({
       );
 
       loadingTag.cancelToken.cancel();
-
-      return store.dispatch(
-        CancelLoadingAction(
-          id: id,
-        ),
-      );
     };
 
 ThunkAction<StateModel> removeLoading({

@@ -13,7 +13,9 @@ class Result<DataType> {
     required dynamic exception,
   }) {
     return Result._(
-      status: ResultStatus.error,
+      status: getFromException(
+        exception: exception,
+      ),
       message: treatException(
         exception: exception,
       ),
@@ -71,6 +73,13 @@ class Result<DataType> {
         message: message,
         data: null,
       );
+
+  static ResultStatus getFromException({
+    required DioException exception,
+  }) =>
+      (exception.type == DioExceptionType.cancel)
+          ? ResultStatus.cancelled
+          : ResultStatus.error;
 
   static ResultStatus getFromHttpStatus({
     required int? httpStatus,
