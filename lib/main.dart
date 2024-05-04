@@ -185,6 +185,7 @@ class MyApp extends StatelessWidget {
             home: const TabsPage(),
             // TODO centralize l10n
             localizationsDelegates: AppLocalizations.localizationsDelegates,
+            // TODO implement l10n switching
             supportedLocales: AppLocalizations.supportedLocales,
             navigatorKey: settings.navigatorState,
             scaffoldMessengerKey: settings.snackState,

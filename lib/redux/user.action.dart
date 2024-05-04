@@ -99,11 +99,7 @@ ThunkAction<StateModel> signIn({
         ),
       );
 
-      // TODO
-      return store.dispatch(
-        NoAction(),
-      );
-
+      // // TODO
       // final searchResults = await new Future.delayed(
       //   new Duration(seconds: secondsToWait),
       //   () => "Search Results",
@@ -180,11 +176,6 @@ ThunkAction<StateModel> validateAndSetToken({
           catchFunction: checkTokenFailure,
           l10n: l10n,
         ),
-      );
-
-      // TODO
-      return store.dispatch(
-        NoAction(),
       );
     };
 
