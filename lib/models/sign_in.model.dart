@@ -1,31 +1,45 @@
+import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
+import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
+import 'package:redux/redux.dart';
 
-class SignInModel implements Loggable {
-  late String userId;
-  late String password;
+class SignInModel implements LoggableModel {
+  final String? token;
 
   SignInModel({
-    required this.userId,
-    required this.password,
+    required this.token,
   });
 
-  SignInModel.fromJson(
-    Map<String, dynamic> json,
+  @override
+  int get hashCode => Object.hash(
+        token,
+        token,
+      );
+
+  @override
+  bool operator ==(
+    Object other,
   ) {
-    userId = json["login"];
-    password = json["password"];
+    if (other is! SignInModel) {
+      return false;
+    }
+    if ((token == null) != (other.token == null)) {
+      return false;
+    }
+    return token == other.token;
   }
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "userId": userId,
-        "password": hideSecret(password),
+        "token": hideSecret(
+          token,
+        ),
       };
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["login"] = userId;
-    data["password"] = password;
-    return data;
-  }
+  static SignInModel select(
+    Store<StateModel> store,
+  ) =>
+      SignInModel(
+        token: store.state.token,
+      );
 }

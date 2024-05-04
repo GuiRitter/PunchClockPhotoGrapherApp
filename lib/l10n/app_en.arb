@@ -8,15 +8,16 @@
   "invalidPassword": "Invalid password.",
   "invalidUserID": "Invalid user ID.",
   "lightTheme": "☀ Light",
+  "loadingTag_signIn": "Signing in",
+  "loadingTag_validateAndSetToken": "Checking saved credential",
   "password": "Password",
   "reload": "🔄 Reload data",
   "signIn": "Sign in",
   "signOut": "⛔ Sign out",
   "systemTheme": "⚙ System",
   "title": "Punch Clock Photo Grapher",
+  "unexpectedError": "Unexpected error",
   "userID": "User ID",
   "userName": "User name",
-  "userNameInvalid": "User name must be filled",
-  "loadingTag_signIn": "Signing in",
-  "loadingTag_validateAndSetToken": "Checking saved credential"
+  "userNameInvalid": "User name must be filled"
 }

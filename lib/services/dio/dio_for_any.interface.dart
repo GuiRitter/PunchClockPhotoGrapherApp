@@ -14,7 +14,7 @@ abstract class DioForAny {
   /// factory constructor to return the correct implementation.
   factory DioForAny() => getDioForAny();
 
-  Future<Result> deleteResult(
+  Future<Result> httpDelete(
     String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
@@ -22,7 +22,7 @@ abstract class DioForAny {
     CancelToken? cancelToken,
   });
 
-  Future<Result> getResult(
+  Future<Result> httpGet(
     String path, {
     Map<String, dynamic>? queryParameters,
     Object? data,
@@ -31,7 +31,7 @@ abstract class DioForAny {
     ProgressCallback? onReceiveProgress,
   });
 
-  Future<Result> patchResult(
+  Future<Result> httpPatch(
     String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
@@ -41,10 +41,21 @@ abstract class DioForAny {
     ProgressCallback? onReceiveProgress,
   });
 
-  Future<Result> postResult(
+  Future<Result> httpPost(
     String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  });
+
+  Future<Result> httpRequest(
+    String method,
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    Object? data,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,

@@ -39,7 +39,9 @@ class AppBarSignedInWidget extends StatelessWidget
           );
 
           dispatch(
-            signOut(),
+            signOut(
+              l10n: l10n,
+            ),
           );
         },
       },

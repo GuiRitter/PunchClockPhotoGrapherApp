@@ -142,7 +142,11 @@ class AppBarPopupMenuWidget extends StatelessWidget {
           context: context,
         );
 
-        dispatch(signOut());
+        dispatch(
+          signOut(
+            l10n: l10n,
+          ),
+        );
         break;
       default:
         break;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:punch_clock_photo_grapher_app/models/loading_cancel_token.model.dart';
+import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart';
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
@@ -31,6 +31,8 @@ class LoadingPage extends StatelessWidget {
     final mediaSize = MediaQuery.of(
       context,
     ).size;
+
+    _log("connectorBuilder").mapList("loadingTagList", loadingTagList).print();
 
     return Scaffold(
       appBar: const AppBarCustomWidget(),

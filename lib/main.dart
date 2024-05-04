@@ -1,28 +1,68 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
-import 'package:punch_clock_photo_grapher_app/models/loading_cancel_token.model.dart';
+import 'package:punch_clock_photo_grapher_app/common/settings.dart';
+import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
+import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart';
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
-import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart';
+import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
+    as user_action;
 import 'package:punch_clock_photo_grapher_app/themes/dark.theme.dart';
 import 'package:punch_clock_photo_grapher_app/themes/light.theme.dart';
 import 'package:punch_clock_photo_grapher_app/ui/pages/tabs.page.dart';
 import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
+import 'package:punch_clock_photo_grapher_app/utils/string.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences.getInstance().then(
+    initializeApp,
+  );
+}
+
+final _log = logger("main");
+
+FutureOr initializeApp(
+  SharedPreferences prefs,
+) async {
+  final themeName = prefs.getString(
+    settings.themeKey,
+  );
+
+  _log("main SharedPreferences.getInstance").raw("theme", themeName).print();
+
+  final theme = (themeName?.isNotEmpty ?? false)
+      ? ThemeMode.values.byName(
+          themeName!,
+        )
+      : ThemeMode.system;
+
+  final token = prefs
+      .getString(
+        settings.tokenKey,
+      )
+      .nullIfEmpty;
+
+  toggleToken(
+    token: token,
+  );
+
   final store = Store<StateModel>(
     reducer,
     initialState: StateModel(
       loadingTagList: <LoadingTagModel>[],
-      themeMode: ThemeMode.system,
-      token: null,
+      themeMode: theme,
+      token: token,
     ),
     middleware: [
       thunkMiddleware,
@@ -35,8 +75,6 @@ void main() {
     ),
   );
 }
-
-final _log = logger("main");
 
 void showSnackBar({
   required String? message,
@@ -58,9 +96,9 @@ String treatDioResponse({
 }) {
   if (response!.data is Map) {
     if ((response!.data as Map).containsKey(
-      settings.error,
+      settings.errorKey,
     )) {
-      return response!.data[settings.error];
+      return response!.data[settings.errorKey];
     }
   }
   return response!.data.toString();
@@ -93,31 +131,9 @@ class MyApp extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
+    _log("build").print();
+
     final dispatch = store.dispatch;
-
-    SharedPreferences.getInstance().then(
-      (
-        prefs,
-      ) {
-        final themeName = prefs.getString(settings.themeKey);
-
-        _log("build SharedPreferences.getInstance")
-            .raw("theme", themeName)
-            .print();
-
-        if (themeName?.isNotEmpty ?? false) {
-          final theme = ThemeMode.values.byName(
-            themeName!,
-          );
-
-          dispatch(
-            ThemeAction(
-              themeMode: theme,
-            ),
-          );
-        }
-      },
-    );
 
     final themeLight = light(
       context: context,
@@ -125,6 +141,10 @@ class MyApp extends StatelessWidget {
 
     final themeDark = dark(
       context: context,
+    );
+
+    Future.microtask(
+      validateAndSetToken,
     );
 
     return MultiProvider(
@@ -163,12 +183,32 @@ class MyApp extends StatelessWidget {
             darkTheme: themeDark,
             themeMode: themeMode,
             home: const TabsPage(),
+            // TODO centralize l10n
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             navigatorKey: settings.navigatorState,
             scaffoldMessengerKey: settings.snackState,
           ),
         ),
+      ),
+    );
+  }
+
+  FutureOr validateAndSetToken() {
+    final context = navigatorState.currentContext!;
+
+    final l10n = AppLocalizations.of(
+      context,
+    )!;
+
+    final dispatch = getDispatch(
+      context: context,
+    );
+
+    dispatch(
+      user_action.validateAndSetToken(
+        newToken: settings.revalidateToken,
+        l10n: l10n,
       ),
     );
   }

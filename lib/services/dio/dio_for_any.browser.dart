@@ -10,10 +10,15 @@ class DioForAnyBrowser extends DioForBrowser implements DioForAny {
   DioForAnyBrowser() {
     options.baseUrl = settings.apiUrl;
     options.contentType = Headers.formUrlEncodedContentType;
+    // options.contentType = Headers.jsonContentType;
+    // options.headers.putIfAbsent(
+    //   "Access-Control-Allow-Origin",
+    //   () => "*",
+    // );
   }
 
   @override
-  Future<Result> deleteResult(
+  Future<Result> httpDelete(
     String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
@@ -40,7 +45,7 @@ class DioForAnyBrowser extends DioForBrowser implements DioForAny {
   }
 
   @override
-  Future<Result> getResult(
+  Future<Result> httpGet(
     String path, {
     Map<String, dynamic>? queryParameters,
     Object? data,
@@ -69,7 +74,7 @@ class DioForAnyBrowser extends DioForBrowser implements DioForAny {
   }
 
   @override
-  Future<Result> patchResult(
+  Future<Result> httpPatch(
     String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
@@ -100,7 +105,7 @@ class DioForAnyBrowser extends DioForBrowser implements DioForAny {
   }
 
   @override
-  Future<Result> postResult(
+  Future<Result> httpPost(
     String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
@@ -111,6 +116,46 @@ class DioForAnyBrowser extends DioForBrowser implements DioForAny {
   }) async {
     try {
       final response = await post(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+
+      return Result.fromResponse(
+        response: response,
+      );
+    } catch (exception) {
+      return Result.fromException(
+        exception: exception,
+      );
+    }
+  }
+
+  @override
+  Future<Result> httpRequest(
+    String method,
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    Object? data,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    if (options == null) {
+      options = Options(
+        method: method,
+      );
+    } else {
+      options.method = method;
+    }
+
+    try {
+      final response = await request(
         path,
         data: data,
         queryParameters: queryParameters,

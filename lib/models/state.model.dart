@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:punch_clock_photo_grapher_app/models/loading_cancel_token.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/tabs.model.dart';
+import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
 import 'package:redux/redux.dart';
 
 class StateModel {
@@ -60,7 +59,7 @@ class StateModel {
       StateModel(
         loadingTagList: loadingTagList,
         themeMode: themeMode,
-        token: token,
+        token: (token == "") ? null : token,
       );
 
   static bool selectIsLoading(
@@ -77,21 +76,4 @@ class StateModel {
     Store<StateModel> store,
   ) =>
       store.state.loadingTagList;
-
-  static TabsModel selectTabsModel(
-    Store<StateModel> store,
-  ) =>
-      TabsModel(
-        isSignedIn: selectIsSignedIn(
-          store,
-        ),
-        isLoading: selectIsLoading(
-          store,
-        ),
-      );
-
-  static String selectTokenNotNull(
-    Store<StateModel> store,
-  ) =>
-      store.state.token ?? "";
 }

@@ -24,6 +24,7 @@ class ThemeOptionWidget extends StatelessWidget {
     BuildContext context,
   ) =>
       StoreConnector<StateModel, ThemeMode>(
+        distinct: true,
         converter: (
           store,
         ) =>

@@ -1,20 +1,17 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:punch_clock_photo_grapher_app/common/api_url.enum.dart';
-import 'package:punch_clock_photo_grapher_app/common/result_status.enum.dart';
 import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
 import 'package:punch_clock_photo_grapher_app/common/settings.dart';
-import 'package:punch_clock_photo_grapher_app/main.dart';
-import 'package:punch_clock_photo_grapher_app/models/sign_in.model.dart';
+import 'package:punch_clock_photo_grapher_app/models/result.dart';
+import 'package:punch_clock_photo_grapher_app/models/sign_in.request.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart';
+import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
+    as dio_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
 import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-final _api = settings.api;
 
 final _log = logger("user.action");
 
@@ -23,13 +20,11 @@ ThunkAction<StateModel> clearToken() => (
     ) async {
       _log("clearToken").print();
 
-      _api.options.headers.remove(
-        settings.token,
-      );
+      dio_action.clearToken();
 
       var prefs = await SharedPreferences.getInstance();
       prefs.setString(
-        settings.token,
+        settings.tokenKey,
         "",
       );
 
@@ -41,7 +36,8 @@ ThunkAction<StateModel> clearToken() => (
     };
 
 ThunkAction<StateModel> signIn({
-  required SignInModel signInModel,
+  required SignInRequestModel signInModel,
+  required AppLocalizations l10n,
 }) =>
     (
       Store<StateModel> store,
@@ -57,59 +53,51 @@ ThunkAction<StateModel> signIn({
       var prefs = await SharedPreferences.getInstance();
 
       prefs.setString(
-        settings.token,
+        settings.tokenKey,
         "",
       );
 
-      final cancelToken = CancelToken();
+      signInSuccess({
+        required Result result,
+      }) async {
+        _log("signInSuccess").map("result", result).print();
 
-      final loadingTag = buildLoadingTag(
-        userFriendlyName: l10n.loadingTag_validateAndSetToken,
-        cancelToken: cancelToken,
-      );
-
-      store.dispatch(
-        addLoading(
-          list: [
-            loadingTag,
-          ],
-        ),
-      );
-
-      final result = await _api.postResult(
-        ApiUrl.signIn.path,
-        data: signInModel.toJson(),
-        cancelToken: cancelToken,
-      );
-
-      store.dispatch(
-        removeLoading(
-          idList: [
-            loadingTag.id,
-          ],
-        ),
-      );
-
-      if (result.status == ResultStatus.success) {
-        final token = result.data[settings.data][settings.token];
+        final token =
+            result.data[settings.dataKey][settings.tokenKey] as String;
 
         prefs.setString(
-          settings.token,
+          settings.tokenKey,
           token,
         );
 
-        _api.options.headers[settings.token] = token;
+        dio_action.setToken(
+          token: token,
+        );
 
         store.dispatch(
           AuthenticationAction(
             token: token,
           ),
         );
-      } else {
-        showSnackBar(
-          message: result.message,
-        );
       }
+
+      signInFailure({
+        required Result result,
+      }) async =>
+          store.dispatch(
+            clearToken(),
+          );
+
+      store.dispatch(
+        dio_action.post(
+          url: ApiUrl.signIn.path,
+          data: signInModel,
+          userFriendlyName: l10n.loadingTag_validateAndSetToken,
+          thenFunction: signInSuccess,
+          catchFunction: signInFailure,
+          l10n: l10n,
+        ),
+      );
 
       // TODO
       return store.dispatch(
@@ -122,7 +110,10 @@ ThunkAction<StateModel> signIn({
       // );
     };
 
-ThunkAction<StateModel> signOut() => (
+ThunkAction<StateModel> signOut({
+  required AppLocalizations l10n,
+}) =>
+    (
       Store<StateModel> store,
     ) async {
       _log("signOut").print();
@@ -130,79 +121,66 @@ ThunkAction<StateModel> signOut() => (
       return store.dispatch(
         validateAndSetToken(
           newToken: null,
+          l10n: l10n,
         ),
       );
     };
 
 ThunkAction<StateModel> validateAndSetToken({
   required String? newToken,
+  required AppLocalizations l10n,
 }) =>
     (
       Store<StateModel> store,
     ) async {
       _log("validateAndSetToken").secret("newToken", newToken).print();
 
-      if (store.state.token == newToken) {
+      if (newToken == settings.revalidateToken) {
+        newToken = store.state.token;
+      } else if (store.state.token == newToken) {
         return store.dispatch(
           NoAction(),
         );
       }
 
-      if (newToken == null) {
+      if (newToken?.isEmpty ?? true) {
         return store.dispatch(
           clearToken(),
         );
       }
 
-      _api.options.headers[settings.token] = newToken;
-
-      final cancelToken = CancelToken();
-
-      final context = navigatorState.currentContext!;
-
-      final l10n = AppLocalizations.of(
-        context,
-      )!;
-
-      final loadingTag = buildLoadingTag(
-        userFriendlyName: l10n.loadingTag_validateAndSetToken,
-        cancelToken: cancelToken,
+      dio_action.setToken(
+        token: newToken!,
       );
 
-      store.dispatch(
-        addLoading(
-          list: [
-            loadingTag,
-          ],
-        ),
-      );
+      checkTokenSuccess({
+        required Result result,
+      }) async {
+        _log("checkTokenSuccess").map("result", result).print();
 
-      final response = await _api.getResult(
-        ApiUrl.checkToken.path,
-        cancelToken: cancelToken,
-      );
-
-      store.dispatch(
-        removeLoading(
-          idList: [
-            loadingTag.id,
-          ],
-        ),
-      );
-
-      if (response.status != ResultStatus.unauthorized) {
         store.dispatch(
           AuthenticationAction(
-            token: response.data.toString(),
+            token: result.data.toString(),
           ),
         );
-
-        // TODO maybe call action to load data?
-      } else {
-        showSnackBar(
-          message: response.message,
-        );
       }
+
+      checkTokenFailure({
+        required Result result,
+      }) async =>
+          store.dispatch(
+            clearToken(),
+          );
+
+      store.dispatch(
+        dio_action.get(
+          url: ApiUrl.checkToken.path,
+          userFriendlyName: l10n.loadingTag_validateAndSetToken,
+          thenFunction: checkTokenSuccess,
+          catchFunction: checkTokenFailure,
+          l10n: l10n,
+        ),
+      );
 
       // TODO
       return store.dispatch(

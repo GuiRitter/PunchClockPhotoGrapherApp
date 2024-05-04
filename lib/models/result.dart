@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:punch_clock_photo_grapher_app/common/result_status.enum.dart';
 import 'package:punch_clock_photo_grapher_app/main.dart';
+import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
 
-class Result<DataType> {
+class Result<DataType> implements LoggableModel {
   final DataType? data;
   final ResultStatus status;
   final String? message;
@@ -51,6 +52,12 @@ class Result<DataType> {
     required this.status,
     this.message,
   });
+
+  @override
+  Map<String, dynamic> asLog() => <String, dynamic>{
+        "resultStatus": status.name,
+        "message": message,
+      };
 
   bool hasMessageNotIn({
     required ResultStatus status,

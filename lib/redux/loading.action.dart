@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:punch_clock_photo_grapher_app/models/loading_cancel_token.model.dart';
+import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/utils/date_time.dart';
 import 'package:redux/redux.dart';

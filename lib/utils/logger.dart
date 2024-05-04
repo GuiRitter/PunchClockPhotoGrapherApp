@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
 import 'package:punch_clock_photo_grapher_app/utils/date_time.dart';
 
 dynamic getExistsMark(
@@ -8,11 +9,11 @@ dynamic getExistsMark(
 ) =>
     (value != null) ? {} : null;
 
-String hideSecret(
+String? hideSecret(
   dynamic text,
 ) {
   if (text == null) {
-    return "null";
+    return null;
   }
   return "length: ${text.toString().length}";
 }
@@ -34,17 +35,37 @@ class Log {
   final String fileName;
   final String methodName;
   final argumentMap = <String, dynamic>{};
+  String headerKey = "";
 
   Log({
     required this.fileName,
     required this.methodName,
   });
 
+  void addToMap({
+    required String key,
+    required dynamic value,
+  }) {
+    final keyList = argumentMap.keys.toList() + [key].toList();
+
+    while (keyList.contains(
+      headerKey,
+    )) {
+      headerKey += "_";
+    }
+
+    argumentMap[key] = value;
+  }
+
   Log asString(
     String key,
     dynamic value,
   ) {
-    argumentMap[key] = value?.toString();
+    addToMap(
+      key: key,
+      value: value?.toString(),
+    );
+
     return this;
   }
 
@@ -52,7 +73,11 @@ class Log {
     String key,
     Enum? value,
   ) {
-    argumentMap[key] = value?.name;
+    addToMap(
+      key: key,
+      value: value?.name,
+    );
+
     return this;
   }
 
@@ -60,9 +85,13 @@ class Log {
     String key,
     dynamic value,
   ) {
-    argumentMap[key] = getExistsMark(
-      value,
+    addToMap(
+      key: key,
+      value: getExistsMark(
+        value,
+      ),
     );
+
     return this;
   }
 
@@ -70,7 +99,11 @@ class Log {
     String key,
     List<dynamic>? value,
   ) {
-    argumentMap[key] = (value != null) ? value.length : null;
+    addToMap(
+      key: key,
+      value: (value != null) ? value.length : null,
+    );
+
     return this;
   }
 
@@ -78,28 +111,54 @@ class Log {
   //   String key,
   //   dynamic value,
   // ) {
-  //   argumentMap[key] = jsonEncode(
-  //     value,
+  //   addToMap(
+  //     key: key,
+  //     value: jsonEncode(
+  //       value,
+  //     ),
   //   );
+
   //   return this;
   // }
 
   Log map(
     String key,
-    Loggable? value,
+    LoggableModel? value,
   ) {
-    argumentMap[key] = value?.asLog();
+    addToMap(
+      key: key,
+      value: value?.asLog(),
+    );
+
+    return this;
+  }
+
+  Log mapList(
+    String key,
+    List<LoggableModel?>? value,
+  ) {
+    addToMap(
+      key: key,
+      value: value
+          ?.map(
+            toLog,
+          )
+          .toList(),
+    );
+
     return this;
   }
 
   void print() => debugPrint(
         "${jsonEncode(
           <String, dynamic>{
-            "dateTime": getISO8601(
-              dateTime: DateTime.now(),
-            ),
-            "file": fileName,
-            "method": methodName,
+            headerKey: {
+              "dateTime": getISO8601(
+                dateTime: DateTime.now(),
+              ),
+              "file": fileName,
+              "method": methodName,
+            },
             ...argumentMap,
           },
         )},",
@@ -109,7 +168,11 @@ class Log {
     String key,
     dynamic value,
   ) {
-    argumentMap[key] = value;
+    addToMap(
+      key: key,
+      value: value,
+    );
+
     return this;
   }
 
@@ -117,15 +180,20 @@ class Log {
     String key,
     dynamic value,
   ) {
-    argumentMap[key] = hideSecret(
-      value,
+    addToMap(
+      key: key,
+      value: hideSecret(
+        value,
+      ),
     );
+
     return this;
   }
-}
 
-abstract class Loggable {
-  Map<String, dynamic> asLog();
+  Map<String, dynamic>? toLog(
+    LoggableModel? loggableModel,
+  ) =>
+      loggableModel?.asLog();
 }
 
 // TODO method that only says if object is null or not
