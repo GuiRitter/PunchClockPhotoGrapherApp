@@ -34,6 +34,6 @@ class TabsPage extends StatelessWidget {
         ? const LoadingPage()
         : tabsModel.isSignedIn
             ? const HomePage()
-            : const SignInPage();
+            : SignInPage();
   }
 }
