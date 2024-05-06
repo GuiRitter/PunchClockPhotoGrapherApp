@@ -9,43 +9,43 @@ ThemeData dark({
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: MaterialColor(
           const Color(
-            0xFFca5800,
+            ,
           ).value,
           const {
             50: Color(
-              0xFFf7f4de,
+              0xFFfffff0,
             ),
             100: Color(
-              0xFFece2ac,
+              0xFFfcfcd1,
             ),
             200: Color(
-              0xFFe0ce76,
+              0xFFf8f9ac,
             ),
             300: Color(
-              0xFFd5bd3d,
+              0xFFf5f589,
             ),
             400: Color(
-              0xFFceaf00,
+              0xFFf0f16e,
             ),
             500: Color(
-              0xFFc9a200,
+              0xFFeced53,
             ),
             600: Color(
-              0xFFca9600,
+              0xFFeae659,
             ),
             700: Color(
-              0xFFcb8600,
+              0xFFdad354,
             ),
             800: Color(
-              0xFFca7600,
+              0xFFc8bb4c,
             ),
             900: Color(
-              0xFFca5800,
+              0xFFa8943f,
             ),
           },
         ),
         accentColor: const Color(
-          0xFF7688e0,
+          0xFFf0f0ff,
         ),
         backgroundColor: const Color(
           0xFF121212,
@@ -60,7 +60,7 @@ ThemeData dark({
       ),
       appBarTheme: const AppBarTheme(
         color: Color(
-          0xFFca5800,
+          ,
         ),
       ),
     );
