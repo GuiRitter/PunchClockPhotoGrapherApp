@@ -9,7 +9,7 @@ ThemeData dark({
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: MaterialColor(
           const Color(
-            0xFFEAE659, // WebAIM: 424242 background, black foreground
+            0xFFEAE659, // WebAIM: 424242 background, this foreground
           ).value,
           const {
             50: Color(
