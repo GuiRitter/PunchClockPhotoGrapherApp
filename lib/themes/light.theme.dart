@@ -9,7 +9,7 @@ ThemeData light({
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: MaterialColor(
           const Color(
-            ,
+            0xFFa8943f,
           ).value,
           const {
             50: Color(
