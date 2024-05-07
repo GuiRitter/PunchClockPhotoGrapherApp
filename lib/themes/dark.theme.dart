@@ -9,7 +9,7 @@ ThemeData dark({
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: MaterialColor(
           const Color(
-            0xFFEAE659,
+            0xFFEAE659, // WebAIM: 424242 background, black foreground
           ).value,
           const {
             50: Color(
@@ -60,7 +60,7 @@ ThemeData dark({
       ),
       appBarTheme: const AppBarTheme(
         color: Color(
-          0xFFa8943f,
+          0xFFa8943f, // WebAIM: this background, white foreground
         ),
       ),
     );

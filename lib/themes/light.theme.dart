@@ -9,7 +9,7 @@ ThemeData light({
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: MaterialColor(
           const Color(
-            0xFFa8943f,
+            0xFFa8943f, // WebAIM: white background, this foreground
           ).value,
           const {
             50: Color(
