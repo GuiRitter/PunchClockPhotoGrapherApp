@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
     _log("build").print();
 
     return BodyWidget(
+      usePadding: false,
       appBar: const AppBarSignedInWidget(),
       body: StoreConnector<StateModel, ListModel?>(
         distinct: true,
@@ -36,20 +37,61 @@ class HomePage extends StatelessWidget {
   ) {
     _log("connectorBuilder").map("list", list).print();
 
+    final mediaSize = MediaQuery.of(
+      context,
+    ).size;
+
+    final theme = Theme.of(
+      context,
+    );
+
+    final fieldPadding = theme.textTheme.labelLarge?.fontSize ?? 0.0;
+
+    Widget body;
+
     if (list == null) {
-      return Text(
+      body = Text(
         l10n.getNotCalled,
       );
-    }
-
-    if (list.data.isEmpty) {
-      return Text(
+    } else if (list.data.isEmpty) {
+      body = Text(
         l10n.noPhoto,
+      );
+    } else {
+      body = Text(
+        list.data,
       );
     }
 
-    return Text(
-      list.data,
+    return SizedBox(
+      height: mediaSize.height,
+      width: mediaSize.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Center(
+              child: body,
+            ),
+          ),
+          BottomAppBar(
+            color: theme.scaffoldBackgroundColor,
+            padding: EdgeInsets.all(
+              fieldPadding,
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                // TODO
+                onPressed: null,
+                child: Text(
+                  l10n.takePhoto,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

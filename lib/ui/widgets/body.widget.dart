@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class BodyWidget extends StatelessWidget {
   final PreferredSizeWidget appBar;
   final Widget body;
+  final bool usePadding;
 
   const BodyWidget({
     super.key,
     required this.appBar,
     required this.body,
+    this.usePadding = true,
   });
 
   @override
@@ -20,16 +22,22 @@ class BodyWidget extends StatelessWidget {
 
     final fieldPadding = theme.textTheme.labelLarge?.fontSize ?? 0.0;
 
-    return Scaffold(
-      appBar: appBar,
-      body: Padding(
+    Widget child = Center(
+      child: body,
+    );
+
+    if (usePadding) {
+      child = Padding(
         padding: EdgeInsets.all(
           fieldPadding,
         ),
-        child: Center(
-          child: body,
-        ),
-      ),
+        child: child,
+      );
+    }
+
+    return Scaffold(
+      appBar: appBar,
+      body: child,
     );
   }
 }
