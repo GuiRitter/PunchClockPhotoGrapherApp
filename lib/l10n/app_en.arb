@@ -8,6 +8,7 @@
   "invalidPassword": "Invalid password.",
   "invalidUserID": "Invalid user ID.",
   "lightTheme": "☀ Light",
+  "loadingTag_getList": "Retrieving list",
   "loadingTag_signIn": "Signing in",
   "loadingTag_validateAndSetToken": "Checking saved credential",
   "password": "Password",

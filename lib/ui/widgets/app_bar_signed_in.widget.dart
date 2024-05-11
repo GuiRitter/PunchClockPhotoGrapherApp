@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:punch_clock_photo_grapher_app/common/app_bar_popup_menu.enum.dart';
+import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
+    as data_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart';
 import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_custom.widget.dart';
@@ -24,20 +26,21 @@ class AppBarSignedInWidget extends StatelessWidget
       context,
     )!;
 
+    final dispatch = getDispatch(
+      context: context,
+    );
+
     return AppBarCustomWidget(
       onHomePopupMenuItemPressedMap: {
         AppBarPopupMenuEnum.reload: (
           context,
-        ) {
-          // TODO
-        },
+        ) =>
+            dispatch(
+              data_action.getList(),
+            ),
         AppBarPopupMenuEnum.signOut: (
           context,
         ) {
-          final dispatch = getDispatch(
-            context: context,
-          );
-
           dispatch(
             signOut(),
           );

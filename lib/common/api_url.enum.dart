@@ -2,6 +2,9 @@ enum ApiUrl {
   checkToken(
     path: "user/check",
   ),
+  getList(
+    path: "photo",
+  ),
   signIn(
     path: "user/sign_in",
   );

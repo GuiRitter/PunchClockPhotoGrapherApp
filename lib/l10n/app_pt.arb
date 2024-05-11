@@ -8,6 +8,7 @@
   "invalidPassword": "Senha inválida.",
   "invalidUserID": "ID de usuário inválida.",
   "lightTheme": "☀ Claro",
+  "loadingTag_getList": "Buscando lista",
   "loadingTag_signIn": "Autenticando",
   "loadingTag_validateAndSetToken": "Verificando credencial salva",
   "password": "Senha",
