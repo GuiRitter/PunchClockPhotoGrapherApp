@@ -74,6 +74,7 @@ FutureOr initializeApp(
       loadingTagList: <LoadingTagModel>[],
       themeMode: theme,
       token: token,
+      list: null,
     ),
     middleware: [
       thunkMiddleware,

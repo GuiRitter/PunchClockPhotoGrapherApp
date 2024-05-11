@@ -1,5 +1,6 @@
 import 'package:punch_clock_photo_grapher_app/common/api_url.enum.dart';
 import 'package:punch_clock_photo_grapher_app/common/settings.dart' show l10n;
+import 'package:punch_clock_photo_grapher_app/models/list.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/result.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
@@ -19,6 +20,14 @@ ThunkAction<StateModel> getList() => (
         required Result result,
       }) async {
         _log("getList").map("result", result).print();
+
+        store.dispatch(
+          DataAction(
+            list: ListModel(
+              data: result.data.toString(),
+            ),
+          ),
+        );
       }
 
       store.dispatch(
@@ -29,3 +38,11 @@ ThunkAction<StateModel> getList() => (
         ),
       );
     };
+
+class DataAction {
+  final ListModel? list;
+
+  const DataAction({
+    required this.list,
+  });
+}

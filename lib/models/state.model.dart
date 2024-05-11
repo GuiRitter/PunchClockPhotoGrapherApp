@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:punch_clock_photo_grapher_app/models/list.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
 import 'package:redux/redux.dart';
 
@@ -6,12 +7,24 @@ class StateModel {
   final List<LoadingTagModel> loadingTagList;
   final ThemeMode themeMode;
   final String? token;
+  final ListModel? list;
 
   StateModel({
     required this.loadingTagList,
     required this.themeMode,
     required this.token,
-  });
+    required list,
+  }) : list = (token != null) ? list : null;
+
+  StateModel withData({
+    required ListModel? list,
+  }) =>
+      StateModel(
+        loadingTagList: loadingTagList,
+        themeMode: themeMode,
+        token: token,
+        list: list,
+      );
 
   StateModel withLoadingTagList({
     required List<LoadingTagModel> newLoadingTagList,
@@ -20,6 +33,7 @@ class StateModel {
         loadingTagList: loadingTagList + newLoadingTagList,
         themeMode: themeMode,
         token: token,
+        list: list,
       );
 
   StateModel withoutLoadingTagList({
@@ -41,6 +55,7 @@ class StateModel {
       loadingTagList: newLoadingTagList,
       themeMode: themeMode,
       token: token,
+      list: list,
     );
   }
 
@@ -51,6 +66,7 @@ class StateModel {
         loadingTagList: loadingTagList,
         themeMode: themeMode,
         token: token,
+        list: list,
       );
 
   StateModel withToken({
@@ -60,6 +76,7 @@ class StateModel {
         loadingTagList: loadingTagList,
         themeMode: themeMode,
         token: (token == "") ? null : token,
+        list: (token?.isNotEmpty ?? false) ? list : null,
       );
 
   static bool selectIsLoading(

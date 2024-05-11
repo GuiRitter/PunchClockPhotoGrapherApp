@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
+import 'package:punch_clock_photo_grapher_app/redux/data.action.dart';
 import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart';
 import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart';
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart';
@@ -38,6 +39,9 @@ StateModel reducer(
           idList: [
             (action as CancelLoadingAction).id,
           ],
+        ),
+    DataAction: () => stateModel.withData(
+          list: (action as DataAction).list,
         ),
     RemoveLoadingAction: () => stateModel.withoutLoadingTagList(
           idList: (action as RemoveLoadingAction).idList,
