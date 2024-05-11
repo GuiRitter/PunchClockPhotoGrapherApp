@@ -1,9 +1,10 @@
 import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
+import 'package:punch_clock_photo_grapher_app/models/week.model.dart';
 import 'package:redux/redux.dart';
 
 class ListModel implements LoggableModel {
-  final Set<String> weekList;
+  final Set<WeekModel> weekList;
 
   ListModel({
     required List<dynamic> data,
@@ -12,7 +13,9 @@ class ListModel implements LoggableModel {
               (
                 photo,
               ) =>
-                  photo.toString(),
+                  WeekModel(
+                data: photo.toString(),
+              ),
             )
             .toSet();
 
@@ -41,7 +44,15 @@ class ListModel implements LoggableModel {
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "weekList": weekList.toList(),
+        "weekList": weekList
+            .toList()
+            .map(
+              (
+                week,
+              ) =>
+                  week.asLog(),
+            )
+            .toList(),
       };
 
   static ListModel? select(

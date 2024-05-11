@@ -70,10 +70,11 @@ class HomePage extends StatelessWidget {
                   (
                     week,
                   ) =>
+                      // TODO WeekWidget receiving week
                       ElevatedButton(
                     onPressed: null,
                     child: Text(
-                      week.toString(),
+                      week.data,
                     ),
                   ),
                 )
