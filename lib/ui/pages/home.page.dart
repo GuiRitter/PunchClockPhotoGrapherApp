@@ -33,9 +33,9 @@ class HomePage extends StatelessWidget {
 
   Widget connectorBuilder(
     BuildContext context,
-    ListModel? list,
+    ListModel? model,
   ) {
-    _log("connectorBuilder").map("list", list).print();
+    _log("connectorBuilder").map("list", model).print();
 
     final mediaSize = MediaQuery.of(
       context,
@@ -49,17 +49,37 @@ class HomePage extends StatelessWidget {
 
     Widget body;
 
-    if (list == null) {
+    if (model == null) {
       body = Text(
         l10n.getNotCalled,
       );
-    } else if (list.weekList.isEmpty) {
+    } else if (model.weekList.isEmpty) {
       body = Text(
         l10n.noPhoto,
       );
     } else {
-      body = Text(
-        list.weekList.toString(),
+      body = SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(
+            fieldPadding,
+          ),
+          child: Column(
+            children: model.weekList
+                .map(
+                  (
+                    week,
+                  ) =>
+                      ElevatedButton(
+                    onPressed: null,
+                    child: Text(
+                      week.toString(),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
       );
     }
 
