@@ -24,7 +24,7 @@ ThunkAction<StateModel> getList() => (
         store.dispatch(
           DataAction(
             list: ListModel(
-              data: result.data.toString(),
+              data: result.data,
             ),
           ),
         );

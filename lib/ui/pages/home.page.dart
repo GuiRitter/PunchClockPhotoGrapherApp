@@ -53,13 +53,13 @@ class HomePage extends StatelessWidget {
       body = Text(
         l10n.getNotCalled,
       );
-    } else if (list.data.isEmpty) {
+    } else if (list.weekList.isEmpty) {
       body = Text(
         l10n.noPhoto,
       );
     } else {
       body = Text(
-        list.data,
+        list.weekList.toString(),
       );
     }
 
