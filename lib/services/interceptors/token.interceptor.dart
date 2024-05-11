@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:punch_clock_photo_grapher_app/common/settings.dart';
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart';
@@ -23,15 +22,9 @@ class TokenInterceptor extends InterceptorsWrapper {
       context: context,
     );
 
-    final l10n = AppLocalizations.of(
-      context,
-    )!;
-
     if (err.response?.statusCode == HttpStatus.unauthorized) {
       await dispatch(
-        signOut(
-          l10n: l10n,
-        ),
+        signOut(),
       );
     }
 

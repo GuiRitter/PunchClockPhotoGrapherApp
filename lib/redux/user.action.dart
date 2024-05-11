@@ -1,7 +1,8 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:punch_clock_photo_grapher_app/common/api_url.enum.dart';
 import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
-import 'package:punch_clock_photo_grapher_app/common/settings.dart';
+import 'package:punch_clock_photo_grapher_app/common/settings.dart'
+    show l10n, navigatorState;
 import 'package:punch_clock_photo_grapher_app/models/result.dart';
 import 'package:punch_clock_photo_grapher_app/models/sign_in.request.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
@@ -95,7 +96,6 @@ ThunkAction<StateModel> signIn({
           userFriendlyName: l10n.loadingTag_validateAndSetToken,
           thenFunction: signInSuccess,
           catchFunction: signInFailure,
-          l10n: l10n,
         ),
       );
 
@@ -106,10 +106,7 @@ ThunkAction<StateModel> signIn({
       // );
     };
 
-ThunkAction<StateModel> signOut({
-  required AppLocalizations l10n,
-}) =>
-    (
+ThunkAction<StateModel> signOut() => (
       Store<StateModel> store,
     ) async {
       _log("signOut").print();
@@ -117,14 +114,12 @@ ThunkAction<StateModel> signOut({
       return store.dispatch(
         validateAndSetToken(
           newToken: null,
-          l10n: l10n,
         ),
       );
     };
 
 ThunkAction<StateModel> validateAndSetToken({
   required String? newToken,
-  required AppLocalizations l10n,
 }) =>
     (
       Store<StateModel> store,
@@ -174,7 +169,6 @@ ThunkAction<StateModel> validateAndSetToken({
           userFriendlyName: l10n.loadingTag_validateAndSetToken,
           thenFunction: checkTokenSuccess,
           catchFunction: checkTokenFailure,
-          l10n: l10n,
         ),
       );
     };

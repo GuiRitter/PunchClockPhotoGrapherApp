@@ -6,8 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:provider/provider.dart';
+import 'package:punch_clock_photo_grapher_app/common/settings.dart'
+    show l10nNotifier, navigatorState;
 import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
-import 'package:punch_clock_photo_grapher_app/common/settings.dart';
 import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart';
@@ -180,20 +181,12 @@ class MyApp extends StatelessWidget {
           ) =>
               MaterialApp(
             title: "Punch Clock Photo Grapher",
-            onGenerateTitle: (
-              context,
-            ) {
-              final l10n = AppLocalizations.of(
-                context,
-              )!;
-
-              return l10n.title;
-            },
+            onGenerateTitle: getTitleLocalized,
+            localeResolutionCallback: populateL10nNotifier,
             theme: themeLight,
             darkTheme: themeDark,
             themeMode: themeMode,
             home: const TabsPage(),
-            // TODO centralize l10n
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             // TODO implement l10n switching
             supportedLocales: AppLocalizations.supportedLocales,
@@ -205,12 +198,36 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  FutureOr validateAndSetToken() {
-    final context = navigatorState.currentContext!;
-
+  String getTitleLocalized(
+    context,
+  ) {
     final l10n = AppLocalizations.of(
       context,
     )!;
+
+    return l10n.title;
+  }
+
+  Locale? populateL10nNotifier(
+    Locale? locale,
+    Iterable<Locale> supportedLocales,
+  ) {
+    AppLocalizations.delegate
+        .load(
+          locale!,
+        )
+        .then(
+          (
+            l10n,
+          ) =>
+              l10nNotifier.value = l10n,
+        );
+
+    return null;
+  }
+
+  FutureOr validateAndSetToken() {
+    final context = navigatorState.currentContext!;
 
     final dispatch = getDispatch(
       context: context,
@@ -219,7 +236,6 @@ class MyApp extends StatelessWidget {
     dispatch(
       user_action.validateAndSetToken(
         newToken: settings.revalidateToken,
-        l10n: l10n,
       ),
     );
   }

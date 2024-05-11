@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:punch_clock_photo_grapher_app/common/http_method.dart';
 import 'package:punch_clock_photo_grapher_app/common/result_status.enum.dart';
 import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
-import 'package:punch_clock_photo_grapher_app/common/settings.dart';
+import 'package:punch_clock_photo_grapher_app/common/settings.dart'
+    show l10n, tokenKey;
 import 'package:punch_clock_photo_grapher_app/main.dart';
 import 'package:punch_clock_photo_grapher_app/models/base_request.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
@@ -39,7 +39,6 @@ ThunkAction<StateModel> get({
     required Result result,
   })? catchFunction,
   Future<void> Function()? finallyFunction,
-  required AppLocalizations l10n,
 }) =>
     (
       Store<StateModel> store,
@@ -65,7 +64,6 @@ ThunkAction<StateModel> get({
           thenFunction: thenFunction,
           catchFunction: catchFunction,
           finallyFunction: finallyFunction,
-          l10n: l10n,
         ),
       );
     };
@@ -83,7 +81,6 @@ ThunkAction<StateModel> post({
     required Result result,
   })? catchFunction,
   Future<void> Function()? finallyFunction,
-  required AppLocalizations l10n,
 }) =>
     (
       Store<StateModel> store,
@@ -110,7 +107,6 @@ ThunkAction<StateModel> post({
           thenFunction: thenFunction,
           catchFunction: catchFunction,
           finallyFunction: finallyFunction,
-          l10n: l10n,
         ),
       );
     };
@@ -202,7 +198,6 @@ ThunkAction<StateModel> _requestAndToggleLoading({
     required Result result,
   })? catchFunction,
   Future<void> Function()? finallyFunction,
-  required AppLocalizations l10n,
 }) =>
     (
       Store<StateModel> store,
@@ -243,7 +238,6 @@ ThunkAction<StateModel> _requestAndToggleLoading({
           catchFunction: catchFunction,
           finallyFunction: finallyFunction,
           loadingTag: loadingTag,
-          l10n: l10n,
         ),
       );
     };
@@ -258,7 +252,6 @@ ThunkAction<StateModel> _treatResult({
   })? catchFunction,
   Future<void> Function()? finallyFunction,
   required LoadingTagModel loadingTag,
-  required AppLocalizations l10n,
 }) =>
     (
       Store<StateModel> store,
@@ -278,9 +271,7 @@ ThunkAction<StateModel> _treatResult({
       } else {
         if (result.status == ResultStatus.unauthorized) {
           store.dispatch(
-            signOut(
-              l10n: l10n,
-            ),
+            signOut(),
           );
           showSnackBar(
             message: result.message,
@@ -288,12 +279,6 @@ ThunkAction<StateModel> _treatResult({
         } else if (result.status == ResultStatus.cancelled) {
           // do nothing
         } else if (result.message == null) {
-          final context = navigatorState.currentContext!;
-
-          final l10n = AppLocalizations.of(
-            context,
-          )!;
-
           showSnackBar(
             message: l10n.unexpectedError,
           );
