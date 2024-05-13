@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
+import 'package:punch_clock_photo_grapher_app/models/date.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/week.model.dart';
@@ -11,26 +13,42 @@ class ListModel implements LoggableModel {
     required List<dynamic> data,
   }) : weekList = data
             .fold(
-              Map<int, dynamic>.identity(),
+              Map<int, Map<String, Set<String>>>.identity(),
               (
                 previousValue,
                 dateTimeWeek,
               ) {
-                final key = dateTimeWeek["week"];
+                final weekKey = dateTimeWeek["week"];
 
-                final dateTimeList = previousValue.containsKey(
-                  key,
+                final dateList = previousValue.containsKey(
+                  weekKey,
                 )
-                    ? (previousValue[key] as Set<String>)
+                    ? (previousValue[weekKey] as Map<String, Set<String>>)
+                    : Map<String, Set<String>>.identity();
+
+                previousValue[weekKey] = dateList;
+
+                final weekDayKey = DateFormat.E().format(
+                  DateTime.parse(
+                    dateTimeWeek["date_time"],
+                  ),
+                );
+
+                final timeList = dateList.containsKey(
+                  weekDayKey,
+                )
+                    ? (dateList[weekDayKey] as Set<String>)
                     : Set<String>.identity();
 
-                dateTimeList.add(
+                dateList[weekDayKey] = timeList;
+
+                timeList.add(
                   dateTimeWeek["date_time"],
                 );
 
                 return {
                   ...previousValue,
-                  key: dateTimeList,
+                  weekKey: dateList,
                 };
               },
             )
@@ -41,7 +59,17 @@ class ListModel implements LoggableModel {
               ) =>
                   WeekModel(
                 number: week.key,
-                dateList: week.value,
+                dateList: week.value.entries
+                    .map(
+                      (
+                        date,
+                      ) =>
+                          DateModel(
+                        weekDay: date.key,
+                        timeList: date.value,
+                      ),
+                    )
+                    .toSet(),
               ),
             )
             .toSet();

@@ -1,43 +1,43 @@
-import 'package:punch_clock_photo_grapher_app/models/date.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
 import 'package:punch_clock_photo_grapher_app/utils/lang.dart';
 
-class WeekModel implements LoggableModel {
-  final int number;
-  final Set<DateModel> dateList;
+class DateModel implements LoggableModel {
+  final String weekDay;
+  final Set<String> timeList;
 
-  WeekModel({
-    required this.number,
-    required this.dateList,
+  DateModel({
+    required this.weekDay,
+    required this.timeList,
   });
 
   @override
   int get hashCode => Object.hashAllUnordered(
-        dateList,
+        timeList,
       );
 
   @override
   bool operator ==(
     Object other,
   ) {
-    if (other is! WeekModel) return false;
+    if (other is! DateModel) return false;
 
     return setEquals(
-      dateList,
-      other.dateList,
+      timeList,
+      other.timeList,
     );
   }
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "number": number,
-        "dateList": dateList
+        "weekDay": weekDay,
+        "timeList": timeList
             .toList()
             .map(
               (
                 date,
               ) =>
-                  date.asLog(),
+                  // TODO
+                  date /* .asLog() */,
             )
             .toList(),
       };
