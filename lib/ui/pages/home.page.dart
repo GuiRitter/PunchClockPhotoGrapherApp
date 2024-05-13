@@ -5,6 +5,7 @@ import 'package:punch_clock_photo_grapher_app/models/list.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_in.widget.dart';
 import 'package:punch_clock_photo_grapher_app/ui/widgets/body.widget.dart';
+import 'package:punch_clock_photo_grapher_app/ui/widgets/week.widget.dart';
 import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
 
 final _log = logger("HomePage");
@@ -67,16 +68,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: model.weekList
                 .map(
-                  (
-                    week,
-                  ) =>
-                      // TODO WeekWidget receiving week
-                      ElevatedButton(
-                    onPressed: null,
-                    child: Text(
-                      week.data,
-                    ),
-                  ),
+                  getWidgetByModel,
                 )
                 .toList(),
           ),
@@ -115,4 +107,11 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  WeekWidget getWidgetByModel(
+    week,
+  ) =>
+      WeekWidget(
+        week: week,
+      );
 }
