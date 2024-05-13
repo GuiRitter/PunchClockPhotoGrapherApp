@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/week.model.dart';
@@ -9,12 +10,38 @@ class ListModel implements LoggableModel {
   ListModel({
     required List<dynamic> data,
   }) : weekList = data
+            .fold(
+              Map<int, dynamic>.identity(),
+              (
+                previousValue,
+                dateTimeWeek,
+              ) {
+                final key = dateTimeWeek["week"];
+
+                final dateTimeList = previousValue.containsKey(
+                  key,
+                )
+                    ? (previousValue[key] as Set<String>)
+                    : Set<String>.identity();
+
+                dateTimeList.add(
+                  dateTimeWeek["date_time"],
+                );
+
+                return {
+                  ...previousValue,
+                  key: dateTimeList,
+                };
+              },
+            )
+            .entries
             .map(
               (
-                photo,
+                week,
               ) =>
                   WeekModel(
-                data: photo.toString(),
+                number: week.key,
+                dateList: week.value,
               ),
             )
             .toSet();
@@ -30,15 +57,9 @@ class ListModel implements LoggableModel {
   ) {
     if (other is! ListModel) return false;
 
-    if (weekList.length != other.weekList.length) return false;
-
-    return weekList.every(
-      (
-        week,
-      ) =>
-          other.weekList.contains(
-        week,
-      ),
+    return setEquals(
+      weekList,
+      other.weekList,
     );
   }
 

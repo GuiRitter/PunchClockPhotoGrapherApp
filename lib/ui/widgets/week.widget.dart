@@ -13,11 +13,32 @@ class WeekWidget extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    return ElevatedButton(
-      onPressed: null,
-      child: Text(
-        week.data,
+    final children = [
+      Row(
+        children: [
+          Text(
+            "${week.number}",
+          ),
+          const ElevatedButton(
+            onPressed: null,
+            child: Icon(
+              Icons.delete,
+            ),
+          ),
+        ],
       ),
+      ...week.dateList.map(
+        (
+          date,
+        ) =>
+            Text(
+          date,
+        ),
+      ),
+    ];
+
+    return Column(
+      children: children,
     );
   }
 }
