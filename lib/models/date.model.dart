@@ -10,6 +10,10 @@ class DateModel implements LoggableModel {
     required this.timeList,
   });
 
+  DateTime get date => DateTime.parse(
+        timeList.first,
+      );
+
   @override
   int get hashCode => Object.hashAllUnordered(
         timeList,
@@ -34,10 +38,9 @@ class DateModel implements LoggableModel {
             .toList()
             .map(
               (
-                date,
+                time,
               ) =>
-                  // TODO
-                  date /* .asLog() */,
+                  time,
             )
             .toList(),
       };

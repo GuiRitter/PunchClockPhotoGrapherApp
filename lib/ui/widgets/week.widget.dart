@@ -22,6 +22,7 @@ class WeekWidget extends StatelessWidget {
     final halfFieldPadding = fieldPadding / 2;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Wrap(
           direction: Axis.horizontal,
@@ -29,7 +30,7 @@ class WeekWidget extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             Text(
-              "${week.number}",
+              week.header,
             ),
             const ElevatedButton(
               onPressed: null,

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:punch_clock_photo_grapher_app/models/date.model.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/time.widget.dart';
+import 'package:intl/intl.dart';
 
-class DateWidget extends StatelessWidget {
-  final DateModel date;
+class TimeWidget extends StatelessWidget {
+  final DateTime dateTime;
 
-  const DateWidget({
+  TimeWidget({
     super.key,
-    required this.date,
-  });
+    required String dateTime,
+  }) : dateTime = DateTime.parse(
+          dateTime,
+        );
 
   @override
   Widget build(
@@ -27,16 +28,16 @@ class DateWidget extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
-          date.weekDay,
-        ),
-        ...date.timeList.map(
-          (
-            time,
-          ) =>
-              TimeWidget(
-            dateTime: time,
+          DateFormat.Hm().format(
+            dateTime,
           ),
-        )
+        ),
+        const ElevatedButton(
+          onPressed: null,
+          child: Icon(
+            Icons.delete,
+          ),
+        ),
       ],
     );
   }
