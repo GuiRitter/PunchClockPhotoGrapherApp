@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
 import 'package:punch_clock_photo_grapher_app/redux/data.action.dart';
 import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart';
+import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart';
 import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart';
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart';
 import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
@@ -42,6 +43,9 @@ StateModel reducer(
         ),
     DataAction: () => stateModel.withData(
           list: (action as DataAction).list,
+        ),
+    NavigationAction: () => stateModel.withState(
+          state: (action as NavigationAction).state,
         ),
     RemoveLoadingAction: () => stateModel.withoutLoadingTagList(
           idList: (action as RemoveLoadingAction).idList,

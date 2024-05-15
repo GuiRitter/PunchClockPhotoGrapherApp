@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:punch_clock_photo_grapher_app/common/state.enum.dart';
 import 'package:punch_clock_photo_grapher_app/models/list.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
 import 'package:redux/redux.dart';
@@ -8,12 +9,14 @@ class StateModel {
   final ThemeMode themeMode;
   final String? token;
   final ListModel? list;
+  final StateEnum state;
 
   StateModel({
     required this.loadingTagList,
     required this.themeMode,
     required this.token,
     required list,
+    required this.state,
   }) : list = (token != null) ? list : null;
 
   StateModel withData({
@@ -24,6 +27,7 @@ class StateModel {
         themeMode: themeMode,
         token: token,
         list: list,
+        state: state,
       );
 
   StateModel withLoadingTagList({
@@ -34,6 +38,7 @@ class StateModel {
         themeMode: themeMode,
         token: token,
         list: list,
+        state: state,
       );
 
   StateModel withoutLoadingTagList({
@@ -56,8 +61,20 @@ class StateModel {
       themeMode: themeMode,
       token: token,
       list: list,
+      state: state,
     );
   }
+
+  StateModel withState({
+    required StateEnum state,
+  }) =>
+      StateModel(
+        loadingTagList: loadingTagList,
+        themeMode: themeMode,
+        token: (token == "") ? null : token,
+        list: (token?.isNotEmpty ?? false) ? list : null,
+        state: state,
+      );
 
   StateModel withThemeMode({
     required ThemeMode themeMode,
@@ -67,6 +84,7 @@ class StateModel {
         themeMode: themeMode,
         token: token,
         list: list,
+        state: state,
       );
 
   StateModel withToken({
@@ -77,6 +95,7 @@ class StateModel {
         themeMode: themeMode,
         token: (token == "") ? null : token,
         list: (token?.isNotEmpty ?? false) ? list : null,
+        state: state,
       );
 
   static bool selectIsLoading(
@@ -93,4 +112,9 @@ class StateModel {
     Store<StateModel> store,
   ) =>
       store.state.loadingTagList;
+
+  static StateEnum selectState(
+    Store<StateModel> store,
+  ) =>
+      store.state.state;
 }

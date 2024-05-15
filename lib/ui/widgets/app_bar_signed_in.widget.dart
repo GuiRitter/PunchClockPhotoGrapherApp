@@ -9,8 +9,11 @@ import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_custom.widget.d
 
 class AppBarSignedInWidget extends StatelessWidget
     implements PreferredSizeWidget {
+  final Widget? appBarLeading;
+
   const AppBarSignedInWidget({
     super.key,
+    this.appBarLeading,
   });
 
   @override
@@ -31,6 +34,7 @@ class AppBarSignedInWidget extends StatelessWidget
     );
 
     return AppBarCustomWidget(
+      appBarLeading: appBarLeading,
       onHomePopupMenuItemPressedMap: {
         AppBarPopupMenuEnum.reload: (
           context,

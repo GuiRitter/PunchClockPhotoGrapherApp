@@ -1,31 +1,63 @@
-import 'dart:async';
+import 'dart:async' show FutureOr;
+import 'dart:io' show HttpOverrides;
 
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:provider/provider.dart';
+import 'package:dio/dio.dart' show DioException;
+import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Locale,
+        MaterialApp,
+        SnackBar,
+        StatelessWidget,
+        Text,
+        ThemeMode,
+        Widget,
+        WidgetsFlutterBinding,
+        runApp;
+import 'package:flutter/services.dart'
+    show SystemChrome, SystemUiOverlayStyle, Color;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'
+    show AppLocalizations;
+import 'package:flutter_redux/flutter_redux.dart'
+    show StoreConnector, StoreProvider;
+import 'package:provider/provider.dart' show MultiProvider, Provider;
 import 'package:punch_clock_photo_grapher_app/common/settings.dart'
     show l10nNotifier, navigatorState;
 import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
-import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart';
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
+import 'package:punch_clock_photo_grapher_app/common/state.enum.dart'
+    show StateEnum;
+import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart'
+    show LoadingTagModel;
+import 'package:punch_clock_photo_grapher_app/models/state.model.dart'
+    show StateModel;
+import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
+    show toggleToken;
+import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
+    show getDispatch, reducer;
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
     as user_action;
-import 'package:punch_clock_photo_grapher_app/themes/dark.theme.dart';
-import 'package:punch_clock_photo_grapher_app/themes/light.theme.dart';
-import 'package:punch_clock_photo_grapher_app/ui/pages/tabs.page.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
-import 'package:punch_clock_photo_grapher_app/utils/string.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:punch_clock_photo_grapher_app/services/dio/my_http_overrides.dart'
+    show MyHttpOverrides;
+import 'package:punch_clock_photo_grapher_app/themes/dark.theme.dart' show dark;
+import 'package:punch_clock_photo_grapher_app/themes/light.theme.dart'
+    show light;
+import 'package:punch_clock_photo_grapher_app/ui/pages/tabs.page.dart'
+    show TabsPage;
+import 'package:punch_clock_photo_grapher_app/utils/logger.dart' show logger;
+import 'package:punch_clock_photo_grapher_app/utils/string.dart'
+    show StringExtension;
+import 'package:redux/redux.dart' show Store;
+import 'package:redux_thunk/redux_thunk.dart' show thunkMiddleware;
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (kDebugMode) {
+    HttpOverrides.global = MyHttpOverrides();
+  }
 
   // https://stackoverflow.com/questions/52489458/how-to-change-status-bar-color-in-flutter
   SystemChrome.setSystemUIOverlayStyle(
@@ -75,6 +107,7 @@ FutureOr initializeApp(
       themeMode: theme,
       token: token,
       list: null,
+      state: StateEnum.list,
     ),
     middleware: [
       thunkMiddleware,

@@ -1,12 +1,40 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter/material.dart'
+    show
+        Axis,
+        BottomAppBar,
+        BuildContext,
+        Center,
+        Column,
+        CrossAxisAlignment,
+        EdgeInsets,
+        ElevatedButton,
+        Expanded,
+        MediaQuery,
+        SingleChildScrollView,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        Theme,
+        Widget;
+import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/settings.dart' show l10n;
-import 'package:punch_clock_photo_grapher_app/models/list.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_in.widget.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/body.widget.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/week.widget.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
+import 'package:punch_clock_photo_grapher_app/common/state.enum.dart'
+    show StateEnum;
+import 'package:punch_clock_photo_grapher_app/models/list.model.dart'
+    show ListModel;
+import 'package:punch_clock_photo_grapher_app/models/state.model.dart'
+    show StateModel;
+import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
+    show getDispatch;
+import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
+    show navigate;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_in.widget.dart'
+    show AppBarSignedInWidget;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/body.widget.dart'
+    show BodyWidget;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/week.widget.dart'
+    show WeekWidget;
+import 'package:punch_clock_photo_grapher_app/utils/logger.dart' show logger;
 
 final _log = logger("HomePage");
 
@@ -76,6 +104,10 @@ class HomePage extends StatelessWidget {
       );
     }
 
+    onPhotoButtonPressed() => goToPhotoPage(
+          context: context,
+        );
+
     return SizedBox(
       height: mediaSize.height,
       width: mediaSize.width,
@@ -95,8 +127,7 @@ class HomePage extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                // TODO
-                onPressed: null,
+                onPressed: onPhotoButtonPressed,
                 child: Text(
                   l10n.takePhoto,
                 ),
@@ -114,4 +145,18 @@ class HomePage extends StatelessWidget {
       WeekWidget(
         week: week,
       );
+
+  goToPhotoPage({
+    required BuildContext context,
+  }) {
+    final dispatch = getDispatch(
+      context: context,
+    );
+
+    dispatch(
+      navigate(
+        state: StateEnum.photo,
+      ),
+    );
+  }
 }
