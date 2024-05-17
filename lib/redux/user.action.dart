@@ -1,7 +1,5 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'
-    show AppLocalizations;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show ApiUrl, l10n, navigatorState, Settings;
+    show ApiUrl, l10n, Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show Result, SignInRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
@@ -37,18 +35,11 @@ ThunkAction<StateModel> clearToken() => (
 
 ThunkAction<StateModel> signIn({
   required SignInRequestModel signInModel,
-  required AppLocalizations l10n,
 }) =>
     (
       Store<StateModel> store,
     ) async {
       _log('signIn').map('signInModel', signInModel).print();
-
-      final context = navigatorState.currentContext!;
-
-      final l10n = AppLocalizations.of(
-        context,
-      )!;
 
       var prefs = await SharedPreferences.getInstance();
 

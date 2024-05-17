@@ -19,9 +19,9 @@ import 'package:flutter/material.dart'
         Widget;
 import 'package:flutter/services.dart'
     show AutofillHints, TextInput, TextInputType;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'
-    show AppLocalizations;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show SignInModel, SignInRequestModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
@@ -59,10 +59,6 @@ class SignInPage extends StatelessWidget {
     SignInModel signInModel,
   ) {
     _log('connectorBuilder').map('signInModel', signInModel).print();
-
-    var l10n = AppLocalizations.of(
-      context,
-    )!;
 
     onSignInPressed() => signIn(
           context: context,
@@ -164,17 +160,12 @@ class SignInPage extends StatelessWidget {
 
     formKey.currentState?.save();
 
-    var l10n = AppLocalizations.of(
-      context,
-    )!;
-
     dispatch(
       user_action.signIn(
         signInModel: SignInRequestModel(
           userId: userIdController.text,
           password: passwordController.text,
         ),
-        l10n: l10n,
       ),
     );
   }

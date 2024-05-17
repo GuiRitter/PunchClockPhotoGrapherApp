@@ -7,10 +7,8 @@ import 'package:flutter/material.dart'
         Size,
         StatelessWidget,
         Widget;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'
-    show AppLocalizations;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show AppBarPopupMenuEnum;
+    show AppBarPopupMenuEnum, l10n;
 import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
     as data_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
@@ -38,10 +36,6 @@ class AppBarSignedInWidget extends StatelessWidget
   Widget build(
     BuildContext context,
   ) {
-    final l10n = AppLocalizations.of(
-      context,
-    )!;
-
     final dispatch = getDispatch(
       context: context,
     );

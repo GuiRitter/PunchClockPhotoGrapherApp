@@ -30,10 +30,8 @@ import 'package:flutter/material.dart'
         Widget;
 import 'package:flutter/services.dart'
     show Size, SystemUiOverlayStyle, TextAlign;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'
-    show AppLocalizations;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show AppBarPopupMenuEnum, navigatorState;
+    show AppBarPopupMenuEnum, l10n, navigatorState;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show ThemeOptionWidget;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
@@ -147,10 +145,6 @@ class AppBarCustomWidget extends StatelessWidget
       context,
     );
 
-    final l10n = AppLocalizations.of(
-      context,
-    )!;
-
     final String? subtitle = _getSubtitle();
 
     final title = (subtitle == null)
@@ -216,10 +210,6 @@ class AppBarCustomWidget extends StatelessWidget
     required AppBarPopupMenuEnum value,
   }) {
     _log('onHomePopupMenuItemPressed').enum_('value', value).print();
-
-    final l10n = AppLocalizations.of(
-      context,
-    )!;
 
     final onHomePopupMenuItemPressedCompleteMap = <AppBarPopupMenuEnum,
         dynamic Function(
