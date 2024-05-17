@@ -30,9 +30,9 @@ class LoadingTagModel implements LoggableModel {
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "id": id,
-        "userFriendlyName": userFriendlyName,
-        "cancelToken": cancelToken.toString(),
+        'id': id,
+        'userFriendlyName': userFriendlyName,
+        'cancelToken': cancelToken.toString(),
       };
 
   static bool Function(

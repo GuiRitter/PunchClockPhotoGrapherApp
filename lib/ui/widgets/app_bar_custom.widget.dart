@@ -43,7 +43,7 @@ double? appBarElevation;
 
 final GlobalKey appBarKey = GlobalKey();
 
-final _log = logger("appBarCustom");
+final _log = logger('appBarCustom');
 
 PopupMenuItem<AppBarPopupMenuEnum> buildPopupMenuItem({
   required String label,
@@ -65,7 +65,7 @@ PopupMenuItem<AppBarPopupMenuEnum> buildPopupMenuItem({
 Future<double> getAppBarElevation({
   required int delay,
 }) async {
-  _log("getAppBarElevation").raw("delay", delay).print();
+  _log('getAppBarElevation').raw('delay', delay).print();
 
   if (appBarElevation != null) {
     return appBarElevation!;
@@ -215,7 +215,7 @@ class AppBarCustomWidget extends StatelessWidget
     required BuildContext context,
     required AppBarPopupMenuEnum value,
   }) {
-    _log("onHomePopupMenuItemPressed").enum_("value", value).print();
+    _log('onHomePopupMenuItemPressed').enum_('value', value).print();
 
     final l10n = AppLocalizations.of(
       context,

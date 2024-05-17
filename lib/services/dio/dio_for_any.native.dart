@@ -1,11 +1,11 @@
-import "package:dio/dio.dart"
+import 'package:dio/dio.dart'
     show CancelToken, Headers, Options, ProgressCallback;
-import "package:dio/io.dart" show DioForNative;
-import "package:punch_clock_photo_grapher_app/common/common.import.dart"
+import 'package:dio/io.dart' show DioForNative;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show Result;
-import "package:punch_clock_photo_grapher_app/services/dio/dio_for_any.interface.dart"
+import 'package:punch_clock_photo_grapher_app/services/dio/dio_for_any.interface.dart'
     show DioForAny;
 
 DioForAny getDioForAny() => DioForAnyNative();
@@ -16,8 +16,8 @@ class DioForAnyNative extends DioForNative implements DioForAny {
     options.contentType = Headers.formUrlEncodedContentType;
     // options.contentType = Headers.jsonContentType;
     // options.headers.putIfAbsent(
-    //   "Access-Control-Allow-Origin",
-    //   () => "*",
+    //   'Access-Control-Allow-Origin',
+    //   () => '*',
     // );
   }
 

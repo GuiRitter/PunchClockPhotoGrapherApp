@@ -1,11 +1,11 @@
 import 'package:intl/intl.dart' show DateFormat;
 
 final dayFormat = DateFormat(
-  "dd",
+  'dd',
 );
 
 final monthFormat = DateFormat(
-  "MM",
+  'MM',
 );
 
 class WeekHeaderModel {
@@ -22,30 +22,30 @@ class WeekHeaderModel {
         ? monthFormat.format(
             start!,
           )
-        : "";
+        : '';
 
     final startDay = (start != null)
         ? dayFormat.format(
             start!,
           )
-        : "";
+        : '';
 
     final endMonth = (end != null)
         ? monthFormat.format(
             end!,
           )
-        : "";
+        : '';
 
     final endDay = (end != null)
         ? dayFormat.format(
             end!,
           )
-        : "";
+        : '';
 
     return ((start != null) && (end != null))
         ? (start!.month == end!.month)
-            ? "$startMonth-$startDay/$endDay"
-            : "$startMonth-$startDay/$endMonth-$endDay"
-        : "";
+            ? '$startMonth-$startDay/$endDay'
+            : '$startMonth-$startDay/$endMonth-$endDay'
+        : '';
   }
 }

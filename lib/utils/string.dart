@@ -1,3 +1,3 @@
 extension StringExtension on String? {
-  String? get nullIfEmpty => (this == "") ? null : this;
+  String? get nullIfEmpty => (this == '') ? null : this;
 }

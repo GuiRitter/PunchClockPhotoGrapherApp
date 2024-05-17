@@ -55,8 +55,8 @@ class WeekModel implements LoggableModel {
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "number": number,
-        "dateList": dateList
+        'number': number,
+        'dateList': dateList
             .toList()
             .map(
               (

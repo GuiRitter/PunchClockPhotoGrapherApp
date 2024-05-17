@@ -30,7 +30,7 @@ import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
-final _log = logger("LoadingPage");
+final _log = logger('LoadingPage');
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({
@@ -55,7 +55,7 @@ class LoadingPage extends StatelessWidget {
       context,
     ).size;
 
-    _log("connectorBuilder").mapList("loadingTagList", loadingTagList).print();
+    _log('connectorBuilder').mapList('loadingTagList', loadingTagList).print();
 
     return Scaffold(
       appBar: const AppBarCustomWidget(),
@@ -90,7 +90,7 @@ class LoadingPage extends StatelessWidget {
                       id: loadingTagList[index].id,
                     ),
                     child: Text(
-                      "🛑 ${loadingTagList[index].userFriendlyName} 🛑",
+                      '🛑 ${loadingTagList[index].userFriendlyName} 🛑',
                     ),
                   ),
                 ),
@@ -106,7 +106,7 @@ class LoadingPage extends StatelessWidget {
     required BuildContext context,
     required String id,
   }) {
-    _log("onCancelPressed").raw("id", id).print();
+    _log('onCancelPressed').raw('id', id).print();
 
     final dispatch = getDispatch(
       context: context,

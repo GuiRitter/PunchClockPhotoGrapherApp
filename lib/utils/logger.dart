@@ -17,7 +17,7 @@ String? hideSecret(
   if (text == null) {
     return null;
   }
-  return "length: ${text.toString().length}";
+  return 'length: ${text.toString().length}';
 }
 
 Log Function(
@@ -37,7 +37,7 @@ class Log {
   final String fileName;
   final String methodName;
   final argumentMap = <String, dynamic>{};
-  String headerKey = "";
+  String headerKey = '';
 
   Log({
     required this.fileName,
@@ -53,7 +53,7 @@ class Log {
     while (keyList.contains(
       headerKey,
     )) {
-      headerKey += "_";
+      headerKey += '_';
     }
 
     argumentMap[key] = value;
@@ -152,18 +152,18 @@ class Log {
   }
 
   void print() => debugPrint(
-        "${jsonEncode(
+        '${jsonEncode(
           <String, dynamic>{
             headerKey: {
-              "dateTime": getISO8601(
+              'dateTime': getISO8601(
                 dateTime: DateTime.now(),
               ),
-              "file": fileName,
-              "method": methodName,
+              'file': fileName,
+              'method': methodName,
             },
             ...argumentMap,
           },
-        )},",
+        )},',
       );
 
   Log raw(

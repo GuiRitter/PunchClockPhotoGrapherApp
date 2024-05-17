@@ -36,9 +36,9 @@ class TabsModel implements LoggableModel {
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "isSignedIn": isSignedIn,
-        "isLoading": isLoading,
-        "state": state.name,
+        'isSignedIn': isSignedIn,
+        'isLoading': isLoading,
+        'state': state.name,
       };
 
   static TabsModel select(

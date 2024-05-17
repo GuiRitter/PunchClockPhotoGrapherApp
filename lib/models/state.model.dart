@@ -72,7 +72,7 @@ class StateModel {
       StateModel(
         loadingTagList: loadingTagList,
         themeMode: themeMode,
-        token: (token == "") ? null : token,
+        token: (token == '') ? null : token,
         list: (token?.isNotEmpty ?? false) ? list : null,
         state: state,
       );
@@ -94,7 +94,7 @@ class StateModel {
       StateModel(
         loadingTagList: loadingTagList,
         themeMode: themeMode,
-        token: (token == "") ? null : token,
+        token: (token == '') ? null : token,
         list: (token?.isNotEmpty ?? false) ? list : null,
         state: state,
       );

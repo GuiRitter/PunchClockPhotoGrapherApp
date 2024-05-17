@@ -34,7 +34,7 @@ class PhotoPage extends StatelessWidget {
         ),
       ),
       body: const Text(
-        "Photo Page",
+        'Photo Page',
       ),
     );
   }

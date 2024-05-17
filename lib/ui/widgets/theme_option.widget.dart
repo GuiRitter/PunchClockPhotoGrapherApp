@@ -23,7 +23,7 @@ import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 
-final _log = logger("ThemeOptionWidget");
+final _log = logger('ThemeOptionWidget');
 
 class ThemeOptionWidget extends StatelessWidget {
   final ThemeMode themeMode;
@@ -69,7 +69,7 @@ class ThemeOptionWidget extends StatelessWidget {
     required BuildContext context,
     required ThemeMode themeMode,
   }) {
-    _log("onThemeTapped").enum_("themeMode", themeMode).print();
+    _log('onThemeTapped').enum_('themeMode', themeMode).print();
 
     final dispatch = getDispatch(
       context: context,

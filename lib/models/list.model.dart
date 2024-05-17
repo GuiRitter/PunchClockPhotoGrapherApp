@@ -16,7 +16,7 @@ class ListModel implements LoggableModel {
                 previousValue,
                 dateTimeWeek,
               ) {
-                final weekKey = dateTimeWeek["week"];
+                final weekKey = dateTimeWeek['week'];
 
                 final dateList = previousValue.containsKey(
                   weekKey,
@@ -28,7 +28,7 @@ class ListModel implements LoggableModel {
 
                 final weekDayKey = DateFormat.E().format(
                   DateTime.parse(
-                    dateTimeWeek["date_time"],
+                    dateTimeWeek['date_time'],
                   ),
                 );
 
@@ -41,7 +41,7 @@ class ListModel implements LoggableModel {
                 dateList[weekDayKey] = timeList;
 
                 timeList.add(
-                  dateTimeWeek["date_time"],
+                  dateTimeWeek['date_time'],
                 );
 
                 return {
@@ -91,7 +91,7 @@ class ListModel implements LoggableModel {
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "weekList": weekList
+        'weekList': weekList
             .toList()
             .map(
               (

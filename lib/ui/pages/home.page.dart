@@ -30,7 +30,7 @@ import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
-final _log = logger("HomePage");
+final _log = logger('HomePage');
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    _log("build").print();
+    _log('build').print();
 
     return BodyWidget(
       usePadding: false,
@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
     BuildContext context,
     ListModel? model,
   ) {
-    _log("connectorBuilder").map("list", model).print();
+    _log('connectorBuilder').map('list', model).print();
 
     final mediaSize = MediaQuery.of(
       context,

@@ -10,7 +10,7 @@ import 'package:punch_clock_photo_grapher_app/ui/pages/pages.import.dart'
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
-final _log = logger("TabsPage");
+final _log = logger('TabsPage');
 
 class TabsPage extends StatelessWidget {
   const TabsPage({
@@ -31,7 +31,7 @@ class TabsPage extends StatelessWidget {
     BuildContext context,
     TabsModel tabsModel,
   ) {
-    _log("connectorBuilder").map("tabsModel", tabsModel).print();
+    _log('connectorBuilder').map('tabsModel', tabsModel).print();
 
     return tabsModel.isLoading
         ? const LoadingPage()

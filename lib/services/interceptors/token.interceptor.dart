@@ -11,7 +11,7 @@ import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
-final _log = logger("TokenInterceptor");
+final _log = logger('TokenInterceptor');
 
 class TokenInterceptor extends InterceptorsWrapper {
   @override
@@ -19,7 +19,7 @@ class TokenInterceptor extends InterceptorsWrapper {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    _log("onError").asString("err", err).print();
+    _log('onError').asString('err', err).print();
 
     final context = navigatorState.currentContext!;
 

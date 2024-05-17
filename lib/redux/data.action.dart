@@ -9,17 +9,17 @@ import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
-final _log = logger("data.action");
+final _log = logger('data.action');
 
 ThunkAction<StateModel> getList() => (
       Store<StateModel> store,
     ) async {
-      _log("getList").print();
+      _log('getList').print();
 
       Future<void> getListSuccess({
         required Result result,
       }) async {
-        _log("getList").map("result", result).print();
+        _log('getList').map('result', result).print();
 
         store.dispatch(
           DataAction(

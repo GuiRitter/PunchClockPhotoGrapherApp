@@ -14,20 +14,20 @@ class SignInRequestModel implements BaseRequestModel {
 
   SignInRequestModel.fromJson(
     Map<String, dynamic> json,
-  )   : userId = json["login"],
-        password = json["password"];
+  )   : userId = json['login'],
+        password = json['password'];
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "userId": userId,
-        "password": hideSecret(
+        'userId': userId,
+        'password': hideSecret(
           password,
         ),
       };
 
   @override
   Map<String, dynamic> toJson() => {
-        "login": userId,
-        "password": password,
+        'login': userId,
+        'password': password,
       };
 }

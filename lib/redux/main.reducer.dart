@@ -15,7 +15,7 @@ import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
-final _log = logger("main.reducer");
+final _log = logger('main.reducer');
 
 dynamic Function(
   dynamic,
@@ -34,7 +34,7 @@ StateModel reducer(
   StateModel stateModel,
   dynamic action,
 ) {
-  _log("reducer").asString("action", action.runtimeType).print();
+  _log('reducer').asString('action', action.runtimeType).print();
 
   return {
     AuthenticationAction: () => stateModel.withToken(

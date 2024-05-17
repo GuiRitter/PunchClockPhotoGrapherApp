@@ -66,7 +66,7 @@ void main() {
   );
 }
 
-final _log = logger("main");
+final _log = logger('main');
 
 FutureOr initializeApp(
   SharedPreferences prefs,
@@ -75,7 +75,7 @@ FutureOr initializeApp(
     Settings.themeKey,
   );
 
-  _log("main SharedPreferences.getInstance").raw("theme", themeName).print();
+  _log('main SharedPreferences.getInstance').raw('theme', themeName).print();
 
   final theme = (themeName?.isNotEmpty ?? false)
       ? ThemeMode.values.byName(
@@ -117,13 +117,13 @@ FutureOr initializeApp(
 void showSnackBar({
   required String? message,
 }) {
-  _log("showSnackBar").raw("message", message).print();
+  _log('showSnackBar').raw('message', message).print();
 
   snackState.currentState!.showSnackBar(
     SnackBar(
       showCloseIcon: true,
       content: Text(
-        message ?? "",
+        message ?? '',
       ),
     ),
   );
@@ -169,7 +169,7 @@ class MyApp extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    _log("build").print();
+    _log('build').print();
 
     final dispatch = store.dispatch;
 
@@ -207,7 +207,7 @@ class MyApp extends StatelessWidget {
             themeMode,
           ) =>
               MaterialApp(
-            title: "Punch Clock Photo Grapher",
+            title: 'Punch Clock Photo Grapher',
             onGenerateTitle: getTitleLocalized,
             localeResolutionCallback: populateL10nNotifier,
             theme: themeLight,

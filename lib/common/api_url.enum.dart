@@ -1,12 +1,12 @@
 enum ApiUrl {
   checkToken(
-    path: "user/check",
+    path: 'user/check',
   ),
   getList(
-    path: "photo",
+    path: 'photo',
   ),
   signIn(
-    path: "user/sign_in",
+    path: 'user/sign_in',
   );
 
   final String path;

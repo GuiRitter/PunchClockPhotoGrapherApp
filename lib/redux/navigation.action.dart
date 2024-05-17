@@ -7,7 +7,7 @@ import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
-final _log = logger("navigation.action");
+final _log = logger('navigation.action');
 
 ThunkAction<StateModel> go({
   required StateEnum state,
@@ -15,7 +15,7 @@ ThunkAction<StateModel> go({
     (
       Store<StateModel> store,
     ) async {
-      _log("navigate").print();
+      _log('navigate').print();
 
       store.dispatch(
         NavigationAction(

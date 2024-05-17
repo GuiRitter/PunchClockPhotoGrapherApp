@@ -35,8 +35,8 @@ class DateModel implements LoggableModel {
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "weekDay": weekDay,
-        "timeList": timeList
+        'weekDay': weekDay,
+        'timeList': timeList
             .toList()
             .map(
               (

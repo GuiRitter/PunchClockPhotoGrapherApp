@@ -13,19 +13,19 @@ import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 
-final _log = logger("user.action");
+final _log = logger('user.action');
 
 ThunkAction<StateModel> clearToken() => (
       Store<StateModel> store,
     ) async {
-      _log("clearToken").print();
+      _log('clearToken').print();
 
       dio_action.clearToken();
 
       var prefs = await SharedPreferences.getInstance();
       prefs.setString(
         Settings.tokenKey,
-        "",
+        '',
       );
 
       return store.dispatch(
@@ -42,7 +42,7 @@ ThunkAction<StateModel> signIn({
     (
       Store<StateModel> store,
     ) async {
-      _log("signIn").map("signInModel", signInModel).print();
+      _log('signIn').map('signInModel', signInModel).print();
 
       final context = navigatorState.currentContext!;
 
@@ -54,13 +54,13 @@ ThunkAction<StateModel> signIn({
 
       prefs.setString(
         Settings.tokenKey,
-        "",
+        '',
       );
 
       signInSuccess({
         required Result result,
       }) async {
-        _log("signInSuccess").map("result", result).print();
+        _log('signInSuccess').map('result', result).print();
 
         final token =
             result.data[Settings.dataKey][Settings.tokenKey] as String;
@@ -101,14 +101,14 @@ ThunkAction<StateModel> signIn({
       // // TODO
       // final searchResults = await new Future.delayed(
       //   new Duration(seconds: secondsToWait),
-      //   () => "Search Results",
+      //   () => 'Search Results',
       // );
     };
 
 ThunkAction<StateModel> signOut() => (
       Store<StateModel> store,
     ) async {
-      _log("signOut").print();
+      _log('signOut').print();
 
       return store.dispatch(
         validateAndSetToken(
@@ -123,7 +123,7 @@ ThunkAction<StateModel> validateAndSetToken({
     (
       Store<StateModel> store,
     ) async {
-      _log("validateAndSetToken").secret("newToken", newToken).print();
+      _log('validateAndSetToken').secret('newToken', newToken).print();
 
       if (newToken == Settings.revalidateToken) {
         newToken = store.state.token;
@@ -144,7 +144,7 @@ ThunkAction<StateModel> validateAndSetToken({
       checkTokenSuccess({
         required Result result,
       }) async {
-        _log("checkTokenSuccess").map("result", result).print();
+        _log('checkTokenSuccess').map('result', result).print();
 
         store.dispatch(
           AuthenticationAction(

@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart'
 import 'package:punch_clock_photo_grapher_app/services/dio/dio_for_any.interface.dart'
     show DioForAny;
 
-const appName = "punch_clock_photo_grapher";
+const appName = 'punch_clock_photo_grapher';
 
 final l10nNotifier = ValueNotifier<AppLocalizations?>(
   null,
@@ -20,31 +20,31 @@ AppLocalizations get l10n => l10nNotifier.value!;
 class Settings {
   static final api = DioForAny();
 
-  static const apiUrl = "$protocol://$domain$port/$path/";
+  static const apiUrl = '$protocol://$domain$port/$path/';
 
-  static const dataKey = "data";
+  static const dataKey = 'data';
 
-  static const domain = "guilherme-alan-ritter.net";
+  static const domain = 'guilherme-alan-ritter.net';
 
-// static const domain = "localhost";
-// static const domain = "127.0.0.1";
-// static const domain = "10.0.2.2";
+// static const domain = 'localhost';
+// static const domain = '127.0.0.1';
+// static const domain = '10.0.2.2';
 
-  static const errorKey = "error";
+  static const errorKey = 'error';
 
-  static const path = "$appName/api";
+  static const path = '$appName/api';
 
-  static const port = "";
+  static const port = '';
 
-// static const port = ":49235";
+// static const port = ':49235';
 
-  static const protocol = "https";
+  static const protocol = 'https';
 
-// static const protocol = "http";
+// static const protocol = 'http';
 
-  static const revalidateToken = "REVALIDATE_TOKEN";
+  static const revalidateToken = 'REVALIDATE_TOKEN';
 
-  static const themeKey = "theme";
+  static const themeKey = 'theme';
 
-  static const tokenKey = "token";
+  static const tokenKey = 'token';
 }

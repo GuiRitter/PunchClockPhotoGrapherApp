@@ -58,8 +58,8 @@ class Result<DataType> implements LoggableModel {
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "resultStatus": status.name,
-        "message": message,
+        'resultStatus': status.name,
+        'message': message,
       };
 
   bool hasMessageNotIn({
@@ -97,9 +97,9 @@ class Result<DataType> implements LoggableModel {
     final statusCodeClass = httpStatus.toString()[0];
     return (httpStatus == HttpStatus.unauthorized)
         ? ResultStatus.unauthorized
-        : (statusCodeClass == "2")
+        : (statusCodeClass == '2')
             ? ResultStatus.success
-            : (statusCodeClass == "4")
+            : (statusCodeClass == '4')
                 ? ResultStatus.warning
                 // 3 or 5 or else
                 : ResultStatus.error;

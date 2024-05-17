@@ -1,9 +1,9 @@
 enum HTTPMethod {
   get(
-    name: "GET",
+    name: 'GET',
   ),
   post(
-    name: "POST",
+    name: 'POST',
   );
 
   final String name;

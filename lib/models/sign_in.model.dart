@@ -32,7 +32,7 @@ class SignInModel implements LoggableModel {
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        "token": hideSecret(
+        'token': hideSecret(
           token,
         ),
       };

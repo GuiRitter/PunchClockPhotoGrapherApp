@@ -5,6 +5,6 @@ const _uuid = Uuid();
 
 String generateUuid() => _uuid.v4(
       options: {
-        "rng": UuidUtil.cryptoRNG,
+        'rng': UuidUtil.cryptoRNG,
       },
     );

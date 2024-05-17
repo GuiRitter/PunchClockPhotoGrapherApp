@@ -33,7 +33,7 @@ import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
-final _log = logger("SignInPage");
+final _log = logger('SignInPage');
 
 class SignInPage extends StatelessWidget {
   final userIdController = TextEditingController();
@@ -58,7 +58,7 @@ class SignInPage extends StatelessWidget {
     BuildContext context,
     SignInModel signInModel,
   ) {
-    _log("connectorBuilder").map("signInModel", signInModel).print();
+    _log('connectorBuilder').map('signInModel', signInModel).print();
 
     var l10n = AppLocalizations.of(
       context,
@@ -154,7 +154,7 @@ class SignInPage extends StatelessWidget {
       context: context,
     );
 
-    _log("onSingInPressed").print();
+    _log('onSingInPressed').print();
 
     if (!(formKey.currentState?.validate() ?? false)) {
       return;

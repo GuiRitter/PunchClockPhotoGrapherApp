@@ -15,10 +15,10 @@ import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
 final _api = Settings.api;
 
-final _log = logger("dio.action.dart");
+final _log = logger('dio.action.dart');
 
 void clearToken() {
-  _log("clearToken").print();
+  _log('clearToken').print();
 
   _api.options.headers.remove(
     Settings.tokenKey,
@@ -41,14 +41,14 @@ ThunkAction<StateModel> get({
     (
       Store<StateModel> store,
     ) async {
-      _log("get")
-          .raw("url", url)
-          .raw("queryParameters", queryParameters)
-          .raw("config", config)
-          .raw("userFriendlyName", userFriendlyName)
-          .exists("then", thenFunction)
-          .exists("catch", catchFunction)
-          .exists("finally", finallyFunction)
+      _log('get')
+          .raw('url', url)
+          .raw('queryParameters', queryParameters)
+          .raw('config', config)
+          .raw('userFriendlyName', userFriendlyName)
+          .exists('then', thenFunction)
+          .exists('catch', catchFunction)
+          .exists('finally', finallyFunction)
           .print();
 
       store.dispatch(
@@ -83,15 +83,15 @@ ThunkAction<StateModel> post({
     (
       Store<StateModel> store,
     ) async {
-      _log("post")
-          .raw("url", url)
-          .raw("queryParameters", queryParameters)
-          .map("data", data)
-          .raw("config", config)
-          .raw("userFriendlyName", userFriendlyName)
-          .exists("then", thenFunction)
-          .exists("catch", catchFunction)
-          .exists("finally", finallyFunction)
+      _log('post')
+          .raw('url', url)
+          .raw('queryParameters', queryParameters)
+          .map('data', data)
+          .raw('config', config)
+          .raw('userFriendlyName', userFriendlyName)
+          .exists('then', thenFunction)
+          .exists('catch', catchFunction)
+          .exists('finally', finallyFunction)
           .print();
 
       store.dispatch(
@@ -112,7 +112,7 @@ ThunkAction<StateModel> post({
 void setToken({
   required String token,
 }) {
-  _log("setToken").secret("token", token).print();
+  _log('setToken').secret('token', token).print();
 
   _api.options.headers[Settings.tokenKey] = token;
 }
@@ -120,7 +120,7 @@ void setToken({
 Future<void> showSnackBarFromResult({
   required Result result,
 }) async {
-  _log("showSnackBarFromResult").map("result", result).print();
+  _log('showSnackBarFromResult').map('result', result).print();
 
   showSnackBar(
     message: result.message,
@@ -130,7 +130,7 @@ Future<void> showSnackBarFromResult({
 void toggleToken({
   required String? token,
 }) {
-  _log("toggleToken").secret("token", token).print();
+  _log('toggleToken').secret('token', token).print();
 
   if (token == null) {
     clearToken();
@@ -148,12 +148,12 @@ Future<Result<dynamic>> _getResult({
   BaseRequestModel? data,
   required CancelToken cancelToken,
 }) async {
-  _log("_getResult")
-      .enum_("method", method)
-      .raw("url", url)
-      .raw("queryParameters", queryParameters)
-      .map("data", data)
-      .asString("cancelToken", cancelToken)
+  _log('_getResult')
+      .enum_('method', method)
+      .raw('url', url)
+      .raw('queryParameters', queryParameters)
+      .map('data', data)
+      .asString('cancelToken', cancelToken)
       .print();
 
   final request = {
@@ -199,12 +199,12 @@ ThunkAction<StateModel> _requestAndToggleLoading({
     (
       Store<StateModel> store,
     ) async {
-      _log("_requestAndToggleLoading")
-          .raw("url", url)
-          .raw("config", config)
-          .exists("then", thenFunction)
-          .exists("catch", catchFunction)
-          .exists("finally", finallyFunction)
+      _log('_requestAndToggleLoading')
+          .raw('url', url)
+          .raw('config', config)
+          .exists('then', thenFunction)
+          .exists('catch', catchFunction)
+          .exists('finally', finallyFunction)
           .print();
 
       final loadingTag = loading_action.buildTag(
@@ -253,12 +253,12 @@ ThunkAction<StateModel> _treatResult({
     (
       Store<StateModel> store,
     ) async {
-      _log("_treatResult")
-          .map("result", result)
-          .exists("then", thenFunction)
-          .exists("catch", catchFunction)
-          .exists("finally", finallyFunction)
-          .map("loadingTag", loadingTag)
+      _log('_treatResult')
+          .map('result', result)
+          .exists('then', thenFunction)
+          .exists('catch', catchFunction)
+          .exists('finally', finallyFunction)
+          .map('loadingTag', loadingTag)
           .print();
 
       if (result.status == ResultStatus.success) {
