@@ -1,7 +1,7 @@
-import 'package:punch_clock_photo_grapher_app/models/date.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/week_header.model.dart';
-import 'package:punch_clock_photo_grapher_app/utils/lang.dart';
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show DateModel, LoggableModel, WeekHeaderModel;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show setEquals;
 
 class WeekModel implements LoggableModel {
   final int number;

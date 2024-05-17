@@ -17,24 +17,18 @@ import 'package:flutter/material.dart'
         Theme,
         Widget;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
-import 'package:punch_clock_photo_grapher_app/common/settings.dart' show l10n;
-import 'package:punch_clock_photo_grapher_app/common/state.enum.dart'
-    show StateEnum;
-import 'package:punch_clock_photo_grapher_app/models/list.model.dart'
-    show ListModel;
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart'
-    show StateModel;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show l10n, StateEnum;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show ListModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show getDispatch;
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
-    show navigate;
-import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_in.widget.dart'
-    show AppBarSignedInWidget;
-import 'package:punch_clock_photo_grapher_app/ui/widgets/body.widget.dart'
-    show BodyWidget;
-import 'package:punch_clock_photo_grapher_app/ui/widgets/week.widget.dart'
-    show WeekWidget;
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart' show logger;
+    as navigation_action;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show AppBarSignedInWidget, BodyWidget, WeekWidget;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger;
 
 final _log = logger("HomePage");
 
@@ -154,7 +148,7 @@ class HomePage extends StatelessWidget {
     );
 
     dispatch(
-      navigate(
+      navigation_action.go(
         state: StateEnum.photo,
       ),
     );

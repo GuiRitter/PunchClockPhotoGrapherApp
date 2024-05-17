@@ -1,12 +1,15 @@
-import 'package:punch_clock_photo_grapher_app/common/state.enum.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show StateEnum;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show StateModel;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger;
+import 'package:redux/redux.dart' show Store;
+import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
 final _log = logger("navigation.action");
 
-ThunkAction<StateModel> navigate({
+ThunkAction<StateModel> go({
   required StateEnum state,
 }) =>
     (

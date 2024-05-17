@@ -1,7 +1,8 @@
-import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
-import 'package:redux/redux.dart';
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show LoggableModel, StateModel;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show hideSecret;
+import 'package:redux/redux.dart' show Store;
 
 class SignInModel implements LoggableModel {
   final String? token;

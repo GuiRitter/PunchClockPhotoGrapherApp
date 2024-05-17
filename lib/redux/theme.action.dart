@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
+import 'package:flutter/material.dart' show ThemeMode;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show StateModel;
+import 'package:redux/redux.dart' show Store;
+import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
 ThunkAction<StateModel> setTheme({
   required ThemeMode themeMode,

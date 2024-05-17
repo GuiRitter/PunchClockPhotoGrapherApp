@@ -1,5 +1,7 @@
-import 'package:punch_clock_photo_grapher_app/models/base_request.model.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show BaseRequestModel;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show hideSecret;
 
 class SignInRequestModel implements BaseRequestModel {
   late String userId;

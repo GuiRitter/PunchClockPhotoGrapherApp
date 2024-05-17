@@ -1,5 +1,7 @@
-import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
-import 'package:punch_clock_photo_grapher_app/utils/lang.dart';
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show LoggableModel;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show setEquals;
 
 class DateModel implements LoggableModel {
   final String weekDay;

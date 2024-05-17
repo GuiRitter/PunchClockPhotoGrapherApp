@@ -1,12 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/redux/data.action.dart';
-import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart';
-import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart';
-import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart';
-import 'package:punch_clock_photo_grapher_app/redux/user.action.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
+import 'package:flutter/material.dart' show BuildContext;
+import 'package:provider/provider.dart' show Provider;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show StateModel;
+import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
+    show DataAction;
+import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
+    show AddLoadingAction, CancelLoadingAction, RemoveLoadingAction;
+import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
+    show NavigationAction;
+import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart'
+    show ThemeAction;
+import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
+    show AuthenticationAction;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger;
 
 final _log = logger("main.reducer");
 

@@ -1,10 +1,15 @@
-import 'dart:io';
+import 'dart:io' show HttpStatus;
 
-import 'package:dio/dio.dart';
-import 'package:punch_clock_photo_grapher_app/common/settings.dart';
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
-import 'package:punch_clock_photo_grapher_app/redux/user.action.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
+import 'package:dio/dio.dart'
+    show DioException, ErrorInterceptorHandler, InterceptorsWrapper;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show navigatorState;
+import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
+    show getDispatch;
+import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
+    as user_action;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger;
 
 final _log = logger("TokenInterceptor");
 
@@ -24,7 +29,7 @@ class TokenInterceptor extends InterceptorsWrapper {
 
     if (err.response?.statusCode == HttpStatus.unauthorized) {
       await dispatch(
-        signOut(),
+        user_action.signOut(),
       );
     }
 

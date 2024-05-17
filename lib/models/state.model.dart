@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:punch_clock_photo_grapher_app/common/state.enum.dart';
-import 'package:punch_clock_photo_grapher_app/models/list.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
-import 'package:redux/redux.dart';
+import 'package:flutter/material.dart' show ThemeMode;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show StateEnum;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show LoadingTagModel, ListModel;
+import 'package:redux/redux.dart' show Store;
 
 class StateModel {
   final List<LoadingTagModel> loadingTagList;

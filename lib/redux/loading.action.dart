@@ -1,11 +1,12 @@
-import 'package:dio/dio.dart';
-import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/utils/date_time.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
+import 'package:dio/dio.dart' show CancelToken;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show LoadingTagModel, StateModel;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show getISO8601;
+import 'package:redux/redux.dart' show Store;
+import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
-ThunkAction<StateModel> addLoading({
+ThunkAction<StateModel> add({
   required List<LoadingTagModel> list,
 }) =>
     (
@@ -17,7 +18,7 @@ ThunkAction<StateModel> addLoading({
           ),
         );
 
-LoadingTagModel buildLoadingTag({
+LoadingTagModel buildTag({
   required String userFriendlyName,
   required CancelToken cancelToken,
 }) =>
@@ -29,7 +30,7 @@ LoadingTagModel buildLoadingTag({
       cancelToken: cancelToken,
     );
 
-ThunkAction<StateModel> cancelLoading({
+ThunkAction<StateModel> cancel({
   required String id,
 }) =>
     (
@@ -44,7 +45,7 @@ ThunkAction<StateModel> cancelLoading({
       loadingTag.cancelToken.cancel();
     };
 
-ThunkAction<StateModel> removeLoading({
+ThunkAction<StateModel> remove({
   required List<String> idList,
 }) =>
     (

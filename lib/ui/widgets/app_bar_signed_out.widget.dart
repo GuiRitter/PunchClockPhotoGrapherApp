@@ -1,5 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_custom.widget.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        kToolbarHeight,
+        PreferredSizeWidget,
+        Size,
+        StatelessWidget,
+        Widget;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show AppBarCustomWidget;
 
 class AppBarSignedOutWidget extends StatelessWidget
     implements PreferredSizeWidget {

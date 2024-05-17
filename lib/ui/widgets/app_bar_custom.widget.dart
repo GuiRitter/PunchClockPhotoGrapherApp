@@ -1,11 +1,43 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:punch_clock_photo_grapher_app/common/app_bar_popup_menu.enum.dart';
-import 'package:punch_clock_photo_grapher_app/common/settings.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/theme_option.widget.dart';
-import 'package:punch_clock_photo_grapher_app/utils/dialogs.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
+import 'package:flutter/material.dart'
+    show
+        AlertDialog,
+        AnnotatedRegion,
+        AppBar,
+        BuildContext,
+        Column,
+        CrossAxisAlignment,
+        GlobalKey,
+        Icon,
+        IconData,
+        Icons,
+        kToolbarHeight,
+        ListTile,
+        MainAxisSize,
+        Material,
+        PopupMenuButton,
+        PopupMenuEntry,
+        PopupMenuItem,
+        PreferredSizeWidget,
+        Semantics,
+        showDialog,
+        SingleChildRenderObjectElement,
+        StatefulElement,
+        StatelessWidget,
+        Text,
+        TextButton,
+        Theme,
+        ThemeMode,
+        Widget;
+import 'package:flutter/services.dart'
+    show Size, SystemUiOverlayStyle, TextAlign;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'
+    show AppLocalizations;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show AppBarPopupMenuEnum, navigatorState;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show ThemeOptionWidget;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger, onDialogCancelPressed;
 
 double? appBarElevation;
 

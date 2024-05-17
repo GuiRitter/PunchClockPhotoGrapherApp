@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart'
     show BackButton, BuildContext, StatelessWidget, Text, Widget;
-import 'package:punch_clock_photo_grapher_app/common/state.enum.dart';
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show StateEnum;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show getDispatch;
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
-    show navigate;
-import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_in.widget.dart'
-    show AppBarSignedInWidget;
-import 'package:punch_clock_photo_grapher_app/ui/widgets/body.widget.dart'
-    show BodyWidget;
+    as navigation_action;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show AppBarSignedInWidget, BodyWidget;
 
 class PhotoPage extends StatelessWidget {
   const PhotoPage({
@@ -28,7 +27,7 @@ class PhotoPage extends StatelessWidget {
       appBar: AppBarSignedInWidget(
         appBarLeading: BackButton(
           onPressed: () => dispatch(
-            navigate(
+            navigation_action.go(
               state: StateEnum.list,
             ),
           ),

@@ -1,15 +1,37 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:punch_clock_photo_grapher_app/models/sign_in.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/sign_in.request.model.dart';
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
+import 'package:flutter/material.dart'
+    show
+        AutofillGroup,
+        BuildContext,
+        Column,
+        EdgeInsets,
+        ElevatedButton,
+        Form,
+        FormState,
+        GlobalKey,
+        InputDecoration,
+        Padding,
+        SingleChildScrollView,
+        StatelessWidget,
+        Text,
+        TextEditingController,
+        TextFormField,
+        Theme,
+        Widget;
+import 'package:flutter/services.dart'
+    show AutofillHints, TextInput, TextInputType;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'
+    show AppLocalizations;
+import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show SignInModel, SignInRequestModel;
+import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
+    show getDispatch;
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
     as user_action;
-import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_out.widget.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/body.widget.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show AppBarSignedOutWidget, BodyWidget;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger;
 
 final _log = logger("SignInPage");
 

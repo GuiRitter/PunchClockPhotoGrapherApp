@@ -1,4 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Center,
+        EdgeInsets,
+        Padding,
+        PreferredSizeWidget,
+        Scaffold,
+        StatelessWidget,
+        Theme,
+        Widget;
 
 class BodyWidget extends StatelessWidget {
   final PreferredSizeWidget appBar;

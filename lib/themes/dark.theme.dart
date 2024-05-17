@@ -1,4 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'
+    show
+        AppBarTheme,
+        Brightness,
+        BuildContext,
+        Color,
+        ColorScheme,
+        MaterialColor,
+        ThemeData;
 
 ThemeData dark({
   required BuildContext context,

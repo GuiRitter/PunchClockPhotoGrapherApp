@@ -1,9 +1,12 @@
-import 'dart:io';
+import 'dart:io' show HttpStatus;
 
-import 'package:dio/dio.dart';
-import 'package:punch_clock_photo_grapher_app/common/result_status.enum.dart';
-import 'package:punch_clock_photo_grapher_app/main.dart';
-import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
+import 'package:dio/dio.dart' show Response, DioException, DioExceptionType;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show ResultStatus;
+import 'package:punch_clock_photo_grapher_app/main.dart'
+    show treatDioResponse, treatException;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show LoggableModel;
 
 class Result<DataType> implements LoggableModel {
   final DataType? data;

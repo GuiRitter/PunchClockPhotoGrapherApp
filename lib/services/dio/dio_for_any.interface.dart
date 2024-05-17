@@ -1,5 +1,7 @@
-import 'package:dio/dio.dart';
-import 'package:punch_clock_photo_grapher_app/models/result.dart';
+import 'package:dio/dio.dart'
+    show BaseOptions, CancelToken, Options, ProgressCallback;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show Result;
 
 import 'dio_for_any.stub.dart'
     // ignore: uri_does_not_exist

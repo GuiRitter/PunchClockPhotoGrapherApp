@@ -1,21 +1,19 @@
-import 'package:dio/dio.dart';
-import 'package:punch_clock_photo_grapher_app/common/http_method.dart';
-import 'package:punch_clock_photo_grapher_app/common/result_status.enum.dart';
-import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
-import 'package:punch_clock_photo_grapher_app/common/settings.dart'
-    show l10n, tokenKey;
-import 'package:punch_clock_photo_grapher_app/main.dart';
-import 'package:punch_clock_photo_grapher_app/models/base_request.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/result.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart';
-import 'package:punch_clock_photo_grapher_app/redux/user.action.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
+import 'package:dio/dio.dart' show CancelToken;
+import 'package:punch_clock_photo_grapher_app/main.dart' show showSnackBar;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show HTTPMethod, l10n, ResultStatus, Settings;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show BaseRequestModel, LoadingTagModel, Result, StateModel;
+import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
+    as loading_action;
+import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
+    as user_action;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger;
+import 'package:redux/redux.dart' show Store;
+import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
-final _api = settings.api;
+final _api = Settings.api;
 
 final _log = logger("dio.action.dart");
 
@@ -23,7 +21,7 @@ void clearToken() {
   _log("clearToken").print();
 
   _api.options.headers.remove(
-    settings.tokenKey,
+    Settings.tokenKey,
   );
 }
 
@@ -116,7 +114,7 @@ void setToken({
 }) {
   _log("setToken").secret("token", token).print();
 
-  _api.options.headers[settings.tokenKey] = token;
+  _api.options.headers[Settings.tokenKey] = token;
 }
 
 Future<void> showSnackBarFromResult({
@@ -155,7 +153,6 @@ Future<Result<dynamic>> _getResult({
       .raw("url", url)
       .raw("queryParameters", queryParameters)
       .map("data", data)
-      .secret("token", tokenKey)
       .asString("cancelToken", cancelToken)
       .print();
 
@@ -210,13 +207,13 @@ ThunkAction<StateModel> _requestAndToggleLoading({
           .exists("finally", finallyFunction)
           .print();
 
-      final loadingTag = buildLoadingTag(
+      final loadingTag = loading_action.buildTag(
         userFriendlyName: userFriendlyName,
         cancelToken: CancelToken(),
       );
 
       store.dispatch(
-        addLoading(
+        loading_action.add(
           list: [
             loadingTag,
           ],
@@ -271,7 +268,7 @@ ThunkAction<StateModel> _treatResult({
       } else {
         if (result.status == ResultStatus.unauthorized) {
           store.dispatch(
-            signOut(),
+            user_action.signOut(),
           );
           showSnackBar(
             message: result.message,
@@ -300,7 +297,7 @@ ThunkAction<StateModel> _treatResult({
       }
 
       store.dispatch(
-        removeLoading(
+        loading_action.remove(
           idList: [
             loadingTag.id,
           ],

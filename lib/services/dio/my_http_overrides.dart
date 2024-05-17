@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:io'
+    show HttpClient, HttpOverrides, SecurityContext, X509Certificate;
 
 /// https://stackoverflow.com/a/61312927/1781376
 class MyHttpOverrides extends HttpOverrides {

@@ -1,14 +1,18 @@
-import "package:dio/browser.dart";
-import "package:dio/dio.dart";
-import "package:punch_clock_photo_grapher_app/common/settings.dart" as settings;
-import "package:punch_clock_photo_grapher_app/models/result.dart";
-import "package:punch_clock_photo_grapher_app/services/dio/dio_for_any.interface.dart";
+import "package:dio/browser.dart" show DioForBrowser;
+import "package:dio/dio.dart"
+    show CancelToken, Headers, Options, ProgressCallback;
+import "package:punch_clock_photo_grapher_app/common/common.import.dart"
+    show Settings;
+import "package:punch_clock_photo_grapher_app/models/models.import.dart"
+    show Result;
+import "package:punch_clock_photo_grapher_app/services/dio/dio_for_any.interface.dart"
+    show DioForAny;
 
 DioForAny getDioForAny() => DioForAnyBrowser();
 
 class DioForAnyBrowser extends DioForBrowser implements DioForAny {
   DioForAnyBrowser() {
-    options.baseUrl = settings.apiUrl;
+    options.baseUrl = Settings.apiUrl;
     options.contentType = Headers.formUrlEncodedContentType;
     // options.contentType = Headers.jsonContentType;
     // options.headers.putIfAbsent(

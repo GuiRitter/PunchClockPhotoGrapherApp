@@ -1,5 +1,5 @@
-import 'package:uuid/uuid.dart';
-import 'package:uuid/uuid_util.dart';
+import 'package:uuid/uuid.dart' show Uuid;
+import 'package:uuid/uuid_util.dart' show UuidUtil;
 
 const _uuid = Uuid();
 

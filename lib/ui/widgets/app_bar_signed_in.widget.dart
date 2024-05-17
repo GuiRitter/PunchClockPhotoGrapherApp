@@ -1,11 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:punch_clock_photo_grapher_app/common/app_bar_popup_menu.enum.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Icons,
+        kToolbarHeight,
+        PreferredSizeWidget,
+        Size,
+        StatelessWidget,
+        Widget;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'
+    show AppLocalizations;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show AppBarPopupMenuEnum;
 import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
     as data_action;
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
-import 'package:punch_clock_photo_grapher_app/redux/user.action.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_custom.widget.dart';
+import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
+    show getDispatch;
+import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
+    as user_action;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show AppBarCustomWidget, buildPopupMenuItem;
 
 class AppBarSignedInWidget extends StatelessWidget
     implements PreferredSizeWidget {
@@ -46,7 +59,7 @@ class AppBarSignedInWidget extends StatelessWidget
           context,
         ) {
           dispatch(
-            signOut(),
+            user_action.signOut(),
           );
         },
       },

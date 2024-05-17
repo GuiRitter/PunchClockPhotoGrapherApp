@@ -1,5 +1,6 @@
-import 'package:dio/dio.dart';
-import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
+import 'package:dio/dio.dart' show CancelToken;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show LoggableModel;
 
 class LoadingTagModel implements LoggableModel {
   final String id;

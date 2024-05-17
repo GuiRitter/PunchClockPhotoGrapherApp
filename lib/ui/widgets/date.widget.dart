@@ -1,6 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:punch_clock_photo_grapher_app/models/date.model.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/time.widget.dart';
+import 'package:flutter/material.dart'
+    show
+        Axis,
+        BuildContext,
+        StatelessWidget,
+        Text,
+        Theme,
+        Widget,
+        Wrap,
+        WrapCrossAlignment;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show DateModel;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show TimeWidget;
 
 class DateWidget extends StatelessWidget {
   final DateModel date;

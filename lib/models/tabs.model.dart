@@ -1,7 +1,8 @@
-import 'package:punch_clock_photo_grapher_app/common/state.enum.dart';
-import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:redux/redux.dart';
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show StateEnum;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show LoggableModel, StateModel;
+import 'package:redux/redux.dart' show Store;
 
 class TabsModel implements LoggableModel {
   final bool isSignedIn;

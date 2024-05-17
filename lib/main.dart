@@ -22,31 +22,24 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart'
 import 'package:flutter_redux/flutter_redux.dart'
     show StoreConnector, StoreProvider;
 import 'package:provider/provider.dart' show MultiProvider, Provider;
-import 'package:punch_clock_photo_grapher_app/common/settings.dart'
-    show l10nNotifier, navigatorState;
-import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
-import 'package:punch_clock_photo_grapher_app/common/state.enum.dart'
-    show StateEnum;
-import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart'
-    show LoadingTagModel;
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart'
-    show StateModel;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show Settings, l10nNotifier, navigatorState, snackState, StateEnum;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show LoadingTagModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
-    show toggleToken;
+    as dio_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show getDispatch, reducer;
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
     as user_action;
 import 'package:punch_clock_photo_grapher_app/services/dio/my_http_overrides.dart'
     show MyHttpOverrides;
-import 'package:punch_clock_photo_grapher_app/themes/dark.theme.dart' show dark;
-import 'package:punch_clock_photo_grapher_app/themes/light.theme.dart'
-    show light;
-import 'package:punch_clock_photo_grapher_app/ui/pages/tabs.page.dart'
+import 'package:punch_clock_photo_grapher_app/themes/themes.import.dart'
+    show dark, light;
+import 'package:punch_clock_photo_grapher_app/ui/pages/pages.import.dart'
     show TabsPage;
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart' show logger;
-import 'package:punch_clock_photo_grapher_app/utils/string.dart'
-    show StringExtension;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger, StringExtension;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show thunkMiddleware;
 import 'package:shared_preferences/shared_preferences.dart'
@@ -79,7 +72,7 @@ FutureOr initializeApp(
   SharedPreferences prefs,
 ) async {
   final themeName = prefs.getString(
-    settings.themeKey,
+    Settings.themeKey,
   );
 
   _log("main SharedPreferences.getInstance").raw("theme", themeName).print();
@@ -92,11 +85,11 @@ FutureOr initializeApp(
 
   final token = prefs
       .getString(
-        settings.tokenKey,
+        Settings.tokenKey,
       )
       .nullIfEmpty;
 
-  toggleToken(
+  dio_action.toggleToken(
     token: token,
   );
 
@@ -126,7 +119,7 @@ void showSnackBar({
 }) {
   _log("showSnackBar").raw("message", message).print();
 
-  settings.snackState.currentState!.showSnackBar(
+  snackState.currentState!.showSnackBar(
     SnackBar(
       showCloseIcon: true,
       content: Text(
@@ -141,9 +134,9 @@ String treatDioResponse({
 }) {
   if (response!.data is Map) {
     if ((response!.data as Map).containsKey(
-      settings.errorKey,
+      Settings.errorKey,
     )) {
-      return response!.data[settings.errorKey];
+      return response!.data[Settings.errorKey];
     }
   }
   return response!.data.toString();
@@ -224,8 +217,8 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             // TODO implement l10n switching
             supportedLocales: AppLocalizations.supportedLocales,
-            navigatorKey: settings.navigatorState,
-            scaffoldMessengerKey: settings.snackState,
+            navigatorKey: navigatorState,
+            scaffoldMessengerKey: snackState,
           ),
         ),
       ),
@@ -269,7 +262,7 @@ class MyApp extends StatelessWidget {
 
     dispatch(
       user_action.validateAndSetToken(
-        newToken: settings.revalidateToken,
+        newToken: Settings.revalidateToken,
       ),
     );
   }

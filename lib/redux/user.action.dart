@@ -1,18 +1,17 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:punch_clock_photo_grapher_app/common/api_url.enum.dart';
-import 'package:punch_clock_photo_grapher_app/common/settings.dart' as settings;
-import 'package:punch_clock_photo_grapher_app/common/settings.dart'
-    show l10n, navigatorState;
-import 'package:punch_clock_photo_grapher_app/models/result.dart';
-import 'package:punch_clock_photo_grapher_app/models/sign_in.request.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'
+    show AppLocalizations;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show ApiUrl, l10n, navigatorState, Settings;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show Result, SignInRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
     as dio_action;
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger;
+import 'package:redux/redux.dart' show Store;
+import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
 final _log = logger("user.action");
 
@@ -25,7 +24,7 @@ ThunkAction<StateModel> clearToken() => (
 
       var prefs = await SharedPreferences.getInstance();
       prefs.setString(
-        settings.tokenKey,
+        Settings.tokenKey,
         "",
       );
 
@@ -54,7 +53,7 @@ ThunkAction<StateModel> signIn({
       var prefs = await SharedPreferences.getInstance();
 
       prefs.setString(
-        settings.tokenKey,
+        Settings.tokenKey,
         "",
       );
 
@@ -64,10 +63,10 @@ ThunkAction<StateModel> signIn({
         _log("signInSuccess").map("result", result).print();
 
         final token =
-            result.data[settings.dataKey][settings.tokenKey] as String;
+            result.data[Settings.dataKey][Settings.tokenKey] as String;
 
         prefs.setString(
-          settings.tokenKey,
+          Settings.tokenKey,
           token,
         );
 
@@ -126,12 +125,10 @@ ThunkAction<StateModel> validateAndSetToken({
     ) async {
       _log("validateAndSetToken").secret("newToken", newToken).print();
 
-      if (newToken == settings.revalidateToken) {
+      if (newToken == Settings.revalidateToken) {
         newToken = store.state.token;
       } else if (store.state.token == newToken) {
-        return store.dispatch(
-          NoAction(),
-        );
+        return;
       }
 
       if (newToken?.isEmpty ?? true) {

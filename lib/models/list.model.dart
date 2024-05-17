@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
-import 'package:punch_clock_photo_grapher_app/models/date.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/week.model.dart';
-import 'package:redux/redux.dart';
+import 'package:flutter/foundation.dart' show setEquals;
+import 'package:intl/intl.dart' show DateFormat;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show DateModel, LoggableModel, StateModel, WeekModel;
+import 'package:redux/redux.dart' show Store;
 
 class ListModel implements LoggableModel {
   final Set<WeekModel> weekList;

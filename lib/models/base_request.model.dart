@@ -1,4 +1,4 @@
-import 'package:punch_clock_photo_grapher_app/models/encodable.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show EncodableModel, LoggableModel;
 
 abstract class BaseRequestModel implements LoggableModel, EncodableModel {}

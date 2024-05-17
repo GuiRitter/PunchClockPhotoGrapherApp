@@ -1,11 +1,27 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:punch_clock_photo_grapher_app/common/settings.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
-import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Icon,
+        Icons,
+        ListTile,
+        Navigator,
+        StatelessWidget,
+        Text,
+        ThemeMode,
+        Widget;
+import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show Settings;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show StateModel;
+import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
+    show getDispatch;
+import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart'
+    as theme_action;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger;
+import 'package:shared_preferences/shared_preferences.dart'
+    show SharedPreferences;
 
 final _log = logger("ThemeOptionWidget");
 
@@ -60,7 +76,7 @@ class ThemeOptionWidget extends StatelessWidget {
     );
 
     dispatch(
-      ThemeAction(
+      theme_action.ThemeAction(
         themeMode: themeMode,
       ),
     );
@@ -70,7 +86,7 @@ class ThemeOptionWidget extends StatelessWidget {
         prefs,
       ) {
         prefs.setString(
-          themeKey,
+          Settings.themeKey,
           themeMode.name,
         );
       },

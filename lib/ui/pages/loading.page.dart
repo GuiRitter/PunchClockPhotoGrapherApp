@@ -1,11 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart';
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart';
-import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart';
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_custom.widget.dart';
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart';
+import 'package:flutter/material.dart'
+    show
+        Align,
+        AlignmentDirectional,
+        BuildContext,
+        CircularProgressIndicator,
+        Column,
+        CrossAxisAlignment,
+        ElevatedButton,
+        Expanded,
+        ListView,
+        MainAxisAlignment,
+        MediaQuery,
+        Positioned,
+        Scaffold,
+        SizedBox,
+        Stack,
+        StatelessWidget,
+        Text,
+        Widget;
+import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show LoadingTagModel, StateModel;
+import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
+    as loading_action;
+import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
+    show getDispatch;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show AppBarCustomWidget;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show logger;
 
 final _log = logger("LoadingPage");
 
@@ -90,7 +113,7 @@ class LoadingPage extends StatelessWidget {
     );
 
     dispatch(
-      cancelLoading(
+      loading_action.cancel(
         id: id,
       ),
     );

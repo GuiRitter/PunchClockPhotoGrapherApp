@@ -1,6 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:punch_clock_photo_grapher_app/models/week.model.dart';
-import 'package:punch_clock_photo_grapher_app/ui/widgets/date.widget.dart';
+import 'package:flutter/material.dart'
+    show
+        Axis,
+        BuildContext,
+        Column,
+        CrossAxisAlignment,
+        ElevatedButton,
+        Icon,
+        Icons,
+        StatelessWidget,
+        Text,
+        Theme,
+        Widget,
+        Wrap,
+        WrapCrossAlignment;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show WeekModel;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show DateWidget;
 
 class WeekWidget extends StatelessWidget {
   final WeekModel week;
