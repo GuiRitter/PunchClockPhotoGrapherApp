@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart'
     show
         Axis,
-        BottomAppBar,
         BuildContext,
         Center,
         Column,
         CrossAxisAlignment,
         EdgeInsets,
-        ElevatedButton,
         Expanded,
         MediaQuery,
         SingleChildScrollView,
@@ -26,7 +24,7 @@ import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show AppBarSignedInWidget, BodyWidget, WeekWidget;
+    show AppBarSignedInWidget, BodyWidget, BottomAppBarWidget, WeekWidget;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
@@ -113,20 +111,9 @@ class HomePage extends StatelessWidget {
               child: body,
             ),
           ),
-          BottomAppBar(
-            color: theme.scaffoldBackgroundColor,
-            padding: EdgeInsets.all(
-              fieldPadding,
-            ),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: onPhotoButtonPressed,
-                child: Text(
-                  l10n.takePhoto,
-                ),
-              ),
-            ),
+          BottomAppBarWidget(
+            onButtonPressed: onPhotoButtonPressed,
+            label: l10n.takePhoto,
           ),
         ],
       ),
