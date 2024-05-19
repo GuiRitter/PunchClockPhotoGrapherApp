@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' show ThemeMode, TimeOfDay;
+import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
@@ -13,6 +14,7 @@ class StateModel {
   final StateEnum state;
   final DateTime date;
   final TimeOfDay time;
+  final XFile? photoFile;
 
   StateModel({
     required this.loadingTagList,
@@ -22,6 +24,7 @@ class StateModel {
     required this.state,
     required this.date,
     required this.time,
+    required this.photoFile,
   }) : list = (token != null) ? list : null;
 
   StateModel withData({
@@ -35,6 +38,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
+        photoFile: photoFile,
       );
 
   StateModel withDate({
@@ -48,6 +52,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
+        photoFile: photoFile,
       );
 
   StateModel withLoadingTagList({
@@ -61,6 +66,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
+        photoFile: photoFile,
       );
 
   StateModel withoutLoadingTagList({
@@ -86,6 +92,7 @@ class StateModel {
       state: state,
       date: date,
       time: time,
+      photoFile: photoFile,
     );
   }
 
@@ -103,6 +110,7 @@ class StateModel {
       state: state,
       date: wentFromListToPhoto ? DateTime.now() : date,
       time: wentFromListToPhoto ? TimeOfDay.now() : time,
+      photoFile: wentFromListToPhoto ? null : photoFile,
     );
   }
 
@@ -117,6 +125,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
+        photoFile: photoFile,
       );
 
   StateModel withTime({
@@ -130,6 +139,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
+        photoFile: photoFile,
       );
 
   StateModel withToken({
@@ -143,6 +153,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
+        photoFile: (token?.isNotEmpty ?? false) ? photoFile : null,
       );
 
   static bool selectIsLoading(

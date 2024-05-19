@@ -7,9 +7,14 @@ import 'package:flutter/material.dart'
         EdgeInsets,
         ElevatedButton,
         Expanded,
+        Icon,
+        Icons,
         Padding,
         Placeholder,
+        Row,
         SizedBox,
+        Stack,
+        StackFit,
         StatelessWidget,
         Text,
         Theme,
@@ -72,6 +77,14 @@ class PhotoPage extends StatelessWidget {
           initialTime: photoModel.time,
         );
 
+    const takePhotoButton = ElevatedButton(
+      // TODO
+      onPressed: null,
+      child: Icon(
+        Icons.camera,
+      ),
+    );
+
     return BodyWidget(
       usePadding: false,
       appBar: AppBarSignedInWidget(
@@ -95,8 +108,25 @@ class PhotoPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const Expanded(
-                    child: Placeholder(),
+                  Expanded(
+                    child: (photoModel.photoFile != null)
+                        ? const Row(
+                            children: [
+                              Expanded(
+                                child: Placeholder(),
+                              ),
+                              takePhotoButton,
+                            ],
+                          )
+                        : const Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              takePhotoButton,
+                            ],
+                          ),
+                  ),
+                  SizedBox.square(
+                    dimension: fieldPadding,
                   ),
                   ElevatedButton(
                     onPressed: onDatePressed,

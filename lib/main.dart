@@ -104,6 +104,7 @@ FutureOr initializeApp(
       state: StateEnum.list,
       date: DateTime.now(),
       time: TimeOfDay.now(),
+      photoFile: null,
     ),
     middleware: [
       thunkMiddleware,
