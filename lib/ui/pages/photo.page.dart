@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart'
     show
+        AsyncSnapshot,
         BackButton,
         BuildContext,
+        Center,
+        CircularProgressIndicator,
         Column,
+        ConnectionState,
         CrossAxisAlignment,
         EdgeInsets,
         ElevatedButton,
         Expanded,
+        FutureBuilder,
         Icon,
         Icons,
+        Image,
         Padding,
-        Placeholder,
         Row,
         SizedBox,
         Stack,
@@ -39,6 +44,8 @@ import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarSignedInWidget, BodyWidget, BottomAppBarWidget;
+import 'package:punch_clock_photo_grapher_app/utils/image.dart'
+    show ImageExtension;
 
 class PhotoPage extends StatelessWidget {
   const PhotoPage({
@@ -54,6 +61,16 @@ class PhotoPage extends StatelessWidget {
         converter: PhotoModel.select,
         builder: connectorBuilder,
       );
+
+  Widget buildImage(
+    context,
+    AsyncSnapshot<Image?> snapshot,
+  ) =>
+      (snapshot.connectionState == ConnectionState.done)
+          ? snapshot.data!
+          : const Center(
+              child: CircularProgressIndicator(),
+            );
 
   Widget connectorBuilder(
     BuildContext context,
@@ -90,6 +107,10 @@ class PhotoPage extends StatelessWidget {
       ),
     );
 
+    Future<Image?> buildImageFuture() async => loadImage(
+          photoFile: photoModel.photoFile,
+        );
+
     return BodyWidget(
       usePadding: false,
       appBar: AppBarSignedInWidget(
@@ -118,8 +139,11 @@ class PhotoPage extends StatelessWidget {
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const Expanded(
-                                child: Placeholder(),
+                              Expanded(
+                                child: FutureBuilder<Image?>(
+                                  future: buildImageFuture(),
+                                  builder: buildImage,
+                                ),
                               ),
                               SizedBox.square(
                                 dimension: fieldPadding,
@@ -165,6 +189,11 @@ class PhotoPage extends StatelessWidget {
       ),
     );
   }
+
+  Future<Image?> loadImage({
+    required XFile? photoFile,
+  }) async =>
+      photoFile.toImage();
 
   pickDate({
     required BuildContext context,
