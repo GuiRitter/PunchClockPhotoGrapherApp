@@ -12,6 +12,7 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         Text,
         ThemeMode,
+        TimeOfDay,
         Widget,
         WidgetsFlutterBinding,
         runApp;
@@ -101,6 +102,8 @@ FutureOr initializeApp(
       token: token,
       list: null,
       state: StateEnum.list,
+      date: DateTime.now(),
+      time: TimeOfDay.now(),
     ),
     middleware: [
       thunkMiddleware,

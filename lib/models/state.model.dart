@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show ThemeMode;
+import 'package:flutter/material.dart' show ThemeMode, TimeOfDay;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
@@ -11,6 +11,8 @@ class StateModel {
   final String? token;
   final ListModel? list;
   final StateEnum state;
+  final DateTime date;
+  final TimeOfDay time;
 
   StateModel({
     required this.loadingTagList,
@@ -18,6 +20,8 @@ class StateModel {
     required this.token,
     required list,
     required this.state,
+    required this.date,
+    required this.time,
   }) : list = (token != null) ? list : null;
 
   StateModel withData({
@@ -29,6 +33,8 @@ class StateModel {
         token: token,
         list: list,
         state: state,
+        date: date,
+        time: time,
       );
 
   StateModel withLoadingTagList({
@@ -40,6 +46,8 @@ class StateModel {
         token: token,
         list: list,
         state: state,
+        date: date,
+        time: time,
       );
 
   StateModel withoutLoadingTagList({
@@ -63,6 +71,8 @@ class StateModel {
       token: token,
       list: list,
       state: state,
+      date: date,
+      time: time,
     );
   }
 
@@ -75,6 +85,8 @@ class StateModel {
         token: (token == '') ? null : token,
         list: (token?.isNotEmpty ?? false) ? list : null,
         state: state,
+        date: date,
+        time: time,
       );
 
   StateModel withThemeMode({
@@ -86,6 +98,8 @@ class StateModel {
         token: token,
         list: list,
         state: state,
+        date: date,
+        time: time,
       );
 
   StateModel withToken({
@@ -97,6 +111,8 @@ class StateModel {
         token: (token == '') ? null : token,
         list: (token?.isNotEmpty ?? false) ? list : null,
         state: state,
+        date: date,
+        time: time,
       );
 
   static bool selectIsLoading(

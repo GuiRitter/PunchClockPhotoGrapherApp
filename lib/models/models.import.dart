@@ -10,6 +10,8 @@ export 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart'
     show LoadingTagModel;
 export 'package:punch_clock_photo_grapher_app/models/loggable.model.dart'
     show LoggableModel;
+export 'package:punch_clock_photo_grapher_app/models/photo.model.dart'
+    show PhotoModel;
 export 'package:punch_clock_photo_grapher_app/models/result.dart' show Result;
 export 'package:punch_clock_photo_grapher_app/models/sign_in.model.dart'
     show SignInModel;
