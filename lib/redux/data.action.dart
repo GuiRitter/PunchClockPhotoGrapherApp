@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' show TimeOfDay;
+import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show ApiUrl, l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
@@ -57,6 +58,23 @@ ThunkAction<StateModel> setDate({
       );
     };
 
+ThunkAction<StateModel> setPhotoFile({
+  required XFile? photoFile,
+}) =>
+    (
+      Store<StateModel> store,
+    ) async {
+      _log('setPhotoFile').asString('date', photoFile).print();
+
+      if (photoFile == null) return;
+
+      store.dispatch(
+        SetPhotoAction(
+          photoFile: photoFile,
+        ),
+      );
+    };
+
 ThunkAction<StateModel> setTime({
   required TimeOfDay? time,
 }) =>
@@ -87,6 +105,14 @@ class SetDateAction {
 
   const SetDateAction({
     required this.date,
+  });
+}
+
+class SetPhotoAction {
+  final XFile photoFile;
+
+  const SetPhotoAction({
+    required this.photoFile,
   });
 }
 

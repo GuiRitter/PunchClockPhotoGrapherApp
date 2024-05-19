@@ -3,7 +3,7 @@ import 'package:provider/provider.dart' show Provider;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
-    show DataAction, SetDateAction, SetTimeAction;
+    show DataAction, SetDateAction, SetPhotoAction, SetTimeAction;
 import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
     show AddLoadingAction, CancelLoadingAction, RemoveLoadingAction;
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
@@ -59,6 +59,9 @@ StateModel reducer(
         ),
     SetDateAction: () => stateModel.withDate(
           date: (action as SetDateAction).date,
+        ),
+    SetPhotoAction: () => stateModel.withPhotoFile(
+          photoFile: (action as SetPhotoAction).photoFile,
         ),
     SetTimeAction: () => stateModel.withTime(
           time: (action as SetTimeAction).time,

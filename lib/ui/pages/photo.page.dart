@@ -23,6 +23,8 @@ import 'package:flutter/material.dart'
         showDatePicker,
         showTimePicker;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
+import 'package:image_picker/image_picker.dart'
+    show ImagePicker, ImageSource, XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum, l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
@@ -77,10 +79,13 @@ class PhotoPage extends StatelessWidget {
           initialTime: photoModel.time,
         );
 
-    const takePhotoButton = ElevatedButton(
-      // TODO
-      onPressed: null,
-      child: Icon(
+    onTakePhotoPressed() => takePhoto(
+          context: context,
+        );
+
+    final takePhotoButton = ElevatedButton(
+      onPressed: onTakePhotoPressed,
+      child: const Icon(
         Icons.camera,
       ),
     );
@@ -110,15 +115,19 @@ class PhotoPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: (photoModel.photoFile != null)
-                        ? const Row(
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Expanded(
+                              const Expanded(
                                 child: Placeholder(),
+                              ),
+                              SizedBox.square(
+                                dimension: fieldPadding,
                               ),
                               takePhotoButton,
                             ],
                           )
-                        : const Stack(
+                        : Stack(
                             fit: StackFit.expand,
                             children: [
                               takePhotoButton,
@@ -197,6 +206,26 @@ class PhotoPage extends StatelessWidget {
     dispatch(
       data_action.setTime(
         time: time,
+      ),
+    );
+  }
+
+  takePhoto({
+    required BuildContext context,
+  }) async {
+    final dispatch = getDispatch(
+      context: context,
+    );
+
+    final ImagePicker picker = ImagePicker();
+
+    final XFile? photoFile = await picker.pickImage(
+      source: ImageSource.camera,
+    );
+
+    dispatch(
+      data_action.setPhotoFile(
+        photoFile: photoFile,
       ),
     );
   }

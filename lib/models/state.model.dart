@@ -96,6 +96,20 @@ class StateModel {
     );
   }
 
+  StateModel withPhotoFile({
+    required XFile photoFile,
+  }) =>
+      StateModel(
+        loadingTagList: loadingTagList,
+        themeMode: themeMode,
+        token: token,
+        list: list,
+        state: state,
+        date: date,
+        time: time,
+        photoFile: photoFile,
+      );
+
   StateModel withState({
     required StateEnum state,
   }) {
