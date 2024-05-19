@@ -18,6 +18,8 @@ import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarCustomWidget, buildPopupMenuItem;
 
+// TODO should not have reload at photo page
+
 class AppBarSignedInWidget extends StatelessWidget
     implements PreferredSizeWidget {
   final Widget? appBarLeading;

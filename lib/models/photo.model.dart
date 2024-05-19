@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoggableModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/utils/date_time.dart'
@@ -5,19 +6,27 @@ import 'package:punch_clock_photo_grapher_app/utils/date_time.dart'
 import 'package:redux/redux.dart' show Store;
 
 class PhotoModel implements LoggableModel {
-  final String date;
-  final String time;
+  final DateTime date;
+  final TimeOfDay time;
 
   PhotoModel({
     required this.date,
     required this.time,
   });
 
+  String get dateString => getISO8601Date(
+        dateTime: date,
+      )!;
+
   @override
   int get hashCode => Object.hash(
         date,
         time,
       );
+
+  String get timeString => getISO8601Time(
+        timeOfDay: time,
+      )!;
 
   @override
   bool operator ==(
@@ -26,8 +35,7 @@ class PhotoModel implements LoggableModel {
     if (other is! PhotoModel) {
       return false;
     }
-    return (date.compareTo(other.date) == 0) &&
-        (time.compareTo(other.time) == 0);
+    return (date.compareTo(other.date) == 0) && (time == other.time);
   }
 
   @override
@@ -40,11 +48,7 @@ class PhotoModel implements LoggableModel {
     Store<StateModel> store,
   ) =>
       PhotoModel(
-        date: getISO8601Date(
-          dateTime: store.state.date,
-        )!,
-        time: getISO8601Time(
-          timeOfDay: store.state.time,
-        )!,
+        date: store.state.date,
+        time: store.state.time,
       );
 }

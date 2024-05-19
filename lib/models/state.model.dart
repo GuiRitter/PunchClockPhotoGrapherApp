@@ -37,6 +37,19 @@ class StateModel {
         time: time,
       );
 
+  StateModel withDate({
+    required DateTime date,
+  }) =>
+      StateModel(
+        loadingTagList: loadingTagList,
+        themeMode: themeMode,
+        token: token,
+        list: list,
+        state: state,
+        date: date,
+        time: time,
+      );
+
   StateModel withLoadingTagList({
     required List<LoadingTagModel> newLoadingTagList,
   }) =>
@@ -78,19 +91,36 @@ class StateModel {
 
   StateModel withState({
     required StateEnum state,
+  }) {
+    final wentFromListToPhoto =
+        (this.state == StateEnum.list) && (state == StateEnum.photo);
+
+    return StateModel(
+      loadingTagList: loadingTagList,
+      themeMode: themeMode,
+      token: (token == '') ? null : token,
+      list: (token?.isNotEmpty ?? false) ? list : null,
+      state: state,
+      date: wentFromListToPhoto ? DateTime.now() : date,
+      time: wentFromListToPhoto ? TimeOfDay.now() : time,
+    );
+  }
+
+  StateModel withThemeMode({
+    required ThemeMode themeMode,
   }) =>
       StateModel(
         loadingTagList: loadingTagList,
         themeMode: themeMode,
-        token: (token == '') ? null : token,
-        list: (token?.isNotEmpty ?? false) ? list : null,
+        token: token,
+        list: list,
         state: state,
         date: date,
         time: time,
       );
 
-  StateModel withThemeMode({
-    required ThemeMode themeMode,
+  StateModel withTime({
+    required TimeOfDay time,
   }) =>
       StateModel(
         loadingTagList: loadingTagList,

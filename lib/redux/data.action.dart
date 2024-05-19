@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show ApiUrl, l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
@@ -39,10 +40,60 @@ ThunkAction<StateModel> getList() => (
       );
     };
 
+ThunkAction<StateModel> setDate({
+  required DateTime? date,
+}) =>
+    (
+      Store<StateModel> store,
+    ) async {
+      _log('setDate').asString('date', date).print();
+
+      if (date == null) return;
+
+      store.dispatch(
+        SetDateAction(
+          date: date,
+        ),
+      );
+    };
+
+ThunkAction<StateModel> setTime({
+  required TimeOfDay? time,
+}) =>
+    (
+      Store<StateModel> store,
+    ) async {
+      _log('setDate').asString('time', time).print();
+
+      if (time == null) return;
+
+      store.dispatch(
+        SetTimeAction(
+          time: time,
+        ),
+      );
+    };
+
 class DataAction {
   final ListModel? list;
 
   const DataAction({
     required this.list,
+  });
+}
+
+class SetDateAction {
+  final DateTime date;
+
+  const SetDateAction({
+    required this.date,
+  });
+}
+
+class SetTimeAction {
+  final TimeOfDay time;
+
+  const SetTimeAction({
+    required this.time,
   });
 }
