@@ -193,7 +193,7 @@ class PhotoPage extends StatelessWidget {
   Future<Image?> loadImage({
     required XFile? photoFile,
   }) async =>
-      photoFile.toImage();
+      photoFile.toImageCroppedToSquare();
 
   pickDate({
     required BuildContext context,
