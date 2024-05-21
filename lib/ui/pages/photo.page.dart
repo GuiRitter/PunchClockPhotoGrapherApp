@@ -15,6 +15,7 @@ import 'package:flutter/material.dart'
         Icon,
         Icons,
         Image,
+        MainAxisAlignment,
         Padding,
         Row,
         SizedBox,
@@ -136,20 +137,9 @@ class PhotoPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: (photoModel.photoFile != null)
-                        ? Row(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Expanded(
-                                child: FutureBuilder<Image?>(
-                                  future: buildImageFuture(),
-                                  builder: buildImage,
-                                ),
-                              ),
-                              SizedBox.square(
-                                dimension: fieldPadding,
-                              ),
-                              takePhotoButton,
-                            ],
+                        ? FutureBuilder<Image?>(
+                            future: buildImageFuture(),
+                            builder: buildImage,
                           )
                         : Stack(
                             fit: StackFit.expand,
@@ -158,23 +148,31 @@ class PhotoPage extends StatelessWidget {
                             ],
                           ),
                   ),
+                  (photoModel.photoFile != null)
+                      ? takePhotoButton
+                      : const SizedBox.shrink(),
                   SizedBox.square(
                     dimension: fieldPadding,
                   ),
-                  ElevatedButton(
-                    onPressed: onDatePressed,
-                    child: Text(
-                      photoModel.dateString,
-                    ),
-                  ),
-                  SizedBox.square(
-                    dimension: fieldPadding,
-                  ),
-                  ElevatedButton(
-                    onPressed: onTimePressed,
-                    child: Text(
-                      photoModel.timeString,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: onDatePressed,
+                        child: Text(
+                          photoModel.dateString,
+                        ),
+                      ),
+                      SizedBox.square(
+                        dimension: fieldPadding,
+                      ),
+                      ElevatedButton(
+                        onPressed: onTimePressed,
+                        child: Text(
+                          photoModel.timeString,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
