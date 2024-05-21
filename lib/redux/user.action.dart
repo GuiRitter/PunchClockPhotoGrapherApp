@@ -136,20 +136,17 @@ ThunkAction<StateModel> validateAndSetToken({
         required Result result,
       }) async {
         _log('checkTokenSuccess').map('result', result).print();
-
-        store.dispatch(
-          AuthenticationAction(
-            token: result.data.toString(),
-          ),
-        );
       }
 
       checkTokenFailure({
         required Result result,
-      }) async =>
-          store.dispatch(
-            clearToken(),
-          );
+      }) async {
+        _log('checkTokenFailure').map('result', result).print();
+
+        return store.dispatch(
+          clearToken(),
+        );
+      }
 
       store.dispatch(
         dio_action.get(
