@@ -10,6 +10,7 @@
   "invalidUserID": "Invalid user ID.",
   "lightTheme": "☀ Light",
   "loadingTag_getList": "Retrieving list",
+  "loadingTag_savePhoto": "Saving photo",
   "loadingTag_signIn": "Signing in",
   "loadingTag_validateAndSetToken": "Checking saved credential",
   "noPhoto": "There are no photos.",

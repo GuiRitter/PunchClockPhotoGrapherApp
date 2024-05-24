@@ -1,5 +1,6 @@
+import 'dart:typed_data' show Uint8List;
+
 import 'package:flutter/material.dart' show ThemeMode, TimeOfDay;
-import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
@@ -14,7 +15,7 @@ class StateModel {
   final StateEnum state;
   final DateTime date;
   final TimeOfDay time;
-  final XFile? photoFile;
+  final Uint8List? photoBytes;
 
   StateModel({
     required this.loadingTagList,
@@ -24,7 +25,7 @@ class StateModel {
     required this.state,
     required this.date,
     required this.time,
-    required this.photoFile,
+    required this.photoBytes,
   }) : list = (token != null) ? list : null;
 
   StateModel withData({
@@ -38,7 +39,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
-        photoFile: photoFile,
+        photoBytes: photoBytes,
       );
 
   StateModel withDate({
@@ -52,7 +53,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
-        photoFile: photoFile,
+        photoBytes: photoBytes,
       );
 
   StateModel withLoadingTagList({
@@ -66,7 +67,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
-        photoFile: photoFile,
+        photoBytes: photoBytes,
       );
 
   StateModel withoutLoadingTagList({
@@ -92,12 +93,12 @@ class StateModel {
       state: state,
       date: date,
       time: time,
-      photoFile: photoFile,
+      photoBytes: photoBytes,
     );
   }
 
-  StateModel withPhotoFile({
-    required XFile photoFile,
+  StateModel withPhotoBytes({
+    required Uint8List photoBytes,
   }) =>
       StateModel(
         loadingTagList: loadingTagList,
@@ -107,13 +108,16 @@ class StateModel {
         state: state,
         date: date,
         time: time,
-        photoFile: photoFile,
+        photoBytes: photoBytes,
       );
 
   StateModel withState({
     required StateEnum state,
   }) {
     final wentFromListToPhoto =
+        (this.state == StateEnum.list) && (state == StateEnum.photo);
+
+    final wentFromPhotoToList =
         (this.state == StateEnum.list) && (state == StateEnum.photo);
 
     return StateModel(
@@ -124,7 +128,8 @@ class StateModel {
       state: state,
       date: wentFromListToPhoto ? DateTime.now() : date,
       time: wentFromListToPhoto ? TimeOfDay.now() : time,
-      photoFile: wentFromListToPhoto ? null : photoFile,
+      photoBytes:
+          (wentFromListToPhoto || wentFromPhotoToList) ? null : photoBytes,
     );
   }
 
@@ -139,7 +144,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
-        photoFile: photoFile,
+        photoBytes: photoBytes,
       );
 
   StateModel withTime({
@@ -153,7 +158,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
-        photoFile: photoFile,
+        photoBytes: photoBytes,
       );
 
   StateModel withToken({
@@ -167,7 +172,7 @@ class StateModel {
         state: state,
         date: date,
         time: time,
-        photoFile: (token?.isNotEmpty ?? false) ? photoFile : null,
+        photoBytes: (token?.isNotEmpty ?? false) ? photoBytes : null,
       );
 
   static bool selectIsLoading(

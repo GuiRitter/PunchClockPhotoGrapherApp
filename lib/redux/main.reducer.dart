@@ -60,8 +60,8 @@ StateModel reducer(
     SetDateAction: () => stateModel.withDate(
           date: (action as SetDateAction).date,
         ),
-    SetPhotoAction: () => stateModel.withPhotoFile(
-          photoFile: (action as SetPhotoAction).photoFile,
+    SetPhotoAction: () => stateModel.withPhotoBytes(
+          photoBytes: (action as SetPhotoAction).photoBytes,
         ),
     SetTimeAction: () => stateModel.withTime(
           time: (action as SetTimeAction).time,

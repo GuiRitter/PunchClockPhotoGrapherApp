@@ -13,6 +13,8 @@ export 'package:punch_clock_photo_grapher_app/models/loggable.model.dart'
 export 'package:punch_clock_photo_grapher_app/models/photo.model.dart'
     show PhotoModel;
 export 'package:punch_clock_photo_grapher_app/models/result.dart' show Result;
+export 'package:punch_clock_photo_grapher_app/models/save_photo.request.model.dart'
+    show SavePhotoRequestModel;
 export 'package:punch_clock_photo_grapher_app/models/sign_in.model.dart'
     show SignInModel;
 export 'package:punch_clock_photo_grapher_app/models/sign_in.request.model.dart'

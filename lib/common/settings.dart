@@ -12,6 +12,8 @@ import 'package:punch_clock_photo_grapher_app/services/dio/dio_for_any.interface
 
 const appName = 'punch_clock_photo_grapher';
 
+const base64Prefix = 'data:image/png;base64,';
+
 final l10nNotifier = ValueNotifier<AppLocalizations?>(
   null,
 );

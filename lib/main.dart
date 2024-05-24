@@ -22,6 +22,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
 import 'package:flutter_redux/flutter_redux.dart'
     show StoreConnector, StoreProvider;
+import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
 import 'package:provider/provider.dart' show MultiProvider, Provider;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show Settings, l10nNotifier, navigatorState, snackState, StateEnum;
@@ -45,8 +46,6 @@ import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show thunkMiddleware;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
-
-import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -110,7 +109,7 @@ FutureOr initializeApp(
       state: StateEnum.list,
       date: DateTime.now(),
       time: TimeOfDay.now(),
-      photoFile: null,
+      photoBytes: null,
     ),
     middleware: [
       thunkMiddleware,
@@ -251,17 +250,17 @@ class MyApp extends StatelessWidget {
   ) {
     AppLocalizations.delegate
         .load(
-          locale!,
-        )
+      locale!,
+    )
         .then(
-          (
-            l10n,
+      (
+        l10n,
       ) {
         Settings.locale = locale.toString();
 
         return l10nNotifier.value = l10n;
       },
-        );
+    );
 
     return null;
   }

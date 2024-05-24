@@ -1,3 +1,5 @@
+import 'dart:typed_data' show Uint8List;
+
 import 'package:flutter/material.dart'
     show
         AsyncSnapshot,
@@ -29,8 +31,6 @@ import 'package:flutter/material.dart'
         showDatePicker,
         showTimePicker;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
-import 'package:image_picker/image_picker.dart'
-    show ImagePicker, ImageSource, XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum, l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
@@ -45,8 +45,6 @@ import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarSignedInWidget, BodyWidget, BottomAppBarWidget;
-import 'package:punch_clock_photo_grapher_app/utils/image.dart'
-    show ImageExtension;
 
 class PhotoPage extends StatelessWidget {
   const PhotoPage({
@@ -109,8 +107,14 @@ class PhotoPage extends StatelessWidget {
     );
 
     Future<Image?> buildImageFuture() async => loadImage(
-          photoFile: photoModel.photoFile,
+          photoBytes: photoModel.photoBytes,
         );
+
+    onSavePhotoPressed() {
+      savePhoto(
+        context: context,
+      );
+    }
 
     return BodyWidget(
       usePadding: false,
@@ -136,7 +140,7 @@ class PhotoPage extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                    child: (photoModel.photoFile != null)
+                    child: (photoModel.photoBytes != null)
                         ? FutureBuilder<Image?>(
                             future: buildImageFuture(),
                             builder: buildImage,
@@ -148,7 +152,7 @@ class PhotoPage extends StatelessWidget {
                             ],
                           ),
                   ),
-                  (photoModel.photoFile != null)
+                  (photoModel.photoBytes != null)
                       ? takePhotoButton
                       : const SizedBox.shrink(),
                   SizedBox.square(
@@ -180,7 +184,7 @@ class PhotoPage extends StatelessWidget {
           ),
           BottomAppBarWidget(
             // TODO
-            onButtonPressed: null,
+            onButtonPressed: onSavePhotoPressed,
             label: l10n.savePhoto,
           ),
         ],
@@ -189,9 +193,14 @@ class PhotoPage extends StatelessWidget {
   }
 
   Future<Image?> loadImage({
-    required XFile? photoFile,
-  }) async =>
-      photoFile.toImageCroppedToSquare();
+    required Uint8List? photoBytes,
+  }) async {
+    if (photoBytes == null) return null;
+
+    return Image.memory(
+      photoBytes,
+    );
+  }
 
   pickDate({
     required BuildContext context,
@@ -237,6 +246,18 @@ class PhotoPage extends StatelessWidget {
     );
   }
 
+  savePhoto({
+    required BuildContext context,
+  }) {
+    final dispatch = getDispatch(
+      context: context,
+    );
+
+    dispatch(
+      data_action.savePhoto(),
+    );
+  }
+
   takePhoto({
     required BuildContext context,
   }) async {
@@ -244,16 +265,8 @@ class PhotoPage extends StatelessWidget {
       context: context,
     );
 
-    final ImagePicker picker = ImagePicker();
-
-    final XFile? photoFile = await picker.pickImage(
-      source: ImageSource.camera,
-    );
-
     dispatch(
-      data_action.setPhotoFile(
-        photoFile: photoFile,
-      ),
+      data_action.setPhotoImage(),
     );
   }
 }

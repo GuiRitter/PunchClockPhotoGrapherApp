@@ -1,5 +1,6 @@
+import 'dart:typed_data' show Uint8List;
+
 import 'package:flutter/material.dart' show TimeOfDay;
-import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoggableModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/utils/date_time.dart'
@@ -11,12 +12,12 @@ import 'package:redux/redux.dart' show Store;
 class PhotoModel implements LoggableModel {
   final DateTime date;
   final TimeOfDay time;
-  final XFile? photoFile;
+  final Uint8List? photoBytes;
 
   PhotoModel({
     required this.date,
     required this.time,
-    required this.photoFile,
+    required this.photoBytes,
   });
 
   String get dateString => getISO8601Date(
@@ -27,7 +28,7 @@ class PhotoModel implements LoggableModel {
   int get hashCode => Object.hash(
         date,
         time,
-        photoFile,
+        photoBytes,
       );
 
   String get timeString => getISO8601Time(
@@ -43,7 +44,7 @@ class PhotoModel implements LoggableModel {
     }
     return (date.compareTo(other.date) == 0) &&
         (time == other.time) &&
-        (photoFile.hashCode == other.photoFile.hashCode);
+        (photoBytes.hashCode == other.photoBytes.hashCode);
   }
 
   @override
@@ -51,7 +52,7 @@ class PhotoModel implements LoggableModel {
         'date': date,
         'time': time,
         'photoFile': getExistsMark(
-          photoFile,
+          photoBytes,
         ),
       };
 
@@ -61,6 +62,6 @@ class PhotoModel implements LoggableModel {
       PhotoModel(
         date: store.state.date,
         time: store.state.time,
-        photoFile: store.state.photoFile,
+        photoBytes: store.state.photoBytes,
       );
 }

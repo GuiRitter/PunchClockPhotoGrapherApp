@@ -10,6 +10,7 @@
   "invalidUserID": "ID de usuário inválida.",
   "lightTheme": "☀ Claro",
   "loadingTag_getList": "Buscando lista",
+  "loadingTag_savePhoto": "Salvando foto",
   "loadingTag_signIn": "Autenticando",
   "loadingTag_validateAndSetToken": "Verificando credencial salva",
   "noPhoto": "Não há fotos.",
