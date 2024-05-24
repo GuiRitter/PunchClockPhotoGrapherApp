@@ -12,6 +12,8 @@ import 'package:flutter/material.dart'
         Wrap,
         WrapCrossAlignment;
 import 'package:intl/intl.dart';
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show Settings;
 
 class TimeWidget extends StatelessWidget {
   final DateTime dateTime;
@@ -21,7 +23,7 @@ class TimeWidget extends StatelessWidget {
     required String dateTime,
   }) : dateTime = DateTime.parse(
           dateTime,
-        );
+        ).toLocal();
 
   @override
   Widget build(
@@ -40,7 +42,9 @@ class TimeWidget extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
-          DateFormat.Hm().format(
+          DateFormat.Hm(
+            Settings.locale,
+          ).format(
             dateTime,
           ),
         ),

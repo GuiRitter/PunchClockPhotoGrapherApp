@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart'
-    show GlobalKey, NavigatorState, ScaffoldMessengerState, ValueNotifier;
+    show
+        GlobalKey,
+        Locale,
+        NavigatorState,
+        ScaffoldMessengerState,
+        ValueNotifier;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
 import 'package:punch_clock_photo_grapher_app/services/dio/dio_for_any.interface.dart'
@@ -31,6 +36,10 @@ class Settings {
 // static const domain = '10.0.2.2';
 
   static const errorKey = 'error';
+
+  static String locale = const Locale.fromSubtags(
+    languageCode: "en",
+  ).toString();
 
   static const path = '$appName/api';
 

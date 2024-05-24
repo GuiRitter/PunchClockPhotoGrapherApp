@@ -1,11 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:intl/intl.dart' show DateFormat, NumberFormat;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show Settings;
 
 // TODO to extension
 
-final dateOnylFormat = DateFormat(
-  'y-MM-dd',
-);
+DateFormat get dateOnylFormat => DateFormat(
+      'y-MM-dd',
+      Settings.locale,
+    );
 
 final timeFormat = NumberFormat(
   '00',
@@ -21,6 +24,7 @@ String? getISO8601({
     '${dateTime.toIso8601String()}${getISO8601TimeZone(
       timeZoneOffsetInMinutes: dateTime.timeZoneOffset.inMinutes,
     )}',
+    Settings.locale,
   ).format(
     dateTime,
   );

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart'
         ElevatedButton,
         Icon,
         Icons,
+        SizedBox,
         StatelessWidget,
         Text,
         Theme,
@@ -40,6 +41,9 @@ class WeekWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
+        SizedBox.square(
+          dimension: halfFieldPadding,
+        ),
         Wrap(
           direction: Axis.horizontal,
           spacing: halfFieldPadding,
@@ -63,6 +67,9 @@ class WeekWidget extends StatelessWidget {
               DateWidget(
             date: date,
           ),
+        ),
+        SizedBox.square(
+          dimension: halfFieldPadding,
         ),
       ],
     );

@@ -14,7 +14,7 @@ class DateModel implements LoggableModel {
 
   DateTime get date => DateTime.parse(
         timeList.first,
-      );
+      ).toLocal();
 
   @override
   int get hashCode => Object.hashAllUnordered(

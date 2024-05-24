@@ -46,6 +46,8 @@ import 'package:redux_thunk/redux_thunk.dart' show thunkMiddleware;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 
+import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -76,7 +78,11 @@ FutureOr initializeApp(
     Settings.themeKey,
   );
 
-  _log('main SharedPreferences.getInstance').raw('theme', themeName).print();
+  await initializeDateFormatting(
+    "en",
+  );
+
+  _log('initializeApp').raw('theme', themeName).print();
 
   final theme = (themeName?.isNotEmpty ?? false)
       ? ThemeMode.values.byName(
@@ -250,8 +256,11 @@ class MyApp extends StatelessWidget {
         .then(
           (
             l10n,
-          ) =>
-              l10nNotifier.value = l10n,
+      ) {
+        Settings.locale = locale.toString();
+
+        return l10nNotifier.value = l10n;
+      },
         );
 
     return null;
