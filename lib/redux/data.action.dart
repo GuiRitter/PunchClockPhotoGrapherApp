@@ -3,7 +3,8 @@ import 'dart:math' show min;
 import 'dart:typed_data' show Uint8List;
 
 import 'package:flutter/material.dart' show TimeOfDay;
-import 'package:image/image.dart' show copyCrop, decodeJpg, encodePng;
+import 'package:image/image.dart'
+    show copyCrop, copyResize, decodeJpg, encodePng;
 import 'package:image_picker/image_picker.dart'
     show ImagePicker, ImageSource, XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
@@ -139,7 +140,7 @@ ThunkAction<StateModel> setPhotoImage() => (
           ? ((photoImage.height - photoImage.width) ~/ 2)
           : 0;
 
-      final dimension = min(
+      var dimension = min(
         photoImage.width,
         photoImage.height,
       );
@@ -148,6 +149,18 @@ ThunkAction<StateModel> setPhotoImage() => (
         photoImage,
         x: x,
         y: y,
+        width: dimension,
+        height: dimension,
+      );
+
+      dimension = min(
+        dimension,
+        // TODO make an option
+        480,
+      );
+
+      photoImage = copyResize(
+        photoImage,
         width: dimension,
         height: dimension,
       );
