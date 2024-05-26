@@ -2,6 +2,8 @@ import 'dart:typed_data' show Uint8List;
 
 import 'package:flutter/material.dart'
     show
+        Alignment,
+        AspectRatio,
         AsyncSnapshot,
         BackButton,
         BuildContext,
@@ -9,6 +11,7 @@ import 'package:flutter/material.dart'
         CircularProgressIndicator,
         Column,
         ConnectionState,
+        Container,
         CrossAxisAlignment,
         EdgeInsets,
         ElevatedButton,
@@ -21,8 +24,6 @@ import 'package:flutter/material.dart'
         Padding,
         Row,
         SizedBox,
-        Stack,
-        StackFit,
         StatelessWidget,
         Text,
         Theme,
@@ -146,11 +147,12 @@ class PhotoPage extends StatelessWidget {
                             future: buildImageFuture(),
                             builder: buildImage,
                           )
-                        : Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              takePhotoButton,
-                            ],
+                        : Container(
+                            alignment: Alignment.center,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: takePhotoButton,
+                            ),
                           ),
                   ),
                   (photoModel.photoBytes != null)
@@ -184,7 +186,6 @@ class PhotoPage extends StatelessWidget {
             ),
           ),
           BottomAppBarWidget(
-            // TODO
             onButtonPressed: onSavePhotoPressed,
             label: l10n.savePhoto,
           ),
