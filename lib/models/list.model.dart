@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show setEquals;
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:punch_clock_photo_grapher_app/models/loggable.model.dart';
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show DateModel, LoggableModel, StateModel, WeekModel;
 import 'package:redux/redux.dart' show Store;
@@ -9,68 +10,9 @@ class ListModel implements LoggableModel {
 
   ListModel({
     required List<dynamic> data,
-  }) : weekList = data
-            .fold(
-              Map<int, Map<String, Set<String>>>.identity(),
-              (
-                previousValue,
-                dateTimeWeek,
-              ) {
-                final weekKey = dateTimeWeek['week'];
-
-                final dateList = previousValue.containsKey(
-                  weekKey,
-                )
-                    ? (previousValue[weekKey] as Map<String, Set<String>>)
-                    : Map<String, Set<String>>.identity();
-
-                previousValue[weekKey] = dateList;
-
-                final weekDayKey = DateFormat.E().format(
-                  DateTime.parse(
-                    dateTimeWeek['date_time'],
-                  ),
-                );
-
-                final timeList = dateList.containsKey(
-                  weekDayKey,
-                )
-                    ? (dateList[weekDayKey] as Set<String>)
-                    : Set<String>.identity();
-
-                dateList[weekDayKey] = timeList;
-
-                timeList.add(
-                  dateTimeWeek['date_time'],
-                );
-
-                return {
-                  ...previousValue,
-                  weekKey: dateList,
-                };
-              },
-            )
-            .entries
-            .map(
-              (
-                week,
-              ) =>
-                  WeekModel(
-                number: week.key,
-                dateList: week.value.entries
-                    .map(
-                      (
-                        date,
-                      ) =>
-                          DateModel(
-                        weekDay: date.key,
-                        timeList: date.value,
-                      ),
-                    )
-                    .toSet(),
-              ),
-            )
-            .toSet();
+  }) : weekList = getWeekList(
+          data: data,
+        );
 
   ListModel.empty() : weekList = Set.identity();
 
@@ -91,16 +33,74 @@ class ListModel implements LoggableModel {
 
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
-        'weekList': weekList
-            .toList()
-            .map(
-              (
-                week,
-              ) =>
-                  week.asLog(),
-            )
-            .toList(),
+        'weekList': weekList.asLog(),
       };
+
+  static Set<WeekModel> getWeekList({
+    required List<dynamic> data,
+  }) =>
+      data
+          .fold(
+            Map<int, Map<String, Set<String>>>.identity(),
+            (
+              previousValue,
+              dateTimeWeek,
+            ) {
+              final weekKey = dateTimeWeek['week'];
+
+              final dateList = previousValue.containsKey(
+                weekKey,
+              )
+                  ? (previousValue[weekKey] as Map<String, Set<String>>)
+                  : Map<String, Set<String>>.identity();
+
+              previousValue[weekKey] = dateList;
+
+              final weekDayKey = DateFormat.E().format(
+                DateTime.parse(
+                  dateTimeWeek['date_time'],
+                ),
+              );
+
+              final timeList = dateList.containsKey(
+                weekDayKey,
+              )
+                  ? (dateList[weekDayKey] as Set<String>)
+                  : Set<String>.identity();
+
+              dateList[weekDayKey] = timeList;
+
+              timeList.add(
+                dateTimeWeek['date_time'],
+              );
+
+              return {
+                ...previousValue,
+                weekKey: dateList,
+              };
+            },
+          )
+          .entries
+          .map(
+            (
+              week,
+            ) =>
+                WeekModel(
+              number: week.key,
+              dateList: week.value.entries
+                  .map(
+                    (
+                      date,
+                    ) =>
+                        DateModel(
+                      weekDay: date.key,
+                      timeList: date.value,
+                    ),
+                  )
+                  .toSet(),
+            ),
+          )
+          .toSet();
 
   static ListModel? select(
     Store<StateModel> store,
