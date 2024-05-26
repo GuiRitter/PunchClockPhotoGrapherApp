@@ -65,7 +65,8 @@ class PhotoPage extends StatelessWidget {
     context,
     AsyncSnapshot<Image?> snapshot,
   ) =>
-      (snapshot.connectionState == ConnectionState.done)
+      ((snapshot.connectionState == ConnectionState.done) &&
+              (snapshot.data != null))
           ? snapshot.data!
           : const Center(
               child: CircularProgressIndicator(),
