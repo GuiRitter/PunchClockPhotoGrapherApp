@@ -88,12 +88,12 @@ class PhotoPage extends StatelessWidget {
 
     onDatePressed() => pickDate(
           context: context,
-          initialDate: photoModel.date,
+          initialDate: photoModel.dateTime,
         );
 
     onTimePressed() => pickTime(
           context: context,
-          initialTime: photoModel.time,
+          initialDate: photoModel.dateTime,
         );
 
     onTakePhotoPressed() => takePhoto(
@@ -229,7 +229,7 @@ class PhotoPage extends StatelessWidget {
 
   pickTime({
     required BuildContext context,
-    required TimeOfDay initialTime,
+    required DateTime initialDate,
   }) async {
     final dispatch = getDispatch(
       context: context,
@@ -237,7 +237,9 @@ class PhotoPage extends StatelessWidget {
 
     final time = await showTimePicker(
       context: context,
-      initialTime: initialTime,
+      initialTime: TimeOfDay.fromDateTime(
+        initialDate,
+      ),
     );
 
     dispatch(

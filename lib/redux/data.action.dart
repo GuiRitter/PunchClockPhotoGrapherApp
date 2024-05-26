@@ -80,17 +80,9 @@ ThunkAction<StateModel> savePhoto() => (
         );
       }
 
-      final dateTime = DateTime(
-        store.state.date.year,
-        store.state.date.month,
-        store.state.date.day,
-        store.state.time.hour,
-        store.state.time.minute,
-      );
-
       final requestData = SavePhotoRequestModel(
         dateTime: getISO8601(
-          dateTime: dateTime,
+          dateTime: store.state.dateTime,
         )!,
         imageURI: photoURI,
       );

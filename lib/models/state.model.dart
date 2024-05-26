@@ -13,8 +13,7 @@ class StateModel {
   final String? token;
   final ListModel? list;
   final StateEnum state;
-  final DateTime date;
-  final TimeOfDay time;
+  final DateTime dateTime;
   final Uint8List? photoBytes;
 
   StateModel({
@@ -23,8 +22,7 @@ class StateModel {
     required this.token,
     required list,
     required this.state,
-    required this.date,
-    required this.time,
+    required this.dateTime,
     required this.photoBytes,
   }) : list = (token != null) ? list : null;
 
@@ -37,8 +35,7 @@ class StateModel {
         token: token,
         list: list,
         state: state,
-        date: date,
-        time: time,
+        dateTime: dateTime,
         photoBytes: photoBytes,
       );
 
@@ -51,8 +48,11 @@ class StateModel {
         token: token,
         list: list,
         state: state,
-        date: date,
-        time: time,
+        dateTime: dateTime.copyWith(
+          year: date.year,
+          month: date.month,
+          day: date.day,
+        ),
         photoBytes: photoBytes,
       );
 
@@ -65,8 +65,7 @@ class StateModel {
         token: token,
         list: list,
         state: state,
-        date: date,
-        time: time,
+        dateTime: dateTime,
         photoBytes: photoBytes,
       );
 
@@ -91,8 +90,7 @@ class StateModel {
       token: token,
       list: list,
       state: state,
-      date: date,
-      time: time,
+      dateTime: dateTime,
       photoBytes: photoBytes,
     );
   }
@@ -106,8 +104,7 @@ class StateModel {
         token: token,
         list: list,
         state: state,
-        date: date,
-        time: time,
+        dateTime: dateTime,
         photoBytes: photoBytes,
       );
 
@@ -126,8 +123,7 @@ class StateModel {
       token: (token == '') ? null : token,
       list: (token?.isNotEmpty ?? false) ? list : null,
       state: state,
-      date: wentFromListToPhoto ? DateTime.now() : date,
-      time: wentFromListToPhoto ? TimeOfDay.now() : time,
+      dateTime: wentFromListToPhoto ? DateTime.now() : dateTime,
       photoBytes:
           (wentFromListToPhoto || wentFromPhotoToList) ? null : photoBytes,
     );
@@ -142,8 +138,7 @@ class StateModel {
         token: token,
         list: list,
         state: state,
-        date: date,
-        time: time,
+        dateTime: dateTime,
         photoBytes: photoBytes,
       );
 
@@ -156,8 +151,10 @@ class StateModel {
         token: token,
         list: list,
         state: state,
-        date: date,
-        time: time,
+        dateTime: dateTime.copyWith(
+          hour: time.hour,
+          minute: time.minute,
+        ),
         photoBytes: photoBytes,
       );
 
@@ -170,8 +167,7 @@ class StateModel {
         token: (token == '') ? null : token,
         list: (token?.isNotEmpty ?? false) ? list : null,
         state: state,
-        date: date,
-        time: time,
+        dateTime: dateTime,
         photoBytes: (token?.isNotEmpty ?? false) ? photoBytes : null,
       );
 

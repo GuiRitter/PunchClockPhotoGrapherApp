@@ -41,7 +41,7 @@ String? getISO8601Date({
   );
 }
 
-String? getISO8601Time({
+String? getISO8601TimeFromTimeOfDay({
   required TimeOfDay? timeOfDay,
 }) {
   if (timeOfDay == null) {
@@ -51,6 +51,19 @@ String? getISO8601Time({
     timeOfDay.hour,
   )}:${timeFormat.format(
     timeOfDay.minute,
+  )}';
+}
+
+String? getISO8601TimeFromDateTime({
+  required DateTime? dateTime,
+}) {
+  if (dateTime == null) {
+    return null;
+  }
+  return '${timeFormat.format(
+    dateTime.hour,
+  )}:${timeFormat.format(
+    dateTime.minute,
   )}';
 }
 
