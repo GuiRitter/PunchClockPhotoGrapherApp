@@ -1,7 +1,6 @@
+import 'package:flutter/foundation.dart' show setEquals;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show DateModel, LoggableModel, WeekHeaderModel;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show setEquals;
+    show DateModel, LoggableModel, LoggableSetExtension, WeekHeaderModel;
 
 class WeekModel implements LoggableModel {
   final int number;
@@ -20,24 +19,7 @@ class WeekModel implements LoggableModel {
   String get header => dateList
       .fold(
         WeekHeaderModel(),
-        (previousValue, element) => WeekHeaderModel(
-          start: (previousValue.start == null)
-              ? element.date
-              : (previousValue.start!.compareTo(
-                        element.date,
-                      ) <
-                      0)
-                  ? previousValue.start
-                  : element.date,
-          end: (previousValue.end == null)
-              ? element.date
-              : (previousValue.end!.compareTo(
-                        element.date,
-                      ) <
-                      0)
-                  ? element.date
-                  : previousValue.end,
-        ),
+        WeekHeaderModel.aggregate,
       )
       .label;
 
@@ -56,14 +38,6 @@ class WeekModel implements LoggableModel {
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
         'number': number,
-        'dateList': dateList
-            .toList()
-            .map(
-              (
-                date,
-              ) =>
-                  date.asLog(),
-            )
-            .toList(),
+        'dateList': dateList.asLog(),
       };
 }

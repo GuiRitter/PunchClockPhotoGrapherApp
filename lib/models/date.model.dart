@@ -1,7 +1,6 @@
+import 'package:flutter/foundation.dart' show setEquals;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoggableModel;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show setEquals;
 
 class DateModel implements LoggableModel {
   final String weekDay;
@@ -36,14 +35,6 @@ class DateModel implements LoggableModel {
   @override
   Map<String, dynamic> asLog() => <String, dynamic>{
         'weekDay': weekDay,
-        'timeList': timeList
-            .toList()
-            .map(
-              (
-                time,
-              ) =>
-                  time,
-            )
-            .toList(),
+        'timeList': timeList.toList(),
       };
 }

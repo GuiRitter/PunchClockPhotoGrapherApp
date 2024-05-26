@@ -9,7 +9,7 @@ export 'package:punch_clock_photo_grapher_app/models/list.model.dart'
 export 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart'
     show LoadingTagModel;
 export 'package:punch_clock_photo_grapher_app/models/loggable.model.dart'
-    show LoggableModel;
+    show LoggableModel, LoggableSetExtension;
 export 'package:punch_clock_photo_grapher_app/models/photo.model.dart'
     show PhotoModel;
 export 'package:punch_clock_photo_grapher_app/models/result.dart' show Result;

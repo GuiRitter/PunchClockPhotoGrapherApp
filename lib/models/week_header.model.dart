@@ -1,4 +1,8 @@
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show DateModel;
+import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+    show DateTimeExtension;
 
 final dayFormat = DateFormat(
   'dd',
@@ -16,6 +20,16 @@ class WeekHeaderModel {
     this.start,
     this.end,
   });
+
+  WeekHeaderModel.aggregate(
+    WeekHeaderModel previousValue,
+    DateModel element,
+  )   : start = element.date.getThisIfNullOrEarlier(
+          other: previousValue.start,
+        ),
+        end = element.date.getThisIfNullOrLater(
+          other: previousValue.end,
+        );
 
   String get label {
     final startMonth = (start != null)

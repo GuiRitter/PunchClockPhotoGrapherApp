@@ -3,16 +3,16 @@ import 'package:intl/intl.dart' show DateFormat, NumberFormat;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show Settings;
 
+final timeFormat = NumberFormat(
+  '00',
+);
+
 // TODO to extension
 
 DateFormat get dateOnylFormat => DateFormat(
       'y-MM-dd',
       Settings.locale,
     );
-
-final timeFormat = NumberFormat(
-  '00',
-);
 
 String? getISO8601({
   required DateTime? dateTime,
@@ -41,19 +41,6 @@ String? getISO8601Date({
   );
 }
 
-String? getISO8601TimeFromTimeOfDay({
-  required TimeOfDay? timeOfDay,
-}) {
-  if (timeOfDay == null) {
-    return null;
-  }
-  return '${timeFormat.format(
-    timeOfDay.hour,
-  )}:${timeFormat.format(
-    timeOfDay.minute,
-  )}';
-}
-
 String? getISO8601TimeFromDateTime({
   required DateTime? dateTime,
 }) {
@@ -64,6 +51,19 @@ String? getISO8601TimeFromDateTime({
     dateTime.hour,
   )}:${timeFormat.format(
     dateTime.minute,
+  )}';
+}
+
+String? getISO8601TimeFromTimeOfDay({
+  required TimeOfDay? timeOfDay,
+}) {
+  if (timeOfDay == null) {
+    return null;
+  }
+  return '${timeFormat.format(
+    timeOfDay.hour,
+  )}:${timeFormat.format(
+    timeOfDay.minute,
   )}';
 }
 
@@ -82,4 +82,30 @@ String getISO8601TimeZone({
   ).format(
     minute,
   )}';
+}
+
+extension DateTimeExtension on DateTime {
+  DateTime getThisIfNullOrEarlier({
+    required DateTime? other,
+  }) =>
+      (other == null)
+          ? this
+          : (other.compareTo(
+                    this,
+                  ) <
+                  0)
+              ? other
+              : this;
+
+  DateTime getThisIfNullOrLater({
+    required DateTime? other,
+  }) =>
+      (other == null)
+          ? this
+          : (other.compareTo(
+                    this,
+                  ) <
+                  0)
+              ? other
+              : this;
 }
