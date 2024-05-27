@@ -2,7 +2,7 @@ import 'package:dio/dio.dart' show CancelToken;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show getISO8601;
+    show DateTimeNullableExtension;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
@@ -23,9 +23,7 @@ LoadingTagModel buildTag({
   required CancelToken cancelToken,
 }) =>
     LoadingTagModel(
-      id: getISO8601(
-        dateTime: DateTime.now(),
-      )!,
+      id: DateTime.now().getISO8601()!,
       userFriendlyName: userFriendlyName,
       cancelToken: cancelToken,
     );

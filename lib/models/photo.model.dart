@@ -5,7 +5,7 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
 import 'package:punch_clock_photo_grapher_app/utils/logger.dart'
     show getExistsMark;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show getISO8601Date, getISO8601TimeFromDateTime;
+    show DateTimeNullableExtension;
 import 'package:redux/redux.dart' show Store;
 
 class PhotoModel implements LoggableModel {
@@ -17,9 +17,7 @@ class PhotoModel implements LoggableModel {
     required this.photoBytes,
   });
 
-  String get dateString => getISO8601Date(
-        dateTime: dateTime,
-      )!;
+  String get dateString => dateTime.getISO8601Date()!;
 
   @override
   int get hashCode => Object.hash(
@@ -27,9 +25,7 @@ class PhotoModel implements LoggableModel {
         photoBytes,
       );
 
-  String get timeString => getISO8601TimeFromDateTime(
-        dateTime: dateTime,
-      )!;
+  String get timeString => dateTime.getISO8601Time()!;
 
   @override
   bool operator ==(

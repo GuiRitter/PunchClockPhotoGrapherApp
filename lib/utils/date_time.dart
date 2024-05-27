@@ -7,65 +7,10 @@ final timeFormat = NumberFormat(
   '00',
 );
 
-// TODO to extension
-
-DateFormat get dateOnylFormat => DateFormat(
+DateFormat get dateOnlyFormat => DateFormat(
       'y-MM-dd',
       Settings.locale,
     );
-
-String? getISO8601({
-  required DateTime? dateTime,
-}) {
-  if (dateTime == null) {
-    return null;
-  }
-  return DateFormat(
-    '${dateTime.toIso8601String()}${getISO8601TimeZone(
-      timeZoneOffsetInMinutes: dateTime.timeZoneOffset.inMinutes,
-    )}',
-    Settings.locale,
-  ).format(
-    dateTime,
-  );
-}
-
-String? getISO8601Date({
-  required DateTime? dateTime,
-}) {
-  if (dateTime == null) {
-    return null;
-  }
-  return dateOnylFormat.format(
-    dateTime,
-  );
-}
-
-String? getISO8601TimeFromDateTime({
-  required DateTime? dateTime,
-}) {
-  if (dateTime == null) {
-    return null;
-  }
-  return '${timeFormat.format(
-    dateTime.hour,
-  )}:${timeFormat.format(
-    dateTime.minute,
-  )}';
-}
-
-String? getISO8601TimeFromTimeOfDay({
-  required TimeOfDay? timeOfDay,
-}) {
-  if (timeOfDay == null) {
-    return null;
-  }
-  return '${timeFormat.format(
-    timeOfDay.hour,
-  )}:${timeFormat.format(
-    timeOfDay.minute,
-  )}';
-}
 
 String getISO8601TimeZone({
   required int timeZoneOffsetInMinutes,
@@ -108,4 +53,49 @@ extension DateTimeExtension on DateTime {
                   0)
               ? other
               : this;
+}
+
+extension DateTimeNullableExtension on DateTime? {
+  String? getISO8601() {
+    if (this == null) return null;
+
+    return DateFormat(
+      '${this!.toIso8601String()}${getISO8601TimeZone(
+        timeZoneOffsetInMinutes: this!.timeZoneOffset.inMinutes,
+      )}',
+      Settings.locale,
+    ).format(
+      this!,
+    );
+  }
+
+  String? getISO8601Date() {
+    if (this == null) return null;
+
+    return dateOnlyFormat.format(
+      this!,
+    );
+  }
+
+  String? getISO8601Time() {
+    if (this == null) return null;
+
+    return '${timeFormat.format(
+      this!.hour,
+    )}:${timeFormat.format(
+      this!.minute,
+    )}';
+  }
+}
+
+extension TimeOfDayNullableExtension on TimeOfDay? {
+  String? getISO8601Time() {
+    if (this == null) return null;
+
+    return '${timeFormat.format(
+      this!.hour,
+    )}:${timeFormat.format(
+      this!.minute,
+    )}';
+  }
 }

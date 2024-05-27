@@ -11,7 +11,7 @@ import 'package:flutter/material.dart'
         Widget,
         Wrap,
         WrapCrossAlignment;
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show Settings;
 

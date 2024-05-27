@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:flutter_test/flutter_test.dart' show expect, test;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show getISO8601TimeFromTimeOfDay;
+    show TimeOfDayNullableExtension;
 
 void main() {
   test(
@@ -23,9 +23,7 @@ void main() {
       );
 
       expect(
-        getISO8601TimeFromTimeOfDay(
-          timeOfDay: a,
-        ),
+        a.getISO8601Time(),
         '02:03',
       );
     },

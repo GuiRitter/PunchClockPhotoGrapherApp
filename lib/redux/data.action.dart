@@ -8,9 +8,7 @@ import 'package:image/image.dart'
 import 'package:image_picker/image_picker.dart'
     show ImagePicker, ImageSource, XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show ApiUrl, StateEnum, l10n;
-import 'package:punch_clock_photo_grapher_app/common/settings.dart'
-    show base64Prefix;
+    show ApiUrl, base64Prefix, StateEnum, l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show ListModel, Result, SavePhotoRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
@@ -18,7 +16,7 @@ import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
     show NavigationAction;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show getISO8601, logger;
+    show DateTimeNullableExtension, logger;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
@@ -82,9 +80,7 @@ ThunkAction<StateModel> savePhoto() => (
       }
 
       final requestData = SavePhotoRequestModel(
-        dateTime: getISO8601(
-          dateTime: store.state.dateTime,
-        )!,
+        dateTime: store.state.dateTime.getISO8601()!,
         imageURI: photoURI,
       );
 

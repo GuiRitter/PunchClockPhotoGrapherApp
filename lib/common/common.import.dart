@@ -7,6 +7,13 @@ export 'package:punch_clock_photo_grapher_app/common/http_method.dart'
 export 'package:punch_clock_photo_grapher_app/common/result_status.enum.dart'
     show ResultStatus;
 export 'package:punch_clock_photo_grapher_app/common/settings.dart'
-    show appName, l10n, l10nNotifier, navigatorState, Settings, snackState;
+    show
+        appName,
+        base64Prefix,
+        l10n,
+        l10nNotifier,
+        navigatorState,
+        Settings,
+        snackState;
 export 'package:punch_clock_photo_grapher_app/common/state.enum.dart'
     show StateEnum;

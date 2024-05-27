@@ -35,9 +35,7 @@ import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum, l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show PhotoModel;
-import 'package:punch_clock_photo_grapher_app/models/state.model.dart'
-    show StateModel;
+    show PhotoModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
     as data_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'

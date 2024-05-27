@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoggableModel;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show getISO8601;
+    show DateTimeNullableExtension;
 
 dynamic getExistsMark(
   dynamic value,
@@ -155,9 +155,7 @@ class Log {
         '${jsonEncode(
           <String, dynamic>{
             headerKey: {
-              'dateTime': getISO8601(
-                dateTime: DateTime.now(),
-              ),
+              'dateTime': DateTime.now().getISO8601(),
               'file': fileName,
               'method': methodName,
             },
