@@ -7,6 +7,8 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, ListModel;
 import 'package:redux/redux.dart' show Store;
 
+// TODO implement copyWith (what If I want to set something to null?)
+
 class StateModel {
   final List<LoadingTagModel> loadingTagList;
   final ThemeMode themeMode;

@@ -24,7 +24,7 @@ import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show AppBarSignedInWidget, BodyWidget, BottomAppBarWidget, WeekWidget;
+    show AppBarHomeWidget, BodyWidget, BottomAppBarWidget, WeekWidget;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
 
     return BodyWidget(
       usePadding: false,
-      appBar: const AppBarSignedInWidget(),
+      appBar: const AppBarHomeWidget(),
       body: StoreConnector<StateModel, ListModel?>(
         distinct: true,
         converter: ListModel.select,

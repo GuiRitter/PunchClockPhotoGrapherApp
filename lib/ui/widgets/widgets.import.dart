@@ -1,5 +1,7 @@
 export 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_custom.widget.dart'
     show AppBarCustomWidget, buildPopupMenuItem;
+export 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_home.widget.dart'
+    show AppBarHomeWidget;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_in.widget.dart'
     show AppBarSignedInWidget;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_out.widget.dart'
