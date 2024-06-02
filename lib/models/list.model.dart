@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart' show setEquals;
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show DateModel, LoggableModel, LoggableSetExtension, StateModel, WeekModel;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
@@ -89,10 +91,12 @@ class ListModel implements LoggableModel {
 
     previousValue[weekKey] = dateList;
 
-    final weekDayKey = DateFormat.E().format(
+    final weekDayKey = DateFormat.E(
+      Settings.locale,
+    ).format(
       DateTime.parse(
         dateTimeWeek['date_time'],
-      ),
+      ).toLocal(),
     );
 
     final timeList = dateList.getValueOrNew(

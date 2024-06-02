@@ -1,16 +1,20 @@
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show DateModel;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show DateTimeExtension;
 
-final dayFormat = DateFormat(
-  'dd',
-);
+get dayFormat => DateFormat(
+      'dd',
+      Settings.locale,
+    );
 
-final monthFormat = DateFormat(
-  'MM',
-);
+get monthFormat => DateFormat(
+      'MM',
+      Settings.locale,
+    );
 
 class WeekHeaderModel {
   final DateTime? start;
