@@ -88,12 +88,6 @@ ThunkAction<StateModel> signIn({
           catchFunction: signInFailure,
         ),
       );
-
-      // // TODO
-      // final searchResults = await new Future.delayed(
-      //   new Duration(seconds: secondsToWait),
-      //   () => 'Search Results',
-      // );
     };
 
 ThunkAction<StateModel> signOut() => (

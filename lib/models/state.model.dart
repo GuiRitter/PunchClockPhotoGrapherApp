@@ -1,13 +1,11 @@
 import 'dart:typed_data' show Uint8List;
 
-import 'package:flutter/material.dart' show ThemeMode, TimeOfDay;
+import 'package:flutter/material.dart' show ThemeMode, TimeOfDay, ValueGetter;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, ListModel;
 import 'package:redux/redux.dart' show Store;
-
-// TODO implement copyWith (what If I want to set something to null?)
 
 class StateModel {
   final List<LoadingTagModel> loadingTagList;
@@ -21,54 +19,81 @@ class StateModel {
   StateModel({
     required this.loadingTagList,
     required this.themeMode,
-    required this.token,
-    required list,
+    required String? token,
+    required ListModel? list,
     required this.state,
     required this.dateTime,
-    required this.photoBytes,
-  }) : list = (token != null) ? list : null;
+    required Uint8List? photoBytes,
+  })  : token = (token != '') ? token : null,
+        list = (token?.isNotEmpty ?? false) ? list : null,
+        photoBytes = (token?.isNotEmpty ?? false) ? photoBytes : null;
 
-  StateModel withData({
-    required ListModel? list,
-  }) =>
-      StateModel(
-        loadingTagList: loadingTagList,
-        themeMode: themeMode,
-        token: token,
-        list: list,
-        state: state,
-        dateTime: dateTime,
-        photoBytes: photoBytes,
-      );
+  StateModel copyWith({
+    ValueGetter<List<LoadingTagModel>>? loadingTagList,
+    ValueGetter<ThemeMode>? themeMode,
+    ValueGetter<String?>? token,
+    ValueGetter<ListModel?>? list,
+    ValueGetter<StateEnum>? state,
+    ValueGetter<DateTime>? dateTime,
+    ValueGetter<Uint8List?>? photoBytes,
+  }) {
+    final newLoadingTagList =
+        (loadingTagList != null) ? loadingTagList.call() : this.loadingTagList;
+
+    final newThemeMode =
+        (themeMode != null) ? themeMode.call() : this.themeMode;
+
+    final newToken = (token != null) ? token.call() : this.token;
+
+    final newList = (list != null) ? list.call() : this.list;
+
+    final newState = (state != null) ? state.call() : this.state;
+
+    final wentFromListToPhoto =
+        (this.state == StateEnum.list) && (newState == StateEnum.photo);
+
+    final wentFromPhotoToList =
+        (this.state == StateEnum.list) && (newState == StateEnum.photo);
+
+    final newDateTime = wentFromListToPhoto
+        ? DateTime.now()
+        : (dateTime != null)
+            ? dateTime.call()
+            : this.dateTime;
+
+    final newPhotoBytes = (wentFromListToPhoto || wentFromPhotoToList)
+        ? null
+        : (photoBytes != null)
+            ? photoBytes.call()
+            : this.photoBytes;
+
+    return StateModel(
+      loadingTagList: newLoadingTagList,
+      themeMode: newThemeMode,
+      token: newToken,
+      list: newList,
+      state: newState,
+      dateTime: newDateTime,
+      photoBytes: newPhotoBytes,
+    );
+  }
 
   StateModel withDate({
     required DateTime date,
   }) =>
-      StateModel(
-        loadingTagList: loadingTagList,
-        themeMode: themeMode,
-        token: token,
-        list: list,
-        state: state,
-        dateTime: dateTime.copyWith(
+      copyWith(
+        dateTime: () => dateTime.copyWith(
           year: date.year,
           month: date.month,
           day: date.day,
         ),
-        photoBytes: photoBytes,
       );
 
   StateModel withLoadingTagList({
     required List<LoadingTagModel> newLoadingTagList,
   }) =>
-      StateModel(
-        loadingTagList: loadingTagList + newLoadingTagList,
-        themeMode: themeMode,
-        token: token,
-        list: list,
-        state: state,
-        dateTime: dateTime,
-        photoBytes: photoBytes,
+      copyWith(
+        loadingTagList: () => loadingTagList + newLoadingTagList,
       );
 
   StateModel withoutLoadingTagList({
@@ -86,92 +111,19 @@ class StateModel {
       newLoadingTagList.removeAt(index);
     }
 
-    return StateModel(
-      loadingTagList: newLoadingTagList,
-      themeMode: themeMode,
-      token: token,
-      list: list,
-      state: state,
-      dateTime: dateTime,
-      photoBytes: photoBytes,
+    return copyWith(
+      loadingTagList: () => newLoadingTagList,
     );
   }
-
-  StateModel withPhotoBytes({
-    required Uint8List photoBytes,
-  }) =>
-      StateModel(
-        loadingTagList: loadingTagList,
-        themeMode: themeMode,
-        token: token,
-        list: list,
-        state: state,
-        dateTime: dateTime,
-        photoBytes: photoBytes,
-      );
-
-  StateModel withState({
-    required StateEnum state,
-  }) {
-    final wentFromListToPhoto =
-        (this.state == StateEnum.list) && (state == StateEnum.photo);
-
-    final wentFromPhotoToList =
-        (this.state == StateEnum.list) && (state == StateEnum.photo);
-
-    return StateModel(
-      loadingTagList: loadingTagList,
-      themeMode: themeMode,
-      token: (token == '') ? null : token,
-      list: (token?.isNotEmpty ?? false) ? list : null,
-      state: state,
-      dateTime: wentFromListToPhoto ? DateTime.now() : dateTime,
-      photoBytes:
-          (wentFromListToPhoto || wentFromPhotoToList) ? null : photoBytes,
-    );
-  }
-
-  StateModel withThemeMode({
-    required ThemeMode themeMode,
-  }) =>
-      StateModel(
-        loadingTagList: loadingTagList,
-        themeMode: themeMode,
-        token: token,
-        list: list,
-        state: state,
-        dateTime: dateTime,
-        photoBytes: photoBytes,
-      );
 
   StateModel withTime({
     required TimeOfDay time,
   }) =>
-      StateModel(
-        loadingTagList: loadingTagList,
-        themeMode: themeMode,
-        token: token,
-        list: list,
-        state: state,
-        dateTime: dateTime.copyWith(
-          hour: time.hour,
-          minute: time.minute,
-        ),
-        photoBytes: photoBytes,
-      );
-
-  StateModel withToken({
-    required String? token,
-  }) =>
-      StateModel(
-        loadingTagList: loadingTagList,
-        themeMode: themeMode,
-        token: (token == '') ? null : token,
-        list: (token?.isNotEmpty ?? false) ? list : null,
-        state: state,
-        dateTime: dateTime,
-        photoBytes: (token?.isNotEmpty ?? false) ? photoBytes : null,
-      );
+      copyWith(
+          dateTime: () => dateTime.copyWith(
+                hour: time.hour,
+                minute: time.minute,
+              ));
 
   static bool selectIsLoading(
     Store<StateModel> store,

@@ -53,6 +53,7 @@ class WeekWidget extends StatelessWidget {
               week.header,
             ),
             const ElevatedButton(
+              // TODO
               onPressed: null,
               child: Icon(
                 Icons.delete,

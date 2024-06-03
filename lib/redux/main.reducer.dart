@@ -37,8 +37,8 @@ StateModel reducer(
   _log('reducer').asString('action', action.runtimeType).print();
 
   return {
-    AuthenticationAction: () => stateModel.withToken(
-          token: (action as AuthenticationAction).token,
+    AuthenticationAction: () => stateModel.copyWith(
+          token: () => (action as AuthenticationAction).token,
         ),
     AddLoadingAction: () => stateModel.withLoadingTagList(
           newLoadingTagList: (action as AddLoadingAction).list,
@@ -48,11 +48,11 @@ StateModel reducer(
             (action as CancelLoadingAction).id,
           ],
         ),
-    DataAction: () => stateModel.withData(
-          list: (action as DataAction).list,
+    DataAction: () => stateModel.copyWith(
+          list: () => (action as DataAction).list,
         ),
-    NavigationAction: () => stateModel.withState(
-          state: (action as NavigationAction).state,
+    NavigationAction: () => stateModel.copyWith(
+          state: () => (action as NavigationAction).state,
         ),
     RemoveLoadingAction: () => stateModel.withoutLoadingTagList(
           idList: (action as RemoveLoadingAction).idList,
@@ -60,14 +60,14 @@ StateModel reducer(
     SetDateAction: () => stateModel.withDate(
           date: (action as SetDateAction).date,
         ),
-    SetPhotoAction: () => stateModel.withPhotoBytes(
-          photoBytes: (action as SetPhotoAction).photoBytes,
+    SetPhotoAction: () => stateModel.copyWith(
+          photoBytes: () => (action as SetPhotoAction).photoBytes,
         ),
     SetTimeAction: () => stateModel.withTime(
           time: (action as SetTimeAction).time,
         ),
-    ThemeAction: () => stateModel.withThemeMode(
-          themeMode: (action as ThemeAction).themeMode,
+    ThemeAction: () => stateModel.copyWith(
+          themeMode: () => (action as ThemeAction).themeMode,
         ),
     NoAction: () => stateModel,
   }[action.runtimeType]!();
