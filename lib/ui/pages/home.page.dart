@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart'
     show
-        Axis,
         BuildContext,
-        Center,
         Column,
         CrossAxisAlignment,
-        EdgeInsets,
-        Expanded,
         MediaQuery,
-        SingleChildScrollView,
         SizedBox,
         StatelessWidget,
-        Text,
-        Theme,
         Widget;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
@@ -24,7 +17,7 @@ import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show AppBarHomeWidget, BodyWidget, BottomAppBarWidget, WeekWidget;
+    show AppBarHomeWidget, BodyWidget, BottomAppBarWidget, HomeWidget;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
@@ -62,40 +55,6 @@ class HomePage extends StatelessWidget {
       context,
     ).size;
 
-    final theme = Theme.of(
-      context,
-    );
-
-    final fieldPadding = theme.textTheme.labelLarge?.fontSize ?? 0.0;
-
-    Widget body;
-
-    if (model == null) {
-      body = Text(
-        l10n.getNotCalled,
-      );
-    } else if (model.weekList.isEmpty) {
-      body = Text(
-        l10n.noPhoto,
-      );
-    } else {
-      body = SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(
-            fieldPadding,
-          ),
-          child: Column(
-            children: model.weekList
-                .map(
-                  getWidgetByModel,
-                )
-                .toList(),
-          ),
-        ),
-      );
-    }
-
     onPhotoButtonPressed() => goToPhotoPage(
           context: context,
         );
@@ -106,10 +65,8 @@ class HomePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Center(
-              child: body,
-            ),
+          HomeWidget(
+            model: model,
           ),
           BottomAppBarWidget(
             onButtonPressed: onPhotoButtonPressed,
@@ -119,13 +76,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
-  WeekWidget getWidgetByModel(
-    week,
-  ) =>
-      WeekWidget(
-        week: week,
-      );
 
   goToPhotoPage({
     required BuildContext context,

@@ -20,6 +20,8 @@ class DateModel implements LoggableModel {
         timeList,
       );
 
+  int get timeCount => timeList.length;
+
   @override
   bool operator ==(
     Object other,
@@ -37,4 +39,9 @@ class DateModel implements LoggableModel {
         'weekDay': weekDay,
         'timeList': timeList.toList(),
       };
+
+  static int toTimeCount(
+    DateModel model,
+  ) =>
+      model.timeCount;
 }
