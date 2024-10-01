@@ -49,7 +49,7 @@ extension DateTimeExtension on DateTime {
           ? this
           : (other.compareTo(
                     this,
-                  ) <
+                  ) >
                   0)
               ? other
               : this;

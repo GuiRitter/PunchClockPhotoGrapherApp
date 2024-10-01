@@ -22,7 +22,7 @@ import 'package:flutter/material.dart'
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show ListModel;
+    show ListModel, WeekModel;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show getAppBarElevation, WeekWidget;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
@@ -186,7 +186,7 @@ class HomeWidget extends StatelessWidget {
   }
 
   WeekWidget getWeekWidget(
-    week,
+    WeekModel week,
   ) =>
       WeekWidget(
         week: week,
