@@ -7,6 +7,8 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show Result;
 import 'package:punch_clock_photo_grapher_app/services/dio/dio_for_any.interface.dart'
     show DioForAny;
+import 'package:punch_clock_photo_grapher_app/services/interceptors/token.interceptor.dart'
+    show buildTokenInterceptor;
 
 DioForAny getDioForAny() => DioForAnyBrowser();
 
@@ -19,6 +21,9 @@ class DioForAnyBrowser extends DioForBrowser implements DioForAny {
     //   'Access-Control-Allow-Origin',
     //   () => '*',
     // );
+    interceptors.add(
+      buildTokenInterceptor(),
+    );
   }
 
   @override

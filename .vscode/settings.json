@@ -1,5 +1,6 @@
 {
-	"files.associations": {
-		"*.arb": "json"
-	}
+  "files.associations": {
+    "*.arb": "json"
+  },
+  "dart.flutterSdkPath": ".fvm/versions/stable"
 }

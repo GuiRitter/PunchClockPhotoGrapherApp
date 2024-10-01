@@ -13,34 +13,33 @@ import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
 
 final _log = logger('TokenInterceptor');
 
-class TokenInterceptor extends InterceptorsWrapper {
-  @override
-  void onError(
-    DioException err,
-    ErrorInterceptorHandler handler,
-  ) async {
-    _log('onError').asString('err', err).print();
+InterceptorsWrapper buildTokenInterceptor() => InterceptorsWrapper(
+      onError: (
+        DioException err,
+        ErrorInterceptorHandler handler,
+      ) async {
+        _log('onError').asString('err', err).print();
 
-    final context = navigatorState.currentContext!;
+        final context = navigatorState.currentContext!;
 
-    final dispatch = getDispatch(
-      context: context,
+        final dispatch = getDispatch(
+          context: context,
+        );
+
+        if (err.response?.statusCode == HttpStatus.unauthorized) {
+          await dispatch(
+            user_action.signOut(),
+          );
+        }
+
+        if (err.response != null) {
+          handler.resolve(
+            err.response!,
+          );
+        } else {
+          handler.next(
+            err,
+          );
+        }
+      },
     );
-
-    if (err.response?.statusCode == HttpStatus.unauthorized) {
-      await dispatch(
-        user_action.signOut(),
-      );
-    }
-
-    if (err.response != null) {
-      handler.resolve(
-        err.response!,
-      );
-    } else {
-      handler.next(
-        err,
-      );
-    }
-  }
-}
