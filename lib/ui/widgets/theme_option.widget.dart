@@ -15,7 +15,7 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show dispatch;
-import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart'
+import 'package:punch_clock_photo_grapher_app/redux/theme.redux.dart'
     as theme_action;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;

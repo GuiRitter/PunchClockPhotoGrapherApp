@@ -14,7 +14,7 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show ListModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show dispatch;
-import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
+import 'package:punch_clock_photo_grapher_app/redux/navigation.redux.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarHomeWidget, BodyWidget, BottomAppBarWidget, getTextL, HomeWidget;

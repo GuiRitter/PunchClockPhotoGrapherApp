@@ -30,7 +30,7 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
     as dio_action;
-import 'package:punch_clock_photo_grapher_app/redux/l10n.action.dart'
+import 'package:punch_clock_photo_grapher_app/redux/l10n.redux.dart'
     as l10n_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show dispatch, reducer;

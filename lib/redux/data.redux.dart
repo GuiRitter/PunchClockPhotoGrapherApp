@@ -13,12 +13,21 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show ListModel, Result, SavePhotoRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
     as dio_action;
-import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
+import 'package:punch_clock_photo_grapher_app/redux/navigation.redux.dart'
     show NavigationAction;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show DateTimeNullableExtension, logger;
-import 'package:redux/redux.dart' show Store, TypedReducer;
+import 'package:redux/redux.dart' show Store, TypedReducer, combineReducers;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
+
+final dataCombinedReducer = combineReducers<StateModel>(
+  [
+    dataTypedReducer,
+    setDateTypedReducer,
+    setPhotoTypedReducer,
+    setTimeTypedReducer,
+  ],
+);
 
 final dataTypedReducer = TypedReducer<StateModel, DataAction>(
   dataReducer,

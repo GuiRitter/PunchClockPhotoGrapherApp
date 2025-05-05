@@ -4,9 +4,9 @@ import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
 import 'package:punch_clock_photo_grapher_app/main.dart' show showSnackBar;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show BaseRequestModel, LoadingTagModel, Result, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
+import 'package:punch_clock_photo_grapher_app/redux/loading.redux.dart'
     as loading_action;
-import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
+import 'package:punch_clock_photo_grapher_app/redux/user.redux.dart'
     as user_action;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;

@@ -4,8 +4,14 @@ import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
-import 'package:redux/redux.dart' show Store, TypedReducer;
+import 'package:redux/redux.dart' show Store, TypedReducer, combineReducers;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
+
+final l10nCombinedReducer = combineReducers<StateModel>(
+  [
+    setL10nTypedReducer,
+  ],
+);
 
 final setL10nTypedReducer = TypedReducer<StateModel, L10nAction>(
   setL10nReducer,

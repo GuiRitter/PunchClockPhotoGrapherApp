@@ -1,23 +1,17 @@
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
-    show
-        dataTypedReducer,
-        setDateTypedReducer,
-        setPhotoTypedReducer,
-        setTimeTypedReducer;
-import 'package:punch_clock_photo_grapher_app/redux/l10n.action.dart'
-    show setL10nTypedReducer;
-import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
-    show
-        addLoadingTypedReducer,
-        cancelLoadingTypedReducer,
-        removeLoadingTypedReducer;
-import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
-    show goTypedReducer;
-import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart';
-import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
-    show setTokenTypedReducer;
+import 'package:punch_clock_photo_grapher_app/redux/data.redux.dart'
+    show dataCombinedReducer;
+import 'package:punch_clock_photo_grapher_app/redux/l10n.redux.dart'
+    show l10nCombinedReducer;
+import 'package:punch_clock_photo_grapher_app/redux/loading.redux.dart'
+    show loadingCombinedReducer;
+import 'package:punch_clock_photo_grapher_app/redux/navigation.redux.dart'
+    show navigationCombinedReducer;
+import 'package:punch_clock_photo_grapher_app/redux/theme.redux.dart'
+    show themeCombinedReducer;
+import 'package:punch_clock_photo_grapher_app/redux/user.redux.dart'
+    show userCombinedReducer;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
@@ -46,18 +40,13 @@ StateModel reducer(
 
   final reducerCombined = combineReducers<StateModel>(
     [
-      setL10nTypedReducer,
-      setTokenTypedReducer,
-      addLoadingTypedReducer,
-      cancelLoadingTypedReducer,
-      dataTypedReducer,
-      goTypedReducer,
-      removeLoadingTypedReducer,
-      setDateTypedReducer,
-      setPhotoTypedReducer,
-      setTimeTypedReducer,
-      setThemeTypedReducer,
+      dataCombinedReducer,
+      l10nCombinedReducer,
+      loadingCombinedReducer,
+      navigationCombinedReducer,
       noActionTypedReducer,
+      themeCombinedReducer,
+      userCombinedReducer,
     ],
   );
 
