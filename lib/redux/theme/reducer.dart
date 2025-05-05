@@ -1,4 +1,4 @@
-import 'package:flutter_guiritter/redux/theme.action.dart'
+import 'package:flutter_guiritter/redux/theme/action.dart'
     as theme_action_gui_ritter;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
