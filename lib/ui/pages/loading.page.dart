@@ -18,17 +18,17 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         Text,
         Widget;
+import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
+    show LoadingTagModel;
+import 'package:flutter_guiritter/redux/loading/action.dart' as loading_action;
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show LoadingTagModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/loading/action.dart'
-    as loading_action;
+    show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show dispatch;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarCustomWidget;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger;
 
 final _log = logger('LoadingPage');
 
@@ -41,7 +41,7 @@ class LoadingPage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) =>
-      StoreConnector<StateModel, List<LoadingTagModel>>(
+      StoreConnector<StateModel, List<model_gui_ritter.LoadingTagModel>>(
         distinct: true,
         converter: StateModel.selectLoadingTagList,
         builder: connectorBuilder,
@@ -49,7 +49,7 @@ class LoadingPage extends StatelessWidget {
 
   Widget connectorBuilder(
     BuildContext context,
-    List<LoadingTagModel> loadingTagList,
+    List<model_gui_ritter.LoadingTagModel> loadingTagList,
   ) {
     final mediaSize = MediaQuery.of(
       context,

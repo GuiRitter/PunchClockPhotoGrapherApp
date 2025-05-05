@@ -1,7 +1,6 @@
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:flutter_guiritter/model/model.import.dart'
     show BaseRequestModel;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show hideSecret;
+import 'package:flutter_guiritter/util/util.import.dart' show hideSecret;
 
 class SavePhotoRequestModel implements BaseRequestModel {
   final String dateTime;

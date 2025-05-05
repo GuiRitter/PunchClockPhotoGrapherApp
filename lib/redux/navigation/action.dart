@@ -1,9 +1,8 @@
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 

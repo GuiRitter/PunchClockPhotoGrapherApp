@@ -1,5 +1,3 @@
 enum AppBarPopupMenuEnum {
-  reload,
-  theme,
-  signOut;
+  reload;
 }

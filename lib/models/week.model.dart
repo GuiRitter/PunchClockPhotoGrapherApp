@@ -1,8 +1,10 @@
 import 'dart:math' show max;
 
 import 'package:flutter/foundation.dart' show setEquals;
+import 'package:flutter_guiritter/model/model.import.dart'
+    show LoggableModel, LoggableSetExtension;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show DateModel, LoggableModel, LoggableSetExtension, WeekHeaderModel;
+    show DateModel, WeekHeaderModel;
 
 class WeekModel implements Comparable, LoggableModel {
   final int number;

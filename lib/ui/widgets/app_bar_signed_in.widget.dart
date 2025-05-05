@@ -8,12 +8,11 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         Widget,
         kToolbarHeight;
+import 'package:flutter_guiritter/redux/user/action.dart' as user_action;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show AppBarPopupMenuEnum;
+    show OldAppBarPopupMenuEnum;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show dispatch;
-import 'package:punch_clock_photo_grapher_app/redux/user/action.dart'
-    as user_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarCustomWidget, buildPopupMenuItem;
 
@@ -22,12 +21,12 @@ class AppBarSignedInWidget extends StatelessWidget
   final Widget? appBarLeading;
 
   final Map<
-      AppBarPopupMenuEnum,
+      OldAppBarPopupMenuEnum,
       dynamic Function(
         BuildContext,
       )>? onHomePopupMenuItemPressedMap;
 
-  final List<PopupMenuItem<AppBarPopupMenuEnum>>? popupMenuItemList;
+  final List<PopupMenuItem<OldAppBarPopupMenuEnum>>? popupMenuItemList;
 
   const AppBarSignedInWidget({
     super.key,
@@ -45,7 +44,7 @@ class AppBarSignedInWidget extends StatelessWidget
   Widget build(
     BuildContext context,
   ) {
-    final onHomePopupMenuItemPressedCompleteMap = <AppBarPopupMenuEnum,
+    final onHomePopupMenuItemPressedCompleteMap = <OldAppBarPopupMenuEnum,
         dynamic Function(
       BuildContext,
     )>{};
@@ -56,7 +55,7 @@ class AppBarSignedInWidget extends StatelessWidget
       );
     }
 
-    onHomePopupMenuItemPressedCompleteMap[AppBarPopupMenuEnum.signOut] = (
+    onHomePopupMenuItemPressedCompleteMap[OldAppBarPopupMenuEnum.signOut] = (
       context,
     ) {
       dispatch(
@@ -64,7 +63,7 @@ class AppBarSignedInWidget extends StatelessWidget
       );
     };
 
-    final popupMenuItemCompleteList = <PopupMenuItem<AppBarPopupMenuEnum>>[];
+    final popupMenuItemCompleteList = <PopupMenuItem<OldAppBarPopupMenuEnum>>[];
 
     if (popupMenuItemList != null) {
       popupMenuItemCompleteList.addAll(
@@ -72,11 +71,13 @@ class AppBarSignedInWidget extends StatelessWidget
       );
     }
 
-    popupMenuItemCompleteList.add(buildPopupMenuItem(
-      l10nSelector: (l) => l!.signOut,
-      icon: Icons.logout,
-      menuEnum: AppBarPopupMenuEnum.signOut,
-    ));
+    popupMenuItemCompleteList.add(
+      buildPopupMenuItem(
+        l10nSelector: (l) => l!.signOut,
+        icon: Icons.logout,
+        menuEnum: OldAppBarPopupMenuEnum.signOut,
+      ),
+    );
 
     return AppBarCustomWidget(
       appBarLeading: appBarLeading,

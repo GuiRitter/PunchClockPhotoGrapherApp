@@ -1,3 +1,4 @@
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/data/reducer.dart'
@@ -12,8 +13,6 @@ import 'package:punch_clock_photo_grapher_app/redux/theme/reducer.dart'
     show themeCombinedReducer;
 import 'package:punch_clock_photo_grapher_app/redux/user/reducer.dart'
     show userCombinedReducer;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger;
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
 
 late dynamic Function(

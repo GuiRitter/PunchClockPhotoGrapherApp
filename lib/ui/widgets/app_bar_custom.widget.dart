@@ -32,10 +32,12 @@ import 'package:flutter/services.dart'
     show Size, SystemUiOverlayStyle, TextAlign;
 import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter;
+import 'package:flutter_guiritter/common/common.import.dart'
+    show navigatorState;
 import 'package:flutter_guiritter/util/util.import.dart'
     show logger, onDialogCancelPressed;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show AppBarPopupMenuEnum, navigatorState;
+    show OldAppBarPopupMenuEnum;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show getTextG, getTextL, ThemeOptionWidget;
 
@@ -45,14 +47,14 @@ final GlobalKey appBarKey = GlobalKey();
 
 final _log = logger('appBarCustom');
 
-PopupMenuItem<AppBarPopupMenuEnum> buildPopupMenuItem({
+PopupMenuItem<OldAppBarPopupMenuEnum> buildPopupMenuItem({
   required String Function(
     common_gui_ritter.AppLocalizationsGuiRitter?,
   ) l10nSelector,
   required IconData icon,
-  required AppBarPopupMenuEnum menuEnum,
+  required OldAppBarPopupMenuEnum menuEnum,
 }) =>
-    PopupMenuItem<AppBarPopupMenuEnum>(
+    PopupMenuItem<OldAppBarPopupMenuEnum>(
       value: menuEnum,
       child: ListTile(
         leading: Icon(
@@ -119,12 +121,12 @@ class AppBarCustomWidget extends StatelessWidget
   final Widget? appBarLeading;
 
   final Map<
-      AppBarPopupMenuEnum,
+      OldAppBarPopupMenuEnum,
       dynamic Function(
         BuildContext,
       )>? onHomePopupMenuItemPressedMap;
 
-  final List<PopupMenuItem<AppBarPopupMenuEnum>>? popupMenuItemList;
+  final List<PopupMenuItem<OldAppBarPopupMenuEnum>>? popupMenuItemList;
 
   const AppBarCustomWidget({
     super.key,
@@ -167,7 +169,8 @@ class AppBarCustomWidget extends StatelessWidget
             ],
           );
 
-    final popupMenuItemCompleteList = <PopupMenuEntry<AppBarPopupMenuEnum>>[];
+    final popupMenuItemCompleteList =
+        <PopupMenuEntry<OldAppBarPopupMenuEnum>>[];
 
     if (popupMenuItemList != null) {
       popupMenuItemCompleteList.addAll(
@@ -179,7 +182,7 @@ class AppBarCustomWidget extends StatelessWidget
       buildPopupMenuItem(
         l10nSelector: (l) => l!.appTheme,
         icon: Icons.color_lens,
-        menuEnum: AppBarPopupMenuEnum.theme,
+        menuEnum: OldAppBarPopupMenuEnum.theme,
       ),
     );
 
@@ -189,7 +192,7 @@ class AppBarCustomWidget extends StatelessWidget
       title: title,
       leading: appBarLeading,
       actions: [
-        PopupMenuButton<AppBarPopupMenuEnum>(
+        PopupMenuButton<OldAppBarPopupMenuEnum>(
           itemBuilder: (
             context,
           ) =>
@@ -208,11 +211,11 @@ class AppBarCustomWidget extends StatelessWidget
 
   _onHomePopupMenuItemPressed({
     required BuildContext context,
-    required AppBarPopupMenuEnum value,
+    required OldAppBarPopupMenuEnum value,
   }) {
     _log('onHomePopupMenuItemPressed').enum_('value', value).print();
 
-    final onHomePopupMenuItemPressedCompleteMap = <AppBarPopupMenuEnum,
+    final onHomePopupMenuItemPressedCompleteMap = <OldAppBarPopupMenuEnum,
         dynamic Function(
       BuildContext,
     )>{};
@@ -223,7 +226,7 @@ class AppBarCustomWidget extends StatelessWidget
       );
     }
 
-    onHomePopupMenuItemPressedCompleteMap[AppBarPopupMenuEnum.theme] = (
+    onHomePopupMenuItemPressedCompleteMap[OldAppBarPopupMenuEnum.theme] = (
       BuildContext context,
     ) =>
         showDialog(

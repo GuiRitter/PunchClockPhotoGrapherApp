@@ -8,17 +8,15 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         ThemeMode,
         Widget;
+import 'package:flutter_guiritter/common/common.import.dart' show Settings;
 import 'package:flutter_guiritter/redux/theme/action.dart'
     as theme_action_gui_ritter;
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show dispatch;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 

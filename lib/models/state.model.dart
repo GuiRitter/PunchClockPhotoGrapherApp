@@ -4,16 +4,14 @@ import 'package:flutter/material.dart' show ThemeMode, TimeOfDay, ValueGetter;
 import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter;
 import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
-    show StateModel;
+    show LoadingTagModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show LoadingTagModel, ListModel;
+    show ListModel;
 import 'package:redux/redux.dart' show Store;
 
 class StateModel extends model_gui_ritter.StateModel<AppLocalizations> {
-  final List<LoadingTagModel> loadingTagList;
-  final String? token;
   final ListModel? list;
   final StateEnum state;
   final DateTime dateTime;
@@ -22,22 +20,21 @@ class StateModel extends model_gui_ritter.StateModel<AppLocalizations> {
   StateModel({
     super.l10n,
     super.l10nGuiRitter,
+    required super.loadingTagList,
+    super.token,
     required super.themeMode,
-    required this.loadingTagList,
-    required String? token,
     required ListModel? list,
     required this.state,
     required this.dateTime,
     required Uint8List? photoBytes,
-  })  : token = (token != '') ? token : null,
-        list = (token?.isNotEmpty ?? false) ? list : null,
+  })  : list = (token?.isNotEmpty ?? false) ? list : null,
         photoBytes = (token?.isNotEmpty ?? false) ? photoBytes : null;
 
   @override
   StateModel copyWith({
     ValueGetter<AppLocalizations?>? l10n,
     ValueGetter<common_gui_ritter.AppLocalizationsGuiRitter?>? l10nGuiRitter,
-    ValueGetter<List<LoadingTagModel>>? loadingTagList,
+    ValueGetter<List<model_gui_ritter.LoadingTagModel>>? loadingTagList,
     ValueGetter<ThemeMode>? themeMode,
     ValueGetter<String?>? token,
     ValueGetter<ListModel?>? list,
@@ -105,7 +102,7 @@ class StateModel extends model_gui_ritter.StateModel<AppLocalizations> {
       );
 
   StateModel withLoadingTagList({
-    required List<LoadingTagModel> newLoadingTagList,
+    required List<model_gui_ritter.LoadingTagModel> newLoadingTagList,
   }) =>
       copyWith(
         loadingTagList: () => loadingTagList + newLoadingTagList,
@@ -114,11 +111,12 @@ class StateModel extends model_gui_ritter.StateModel<AppLocalizations> {
   StateModel withoutLoadingTagList({
     required List<String> idList,
   }) {
-    final newLoadingTagList = List<LoadingTagModel>.from(loadingTagList);
+    final newLoadingTagList =
+        List<model_gui_ritter.LoadingTagModel>.from(loadingTagList);
 
     for (final id in idList) {
       final index = newLoadingTagList.indexWhere(
-        LoadingTagModel.idEquals(
+        model_gui_ritter.LoadingTagModel.idEquals(
           id,
         ),
       );
@@ -155,7 +153,7 @@ class StateModel extends model_gui_ritter.StateModel<AppLocalizations> {
   ) =>
       store.state.token?.isNotEmpty ?? false;
 
-  static List<LoadingTagModel> selectLoadingTagList(
+  static List<model_gui_ritter.LoadingTagModel> selectLoadingTagList(
     Store<StateModel> store,
   ) =>
       store.state.loadingTagList;

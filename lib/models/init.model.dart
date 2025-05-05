@@ -1,5 +1,6 @@
+import 'package:flutter_guiritter/model/model.import.dart' show LoggableModel;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show LoggableModel, StateModel;
+    show StateModel;
 import 'package:redux/redux.dart' show Store;
 
 class InitModel implements LoggableModel {

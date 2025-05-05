@@ -1,7 +1,9 @@
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show LoadingTagModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/loading/action.dart'
+import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
+    show LoadingTagModel;
+import 'package:flutter_guiritter/redux/loading/action.dart'
     show AddLoadingAction, CancelLoadingAction, RemoveLoadingAction;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show StateModel;
 import 'package:redux/redux.dart' show Store, TypedReducer, combineReducers;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
@@ -26,7 +28,7 @@ final removeLoadingTypedReducer = TypedReducer<StateModel, RemoveLoadingAction>(
 ).call;
 
 ThunkAction<StateModel> add({
-  required List<LoadingTagModel> list,
+  required List<model_gui_ritter.LoadingTagModel> list,
 }) =>
     (
       Store<StateModel> store,

@@ -1,16 +1,13 @@
 import 'dart:async' show FutureOr;
 import 'dart:io' show HttpOverrides;
 
-import 'package:dio/dio.dart' show DioException;
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart'
     show
         BuildContext,
         Locale,
         MaterialApp,
-        SnackBar,
         StatelessWidget,
-        Text,
         ThemeMode,
         Widget,
         WidgetsFlutterBinding,
@@ -19,29 +16,33 @@ import 'package:flutter/services.dart'
     show SystemChrome, SystemUiOverlayStyle, Color;
 import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter;
+import 'package:flutter_guiritter/common/common.import.dart'
+    show navigatorState, Settings, snackState;
+import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
+    show LoadingTagModel;
+import 'package:flutter_guiritter/redux/api/action.dart' as api_action;
 import 'package:flutter_guiritter/redux/redux.import.dart' as redux_gui_ritter
     show dispatch;
+import 'package:flutter_guiritter/service/dio/my_http_overrides.dart'
+    show MyHttpOverrides;
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart'
     show StoreConnector, StoreProvider;
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show AppLocalizations, navigatorState, Settings, snackState, StateEnum;
+    show AppLocalizations, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show LoadingTagModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/api/action.dart'
-    as api_action;
+    show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/l10n/action.dart'
     as l10n_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show dispatch, reducer;
-import 'package:punch_clock_photo_grapher_app/services/dio/my_http_overrides.dart'
-    show MyHttpOverrides;
 import 'package:punch_clock_photo_grapher_app/themes/themes.import.dart'
     show dark, light;
 import 'package:punch_clock_photo_grapher_app/ui/pages/pages.import.dart'
     show RootPage;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger, StringExtension;
+    show StringExtension;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show thunkMiddleware;
 import 'package:shared_preferences/shared_preferences.dart'
@@ -104,7 +105,7 @@ FutureOr initializeApp(
     initialState: StateModel(
       l10n: null,
       l10nGuiRitter: null,
-      loadingTagList: <LoadingTagModel>[],
+      loadingTagList: <model_gui_ritter.LoadingTagModel>[],
       themeMode: theme,
       token: token,
       list: null,
@@ -125,49 +126,6 @@ FutureOr initializeApp(
       store: store,
     ),
   );
-}
-
-void showSnackBar({
-  required String? message,
-}) {
-  _log('showSnackBar').raw('message', message).print();
-
-  snackState.currentState!.showSnackBar(
-    SnackBar(
-      showCloseIcon: true,
-      content: Text(
-        message ?? '',
-      ),
-    ),
-  );
-}
-
-String treatDioResponse({
-  required dynamic response,
-}) {
-  if (response!.data is Map) {
-    if ((response!.data as Map).containsKey(
-      Settings.errorKey,
-    )) {
-      return response!.data[Settings.errorKey];
-    }
-  }
-  return response!.data.toString();
-}
-
-String treatException({
-  required dynamic exception,
-}) {
-  if (exception is DioException) {
-    if (exception.response != null) {
-      return treatDioResponse(
-        response: exception.response,
-      );
-    } else if (exception.message != null) {
-      return exception.message!;
-    }
-  }
-  return exception.toString();
 }
 
 class MyApp extends StatelessWidget {

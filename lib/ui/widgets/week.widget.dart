@@ -28,9 +28,9 @@ import 'package:flutter/material.dart'
         TextAlign,
         Theme,
         Widget;
+import 'package:flutter_guiritter/common/common.import.dart' show Settings;
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show Settings;
 import 'package:punch_clock_photo_grapher_app/models/date.model.dart'
     show DateModel;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
@@ -38,7 +38,7 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show appBarElevation, tableRowHeight;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show buildIntrinsicColumnWidthMap, logger, MapExtension;
+    show buildIntrinsicColumnWidthMap, MapExtension;
 
 double? dataTableWidth;
 
