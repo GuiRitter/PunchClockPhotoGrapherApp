@@ -31,11 +31,11 @@ import 'package:flutter/material.dart'
 import 'package:flutter/services.dart'
     show Size, SystemUiOverlayStyle, TextAlign;
 import 'package:flutter_guiritter/common/common.import.dart'
-    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
+    as common_gui_ritter show AppLocalizationsGuiRitter;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show AppBarPopupMenuEnum, l10n, navigatorState;
+    show AppBarPopupMenuEnum, navigatorState;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show ThemeOptionWidget;
+    show getTextG, getTextL, ThemeOptionWidget;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger, onDialogCancelPressed;
 
@@ -45,11 +45,10 @@ final GlobalKey appBarKey = GlobalKey();
 
 final _log = logger('appBarCustom');
 
-common_gui_ritter.AppLocalizationsGuiRitter get l10nGuiRitter =>
-    common_gui_ritter.l10nGuiRitter!;
-
 PopupMenuItem<AppBarPopupMenuEnum> buildPopupMenuItem({
-  required String label,
+  required String Function(
+    common_gui_ritter.AppLocalizationsGuiRitter?,
+  ) l10nSelector,
   required IconData icon,
   required AppBarPopupMenuEnum menuEnum,
 }) =>
@@ -59,9 +58,7 @@ PopupMenuItem<AppBarPopupMenuEnum> buildPopupMenuItem({
         leading: Icon(
           icon,
         ),
-        title: Text(
-          label,
-        ),
+        title: getTextG(l10nSelector),
       ),
     );
 
@@ -153,14 +150,12 @@ class AppBarCustomWidget extends StatelessWidget
     final String? subtitle = _getSubtitle();
 
     final title = (subtitle == null)
-        ? Text(
-            l10n.title,
-          )
+        ? getTextL((l) => l!.title)
         : Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                l10n.title,
+              getTextL(
+                (l) => l!.title,
                 style: theme.textTheme.bodySmall!.copyWith(
                   color: theme.colorScheme.onPrimary,
                 ),
@@ -181,7 +176,7 @@ class AppBarCustomWidget extends StatelessWidget
 
     popupMenuItemCompleteList.add(
       buildPopupMenuItem(
-        label: l10nGuiRitter.appTheme,
+        l10nSelector: (l) => l!.appTheme,
         icon: Icons.color_lens,
         menuEnum: AppBarPopupMenuEnum.theme,
       ),
@@ -238,22 +233,20 @@ class AppBarCustomWidget extends StatelessWidget
             final optionList = [
               ThemeOptionWidget(
                 themeMode: ThemeMode.dark,
-                title: l10nGuiRitter.darkTheme,
+                title: getTextG((l) => l!.darkTheme),
               ),
               ThemeOptionWidget(
                 themeMode: ThemeMode.light,
-                title: l10nGuiRitter.lightTheme,
+                title: getTextG((l) => l!.lightTheme),
               ),
               ThemeOptionWidget(
                 themeMode: ThemeMode.system,
-                title: l10nGuiRitter.systemTheme,
+                title: getTextG((l) => l!.systemTheme),
               ),
             ];
 
             return AlertDialog(
-              title: Text(
-                l10nGuiRitter.chooseTheme,
-              ),
+              title: getTextG((l) => l!.chooseTheme),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: optionList,
@@ -263,8 +256,8 @@ class AppBarCustomWidget extends StatelessWidget
                   onPressed: () => onDialogCancelPressed(
                     context: context,
                   ),
-                  child: Text(
-                    l10nGuiRitter.cancel,
+                  child: getTextG(
+                    (l) => l!.cancel,
                     textAlign: TextAlign.end,
                   ),
                 ),

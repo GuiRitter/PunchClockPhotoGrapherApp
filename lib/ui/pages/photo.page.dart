@@ -33,17 +33,17 @@ import 'package:flutter/material.dart'
         showTimePicker;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show StateEnum, l10n;
+    show StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show PhotoModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
     as data_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show getDispatch;
+    show dispatch;
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show AppBarSignedInWidget, BodyWidget, BottomAppBarWidget;
+    show AppBarSignedInWidget, BodyWidget, BottomAppBarWidget, getTextL;
 
 class PhotoPage extends StatelessWidget {
   const PhotoPage({
@@ -75,10 +75,6 @@ class PhotoPage extends StatelessWidget {
     BuildContext context,
     PhotoModel photoModel,
   ) {
-    final dispatch = getDispatch(
-      context: context,
-    );
-
     final theme = Theme.of(
       context,
     );
@@ -185,7 +181,7 @@ class PhotoPage extends StatelessWidget {
           ),
           BottomAppBarWidget(
             onButtonPressed: onSavePhotoPressed,
-            label: l10n.savePhoto,
+            label: getTextL((l) => l!.savePhoto),
           ),
         ],
       ),
@@ -206,10 +202,6 @@ class PhotoPage extends StatelessWidget {
     required BuildContext context,
     required DateTime initialDate,
   }) async {
-    final dispatch = getDispatch(
-      context: context,
-    );
-
     final date = await showDatePicker(
       context: context,
       firstDate: DateTime.fromMicrosecondsSinceEpoch(
@@ -230,10 +222,6 @@ class PhotoPage extends StatelessWidget {
     required BuildContext context,
     required DateTime initialDate,
   }) async {
-    final dispatch = getDispatch(
-      context: context,
-    );
-
     final time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(
@@ -251,10 +239,6 @@ class PhotoPage extends StatelessWidget {
   savePhoto({
     required BuildContext context,
   }) {
-    final dispatch = getDispatch(
-      context: context,
-    );
-
     dispatch(
       data_action.savePhoto(),
     );
@@ -263,10 +247,6 @@ class PhotoPage extends StatelessWidget {
   takePhoto({
     required BuildContext context,
   }) async {
-    final dispatch = getDispatch(
-      context: context,
-    );
-
     dispatch(
       data_action.setPhotoImage(),
     );

@@ -8,19 +8,14 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         Widget,
         kToolbarHeight;
-import 'package:flutter_guiritter/common/common.import.dart'
-    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppBarPopupMenuEnum;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show getDispatch;
+    show dispatch;
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
     as user_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarCustomWidget, buildPopupMenuItem;
-
-common_gui_ritter.AppLocalizationsGuiRitter get l10nGuiRitter =>
-    common_gui_ritter.l10nGuiRitter!;
 
 class AppBarSignedInWidget extends StatelessWidget
     implements PreferredSizeWidget {
@@ -50,10 +45,6 @@ class AppBarSignedInWidget extends StatelessWidget
   Widget build(
     BuildContext context,
   ) {
-    final dispatch = getDispatch(
-      context: context,
-    );
-
     final onHomePopupMenuItemPressedCompleteMap = <AppBarPopupMenuEnum,
         dynamic Function(
       BuildContext,
@@ -82,7 +73,7 @@ class AppBarSignedInWidget extends StatelessWidget
     }
 
     popupMenuItemCompleteList.add(buildPopupMenuItem(
-      label: l10nGuiRitter.signOut,
+      l10nSelector: (l) => l!.signOut,
       icon: Icons.logout,
       menuEnum: AppBarPopupMenuEnum.signOut,
     ));

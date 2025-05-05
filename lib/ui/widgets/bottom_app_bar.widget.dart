@@ -6,14 +6,13 @@ import 'package:flutter/material.dart'
         ElevatedButton,
         SizedBox,
         StatelessWidget,
-        Text,
         Theme,
         VoidCallback,
         Widget;
 
 class BottomAppBarWidget extends StatelessWidget {
   final VoidCallback? onButtonPressed;
-  final String label;
+  final Widget label;
 
   const BottomAppBarWidget({
     super.key,
@@ -40,9 +39,7 @@ class BottomAppBarWidget extends StatelessWidget {
         width: double.infinity,
         child: ElevatedButton(
           onPressed: onButtonPressed,
-          child: Text(
-            label,
-          ),
+          child: label,
         ),
       ),
     );

@@ -8,35 +8,30 @@ import 'package:flutter/material.dart'
         Form,
         FormState,
         GlobalKey,
-        InputDecoration,
         Padding,
         SingleChildScrollView,
         StatelessWidget,
-        Text,
         TextEditingController,
-        TextFormField,
         Theme,
         Widget;
 import 'package:flutter/services.dart'
     show AutofillHints, TextInput, TextInputType;
-import 'package:flutter_guiritter/common/common.import.dart'
-    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
+import 'package:flutter_guiritter/ui/widget/widget.import.dart'
+    show TextFormFieldL10n;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart';
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show SignInModel, SignInRequestModel;
+    show SignInModel, SignInRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show getDispatch;
+    show dispatch;
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
     as user_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show AppBarSignedOutWidget, BodyWidget;
+    show AppBarSignedOutWidget, BodyWidget, getTextG;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
 final _log = logger('SignInPage');
-
-common_gui_ritter.AppLocalizationsGuiRitter get l10nGuiRitter =>
-    common_gui_ritter.l10nGuiRitter!;
 
 class SignInPage extends StatelessWidget {
   final userIdController = TextEditingController();
@@ -67,34 +62,6 @@ class SignInPage extends StatelessWidget {
           context: context,
         );
 
-    buildTextFormField({
-      required String autofillHint,
-      required String labelText,
-      required TextInputType keyboardType,
-      bool obscureText = false,
-      TextEditingController? controller,
-      void Function(
-        String?,
-      )? onSaved,
-      required String invalidMessage,
-    }) =>
-        TextFormField(
-          autofillHints: [
-            autofillHint,
-          ],
-          controller: controller,
-          decoration: InputDecoration(
-            labelText: labelText,
-          ),
-          keyboardType: keyboardType,
-          obscureText: obscureText,
-          onSaved: onSaved,
-          validator: (
-            value,
-          ) =>
-              (value?.isEmpty ?? true) ? invalidMessage : null,
-        );
-
     return BodyWidget(
       appBar: const AppBarSignedOutWidget(),
       body: SingleChildScrollView(
@@ -109,20 +76,20 @@ class SignInPage extends StatelessWidget {
           child: AutofillGroup(
             child: Column(
               children: [
-                buildTextFormField(
+                TextFormFieldL10n<AppLocalizations, StateModel>(
                   autofillHint: AutofillHints.username,
-                  labelText: l10nGuiRitter.userID,
-                  keyboardType: TextInputType.text,
                   controller: userIdController,
-                  invalidMessage: l10nGuiRitter.invalidUserID,
+                  invalidMessageL10nGuiRitter: (l) => l!.invalidUserID,
+                  keyboardType: TextInputType.text,
+                  labelL10nGuiRitter: (l) => l!.userID,
                 ),
-                buildTextFormField(
+                TextFormFieldL10n<AppLocalizations, StateModel>(
                   autofillHint: AutofillHints.password,
-                  labelText: l10nGuiRitter.password,
-                  keyboardType: TextInputType.visiblePassword,
                   controller: passwordController,
+                  invalidMessageL10nGuiRitter: (l) => l!.invalidPassword,
+                  keyboardType: TextInputType.visiblePassword,
+                  labelL10nGuiRitter: (l) => l!.password,
                   obscureText: true,
-                  invalidMessage: l10nGuiRitter.invalidPassword,
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -133,8 +100,8 @@ class SignInPage extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                     onPressed: onSignInPressed,
-                    child: Text(
-                      l10nGuiRitter.signIn,
+                    child: getTextG(
+                      (l) => l!.signIn,
                     ),
                   ),
                 ),
@@ -149,10 +116,6 @@ class SignInPage extends StatelessWidget {
   signIn({
     required BuildContext context,
   }) async {
-    final dispatch = getDispatch(
-      context: context,
-    );
-
     _log('onSingInPressed').print();
 
     if (!(formKey.currentState?.validate() ?? false)) {

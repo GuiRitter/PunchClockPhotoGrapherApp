@@ -17,30 +17,28 @@ import 'package:flutter/material.dart'
         runApp;
 import 'package:flutter/services.dart'
     show SystemChrome, SystemUiOverlayStyle, Color;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'
-    show AppLocalizations;
 import 'package:flutter_guiritter/common/common.import.dart'
-    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
+    as common_gui_ritter show AppLocalizationsGuiRitter;
 import 'package:flutter_redux/flutter_redux.dart'
     show StoreConnector, StoreProvider;
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
 import 'package:provider/provider.dart' show MultiProvider, Provider;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show Settings, l10nNotifier, navigatorState, snackState, StateEnum;
+    show AppLocalizations, navigatorState, Settings, snackState, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
     as dio_action;
+import 'package:punch_clock_photo_grapher_app/redux/l10n.action.dart'
+    as l10n_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show getDispatch, reducer;
-import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
-    as user_action;
+    show dispatch, reducer;
 import 'package:punch_clock_photo_grapher_app/services/dio/my_http_overrides.dart'
     show MyHttpOverrides;
 import 'package:punch_clock_photo_grapher_app/themes/themes.import.dart'
     show dark, light;
 import 'package:punch_clock_photo_grapher_app/ui/pages/pages.import.dart'
-    show TabsPage;
+    show RootPage;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger, StringExtension;
 import 'package:redux/redux.dart' show Store;
@@ -103,6 +101,8 @@ FutureOr initializeApp(
   final store = Store<StateModel>(
     reducer,
     initialState: StateModel(
+      l10n: null,
+      l10nGuiRitter: null,
       loadingTagList: <LoadingTagModel>[],
       themeMode: theme,
       token: token,
@@ -115,6 +115,8 @@ FutureOr initializeApp(
       thunkMiddleware,
     ],
   );
+
+  dispatch = store.dispatch;
 
   runApp(
     MyApp(
@@ -190,10 +192,6 @@ class MyApp extends StatelessWidget {
       context: context,
     );
 
-    Future.microtask(
-      validateAndSetToken,
-    );
-
     return MultiProvider(
       providers: [
         Provider<
@@ -222,7 +220,7 @@ class MyApp extends StatelessWidget {
             theme: themeLight,
             darkTheme: themeDark,
             themeMode: themeMode,
-            home: const TabsPage(),
+            home: const RootPage(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             // TODO implement l10n switching
             supportedLocales: AppLocalizations.supportedLocales,
@@ -236,56 +234,56 @@ class MyApp extends StatelessWidget {
 
   String getTitleLocalized(
     context,
-  ) {
-    final l10n = AppLocalizations.of(
-      context,
-    )!;
-
-    return l10n.title;
-  }
+  ) =>
+      AppLocalizations.of(
+        context,
+      )!
+          .title;
 
   Locale? populateL10nNotifier(
     Locale? locale,
     Iterable<Locale> supportedLocales,
   ) {
-    common_gui_ritter.AppLocalizationsGuiRitter.delegate
-        .load(
-      locale!,
-    )
-        .then(
-      (
-        l10n,
-      ) {
-        common_gui_ritter.l10nGuiRitter = l10n;
+    _log('populateL10nNotifier').asString('locale', locale).print();
 
-        return AppLocalizations.delegate.load(
-          locale,
-        );
-      },
+    late common_gui_ritter.AppLocalizationsGuiRitter newL10nGuiRitter;
+    late AppLocalizations newL10n;
+
+    Future.wait(
+      [
+        common_gui_ritter.AppLocalizationsGuiRitter.delegate
+            .load(
+              locale!,
+            )
+            .then(
+              (
+                l10nLoaded,
+              ) =>
+                  newL10nGuiRitter = l10nLoaded,
+            ),
+        AppLocalizations.delegate
+            .load(
+              locale,
+            )
+            .then(
+              (
+                l10nLoaded,
+              ) =>
+                  newL10n = l10nLoaded,
+            ),
+      ],
     ).then(
       (
-        l10n,
-      ) {
-        Settings.locale = locale.toString();
-
-        return l10nNotifier.value = l10n;
-      },
+        _,
+      ) =>
+          dispatch(
+        l10n_action.setL10n(
+          l10n: newL10n,
+          l10nGuiRitter: newL10nGuiRitter,
+        ),
+      ),
     );
 
     return locale;
-  }
-
-  FutureOr validateAndSetToken() {
-    final context = navigatorState.currentContext!;
-
-    final dispatch = getDispatch(
-      context: context,
-    );
-
-    dispatch(
-      user_action.validateAndSetToken(
-        newToken: Settings.revalidateToken,
-      ),
-    );
   }
 }

@@ -19,12 +19,10 @@ import 'package:flutter/material.dart'
         Text,
         Theme,
         Widget;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show ListModel, WeekModel;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show getAppBarElevation, WeekWidget;
+    show getAppBarElevation, getTextL, WeekWidget;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
@@ -101,13 +99,9 @@ class HomeWidget extends StatelessWidget {
     required double padding,
   }) {
     if (model == null) {
-      return Text(
-        l10n.getNotCalled,
-      );
+      return getTextL((l) => l!.getNotCalled);
     } else if (model.weekList.isEmpty) {
-      return Text(
-        l10n.noPhoto,
-      );
+      return getTextL((l) => l!.noPhoto);
     } else {
       return FutureBuilder<double>(
         future: getAppBarElevation(

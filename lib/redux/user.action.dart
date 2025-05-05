@@ -1,7 +1,5 @@
-import 'package:flutter_guiritter/common/common.import.dart'
-    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show ApiUrl, l10n, Settings;
+    show ApiUrl, Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show Result, SignInRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
@@ -14,9 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
 
 final _log = logger('user.action');
-
-common_gui_ritter.AppLocalizationsGuiRitter get l10nGuiRitter =>
-    common_gui_ritter.l10nGuiRitter!;
 
 ThunkAction<StateModel> clearToken() => (
       Store<StateModel> store,
@@ -88,7 +83,8 @@ ThunkAction<StateModel> signIn({
         dio_action.post(
           url: ApiUrl.signIn.path,
           data: signInModel,
-          userFriendlyName: l10nGuiRitter.loadingTag_validateAndSetToken,
+          userFriendlyName:
+              store.state.l10nGuiRitter!.loadingTag_validateAndSetToken,
           thenFunction: signInSuccess,
           catchFunction: signInFailure,
         ),
@@ -150,7 +146,8 @@ ThunkAction<StateModel> validateAndSetToken({
       store.dispatch(
         dio_action.get(
           url: ApiUrl.checkToken.path,
-          userFriendlyName: l10nGuiRitter.loadingTag_validateAndSetToken,
+          userFriendlyName:
+              store.state.l10nGuiRitter!.loadingTag_validateAndSetToken,
           thenFunction: checkTokenSuccess,
           catchFunction: checkTokenFailure,
         ),

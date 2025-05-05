@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart' show BuildContext;
-import 'package:provider/provider.dart' show Provider;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
     show DataAction, SetDateAction, SetPhotoAction, SetTimeAction;
+import 'package:punch_clock_photo_grapher_app/redux/l10n.action.dart'
+    show L10nAction;
 import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
     show AddLoadingAction, CancelLoadingAction, RemoveLoadingAction;
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
@@ -15,20 +15,11 @@ import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
-final _log = logger('main.reducer');
-
-dynamic Function(
+late dynamic Function(
   dynamic,
-) getDispatch({
-  required BuildContext context,
-}) =>
-    Provider.of<
-        dynamic Function(
-          dynamic,
-        )>(
-      context,
-      listen: false,
-    );
+) dispatch;
+
+final _log = logger('main.reducer');
 
 StateModel reducer(
   StateModel stateModel,
@@ -50,6 +41,10 @@ StateModel reducer(
         ),
     DataAction: () => stateModel.copyWith(
           list: () => (action as DataAction).list,
+        ),
+    L10nAction: () => stateModel.copyWith(
+          l10n: () => (action as L10nAction).l10n,
+          l10nGuiRitter: () => (action as L10nAction).l10nGuiRitter,
         ),
     NavigationAction: () => stateModel.copyWith(
           state: () => (action as NavigationAction).state,

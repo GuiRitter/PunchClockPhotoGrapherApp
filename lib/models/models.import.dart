@@ -4,6 +4,10 @@ export 'package:punch_clock_photo_grapher_app/models/date.model.dart'
     show DateModel;
 export 'package:punch_clock_photo_grapher_app/models/encodable.model.dart'
     show EncodableModel;
+export 'package:punch_clock_photo_grapher_app/models/init.model.dart'
+    show InitModel;
+export 'package:punch_clock_photo_grapher_app/models/l10n.model.dart'
+    show L10nModel;
 export 'package:punch_clock_photo_grapher_app/models/list.model.dart'
     show ListModel;
 export 'package:punch_clock_photo_grapher_app/models/loading_tag.model.dart'

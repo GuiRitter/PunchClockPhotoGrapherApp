@@ -24,7 +24,7 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
 import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
     as loading_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show getDispatch;
+    show dispatch;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarCustomWidget;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
@@ -107,10 +107,6 @@ class LoadingPage extends StatelessWidget {
     required String id,
   }) {
     _log('onCancelPressed').raw('id', id).print();
-
-    final dispatch = getDispatch(
-      context: context,
-    );
 
     dispatch(
       loading_action.cancel(
