@@ -19,6 +19,8 @@ import 'package:flutter/services.dart'
     show SystemChrome, SystemUiOverlayStyle, Color;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
+import 'package:flutter_guiritter/common/common.import.dart'
+    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
 import 'package:flutter_redux/flutter_redux.dart'
     show StoreConnector, StoreProvider;
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
@@ -246,11 +248,21 @@ class MyApp extends StatelessWidget {
     Locale? locale,
     Iterable<Locale> supportedLocales,
   ) {
-    AppLocalizations.delegate
+    common_gui_ritter.AppLocalizationsGuiRitter.delegate
         .load(
       locale!,
     )
         .then(
+      (
+        l10n,
+      ) {
+        common_gui_ritter.l10nGuiRitter = l10n;
+
+        return AppLocalizations.delegate.load(
+          locale,
+        );
+      },
+    ).then(
       (
         l10n,
       ) {
@@ -260,7 +272,7 @@ class MyApp extends StatelessWidget {
       },
     );
 
-    return null;
+    return locale;
   }
 
   FutureOr validateAndSetToken() {

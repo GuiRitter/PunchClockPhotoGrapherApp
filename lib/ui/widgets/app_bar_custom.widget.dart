@@ -30,6 +30,8 @@ import 'package:flutter/material.dart'
         Widget;
 import 'package:flutter/services.dart'
     show Size, SystemUiOverlayStyle, TextAlign;
+import 'package:flutter_guiritter/common/common.import.dart'
+    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppBarPopupMenuEnum, l10n, navigatorState;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
@@ -42,6 +44,9 @@ double? appBarElevation;
 final GlobalKey appBarKey = GlobalKey();
 
 final _log = logger('appBarCustom');
+
+common_gui_ritter.AppLocalizationsGuiRitter get l10nGuiRitter =>
+    common_gui_ritter.l10nGuiRitter!;
 
 PopupMenuItem<AppBarPopupMenuEnum> buildPopupMenuItem({
   required String label,
@@ -176,7 +181,7 @@ class AppBarCustomWidget extends StatelessWidget
 
     popupMenuItemCompleteList.add(
       buildPopupMenuItem(
-        label: l10n.appTheme,
+        label: l10nGuiRitter.appTheme,
         icon: Icons.color_lens,
         menuEnum: AppBarPopupMenuEnum.theme,
       ),
@@ -233,21 +238,21 @@ class AppBarCustomWidget extends StatelessWidget
             final optionList = [
               ThemeOptionWidget(
                 themeMode: ThemeMode.dark,
-                title: l10n.darkTheme,
+                title: l10nGuiRitter.darkTheme,
               ),
               ThemeOptionWidget(
                 themeMode: ThemeMode.light,
-                title: l10n.lightTheme,
+                title: l10nGuiRitter.lightTheme,
               ),
               ThemeOptionWidget(
                 themeMode: ThemeMode.system,
-                title: l10n.systemTheme,
+                title: l10nGuiRitter.systemTheme,
               ),
             ];
 
             return AlertDialog(
               title: Text(
-                l10n.chooseTheme,
+                l10nGuiRitter.chooseTheme,
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -259,7 +264,7 @@ class AppBarCustomWidget extends StatelessWidget
                     context: context,
                   ),
                   child: Text(
-                    l10n.cancel,
+                    l10nGuiRitter.cancel,
                     textAlign: TextAlign.end,
                   ),
                 ),

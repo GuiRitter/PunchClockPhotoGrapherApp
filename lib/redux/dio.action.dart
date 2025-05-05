@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart' show CancelToken;
-import 'package:punch_clock_photo_grapher_app/main.dart' show showSnackBar;
+import 'package:flutter_guiritter/common/common.import.dart'
+    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show HTTPMethod, l10n, ResultStatus, Settings;
+    show HTTPMethod, ResultStatus, Settings;
+import 'package:punch_clock_photo_grapher_app/main.dart' show showSnackBar;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show BaseRequestModel, LoadingTagModel, Result, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
@@ -16,6 +18,9 @@ import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 final _api = Settings.api;
 
 final _log = logger('dio.action.dart');
+
+common_gui_ritter.AppLocalizationsGuiRitter get l10nGuiRitter =>
+    common_gui_ritter.l10nGuiRitter!;
 
 void clearToken() {
   _log('clearToken').print();
@@ -277,7 +282,7 @@ ThunkAction<StateModel> _treatResult({
           // do nothing
         } else if (result.message == null) {
           showSnackBar(
-            message: l10n.unexpectedError,
+            message: l10nGuiRitter.unexpectedError,
           );
         } else {
           showSnackBar(

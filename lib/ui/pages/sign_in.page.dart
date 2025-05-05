@@ -19,9 +19,9 @@ import 'package:flutter/material.dart'
         Widget;
 import 'package:flutter/services.dart'
     show AutofillHints, TextInput, TextInputType;
+import 'package:flutter_guiritter/common/common.import.dart'
+    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show l10n;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show SignInModel, SignInRequestModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
@@ -34,6 +34,9 @@ import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
 final _log = logger('SignInPage');
+
+common_gui_ritter.AppLocalizationsGuiRitter get l10nGuiRitter =>
+    common_gui_ritter.l10nGuiRitter!;
 
 class SignInPage extends StatelessWidget {
   final userIdController = TextEditingController();
@@ -108,18 +111,18 @@ class SignInPage extends StatelessWidget {
               children: [
                 buildTextFormField(
                   autofillHint: AutofillHints.username,
-                  labelText: l10n.userID,
+                  labelText: l10nGuiRitter.userID,
                   keyboardType: TextInputType.text,
                   controller: userIdController,
-                  invalidMessage: l10n.invalidUserID,
+                  invalidMessage: l10nGuiRitter.invalidUserID,
                 ),
                 buildTextFormField(
                   autofillHint: AutofillHints.password,
-                  labelText: l10n.password,
+                  labelText: l10nGuiRitter.password,
                   keyboardType: TextInputType.visiblePassword,
                   controller: passwordController,
                   obscureText: true,
-                  invalidMessage: l10n.invalidPassword,
+                  invalidMessage: l10nGuiRitter.invalidPassword,
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -131,7 +134,7 @@ class SignInPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: onSignInPressed,
                     child: Text(
-                      l10n.signIn,
+                      l10nGuiRitter.signIn,
                     ),
                   ),
                 ),
