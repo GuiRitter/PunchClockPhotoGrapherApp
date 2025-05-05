@@ -2,24 +2,14 @@ import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show ApiUrl, Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show Result, SignInRequestModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
-    as dio_action;
+import 'package:punch_clock_photo_grapher_app/redux/api/action.dart'
+    as api_action;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
-import 'package:redux/redux.dart' show Store, TypedReducer, combineReducers;
+import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
-
-final setTokenTypedReducer = TypedReducer<StateModel, AuthenticationAction>(
-  setTokenReducer,
-).call;
-
-final userCombinedReducer = combineReducers<StateModel>(
-  [
-    setTokenTypedReducer,
-  ],
-);
 
 final _log = logger('user.action');
 
@@ -28,7 +18,7 @@ ThunkAction<StateModel> clearToken() => (
     ) async {
       _log('clearToken').print();
 
-      dio_action.clearToken();
+      api_action.clearToken();
 
       var prefs = await SharedPreferences.getInstance();
       prefs.setString(
@@ -42,14 +32,6 @@ ThunkAction<StateModel> clearToken() => (
         ),
       );
     };
-
-StateModel setTokenReducer(
-  StateModel stateModel,
-  AuthenticationAction action,
-) =>
-    stateModel.copyWith(
-      token: () => action.token,
-    );
 
 ThunkAction<StateModel> signIn({
   required SignInRequestModel signInModel,
@@ -79,7 +61,7 @@ ThunkAction<StateModel> signIn({
           token,
         );
 
-        dio_action.setToken(
+        api_action.setToken(
           token: token,
         );
 
@@ -98,7 +80,7 @@ ThunkAction<StateModel> signIn({
           );
 
       store.dispatch(
-        dio_action.post(
+        api_action.post(
           url: ApiUrl.signIn.path,
           data: signInModel,
           userFriendlyName:
@@ -141,7 +123,7 @@ ThunkAction<StateModel> validateAndSetToken({
         );
       }
 
-      dio_action.setToken(
+      api_action.setToken(
         token: newToken!,
       );
 
@@ -162,7 +144,7 @@ ThunkAction<StateModel> validateAndSetToken({
       }
 
       store.dispatch(
-        dio_action.get(
+        api_action.get(
           url: ApiUrl.checkToken.path,
           userFriendlyName:
               store.state.l10nGuiRitter!.loadingTag_validateAndSetToken,

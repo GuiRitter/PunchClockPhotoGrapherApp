@@ -28,9 +28,9 @@ import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations, navigatorState, Settings, snackState, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
-    as dio_action;
-import 'package:punch_clock_photo_grapher_app/redux/l10n.redux.dart'
+import 'package:punch_clock_photo_grapher_app/redux/api/action.dart'
+    as api_action;
+import 'package:punch_clock_photo_grapher_app/redux/l10n/action.dart'
     as l10n_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show dispatch, reducer;
@@ -95,7 +95,7 @@ FutureOr initializeApp(
       )
       .nullIfEmpty;
 
-  dio_action.toggleToken(
+  api_action.toggleToken(
     token: token,
   );
 

@@ -1,8 +1,7 @@
-import 'package:dio/dio.dart' show CancelToken;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show DateTimeNullableExtension;
+import 'package:punch_clock_photo_grapher_app/redux/loading/action.dart'
+    show AddLoadingAction, CancelLoadingAction, RemoveLoadingAction;
 import 'package:redux/redux.dart' show Store, TypedReducer, combineReducers;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
@@ -46,31 +45,6 @@ StateModel addLoadingReducer(
       newLoadingTagList: action.list,
     );
 
-LoadingTagModel buildTag({
-  required String userFriendlyName,
-  required CancelToken cancelToken,
-}) =>
-    LoadingTagModel(
-      id: DateTime.now().getISO8601()!,
-      userFriendlyName: userFriendlyName,
-      cancelToken: cancelToken,
-    );
-
-ThunkAction<StateModel> cancel({
-  required String id,
-}) =>
-    (
-      Store<StateModel> store,
-    ) async {
-      final loadingTag = store.state.loadingTagList.firstWhere(
-        LoadingTagModel.idEquals(
-          id,
-        ),
-      );
-
-      loadingTag.cancelToken.cancel();
-    };
-
 StateModel cancelLoadingReducer(
   StateModel stateModel,
   CancelLoadingAction action,
@@ -81,18 +55,6 @@ StateModel cancelLoadingReducer(
       ],
     );
 
-ThunkAction<StateModel> remove({
-  required List<String> idList,
-}) =>
-    (
-      Store<StateModel> store,
-    ) async =>
-        store.dispatch(
-          RemoveLoadingAction(
-            idList: idList,
-          ),
-        );
-
 StateModel removeLoadingReducer(
   StateModel stateModel,
   RemoveLoadingAction action,
@@ -100,27 +62,3 @@ StateModel removeLoadingReducer(
     stateModel.withoutLoadingTagList(
       idList: action.idList,
     );
-
-class AddLoadingAction {
-  final List<LoadingTagModel> list;
-
-  const AddLoadingAction({
-    required this.list,
-  });
-}
-
-class CancelLoadingAction {
-  final String id;
-
-  const CancelLoadingAction({
-    required this.id,
-  });
-}
-
-class RemoveLoadingAction {
-  final List<String> idList;
-
-  const RemoveLoadingAction({
-    required this.idList,
-  });
-}

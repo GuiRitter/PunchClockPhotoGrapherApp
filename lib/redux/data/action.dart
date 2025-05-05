@@ -11,49 +11,16 @@ import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show ApiUrl, base64Prefix, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show ListModel, Result, SavePhotoRequestModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
-    as dio_action;
-import 'package:punch_clock_photo_grapher_app/redux/navigation.redux.dart'
-    show NavigationAction;
+import 'package:punch_clock_photo_grapher_app/redux/api/action.dart'
+    as api_action;
+import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
+    as navigation_action;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show DateTimeNullableExtension, logger;
-import 'package:redux/redux.dart' show Store, TypedReducer, combineReducers;
+import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
-final dataCombinedReducer = combineReducers<StateModel>(
-  [
-    dataTypedReducer,
-    setDateTypedReducer,
-    setPhotoTypedReducer,
-    setTimeTypedReducer,
-  ],
-);
-
-final dataTypedReducer = TypedReducer<StateModel, DataAction>(
-  dataReducer,
-).call;
-
-final setDateTypedReducer = TypedReducer<StateModel, SetDateAction>(
-  setDateReducer,
-).call;
-
-final setPhotoTypedReducer = TypedReducer<StateModel, SetPhotoAction>(
-  setPhotoReducer,
-).call;
-
-final setTimeTypedReducer = TypedReducer<StateModel, SetTimeAction>(
-  setTimeReducer,
-).call;
-
 final _log = logger('data.action');
-
-StateModel dataReducer(
-  StateModel stateModel,
-  DataAction action,
-) =>
-    stateModel.copyWith(
-      list: () => action.list,
-    );
 
 ThunkAction<StateModel> getList() => (
       Store<StateModel> store,
@@ -75,7 +42,7 @@ ThunkAction<StateModel> getList() => (
       }
 
       store.dispatch(
-        dio_action.get(
+        api_action.get(
           url: ApiUrl.photo.path,
           userFriendlyName: store.state.l10n!.loadingTag_getList,
           thenFunction: getListSuccess,
@@ -105,8 +72,15 @@ ThunkAction<StateModel> savePhoto() => (
           getList(),
         );
 
+        // TODO test
+        // store.dispatch(
+        //   const NavigationAction(
+        //     state: StateEnum.list,
+        //   ),
+        // );
+
         store.dispatch(
-          const NavigationAction(
+          navigation_action.go(
             state: StateEnum.list,
           ),
         );
@@ -118,7 +92,7 @@ ThunkAction<StateModel> savePhoto() => (
       );
 
       store.dispatch(
-        dio_action.post(
+        api_action.post(
           url: ApiUrl.photo.path,
           data: requestData,
           userFriendlyName: store.state.l10n!.loadingTag_savePhoto,
@@ -143,14 +117,6 @@ ThunkAction<StateModel> setDate({
         ),
       );
     };
-
-StateModel setDateReducer(
-  StateModel stateModel,
-  SetDateAction action,
-) =>
-    stateModel.withDate(
-      date: action.date,
-    );
 
 ThunkAction<StateModel> setPhotoImage() => (
       Store<StateModel> store,
@@ -213,14 +179,6 @@ ThunkAction<StateModel> setPhotoImage() => (
       );
     };
 
-StateModel setPhotoReducer(
-  StateModel stateModel,
-  SetPhotoAction action,
-) =>
-    stateModel.copyWith(
-      photoBytes: () => action.photoBytes,
-    );
-
 ThunkAction<StateModel> setTime({
   required TimeOfDay? time,
 }) =>
@@ -237,14 +195,6 @@ ThunkAction<StateModel> setTime({
         ),
       );
     };
-
-StateModel setTimeReducer(
-  StateModel stateModel,
-  SetTimeAction action,
-) =>
-    stateModel.withTime(
-      time: action.time,
-    );
 
 class DataAction {
   final ListModel? list;

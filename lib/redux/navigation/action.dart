@@ -4,18 +4,8 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
-import 'package:redux/redux.dart' show Store, TypedReducer, combineReducers;
+import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
-
-final goTypedReducer = TypedReducer<StateModel, NavigationAction>(
-  goReducer,
-).call;
-
-final navigationCombinedReducer = combineReducers<StateModel>(
-  [
-    goTypedReducer,
-  ],
-);
 
 final _log = logger('navigation.action');
 
@@ -33,14 +23,6 @@ ThunkAction<StateModel> go({
         ),
       );
     };
-
-StateModel goReducer(
-  StateModel stateModel,
-  NavigationAction action,
-) =>
-    stateModel.copyWith(
-      state: () => action.state,
-    );
 
 class NavigationAction {
   final StateEnum state;

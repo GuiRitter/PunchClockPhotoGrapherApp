@@ -21,7 +21,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/loading.redux.dart'
+import 'package:punch_clock_photo_grapher_app/redux/loading/action.dart'
     as loading_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show dispatch;

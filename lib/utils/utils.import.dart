@@ -8,6 +8,7 @@ export 'package:punch_clock_photo_grapher_app/utils/date_time.dart'
         TimeOfDayNullableExtension;
 export 'package:punch_clock_photo_grapher_app/utils/dialogs.dart'
     show onDialogCancelPressed;
+export 'package:punch_clock_photo_grapher_app/utils/loading.dart' show buildTag;
 export 'package:punch_clock_photo_grapher_app/utils/logger.dart'
     show hideSecret, logger;
 export 'package:punch_clock_photo_grapher_app/utils/material.dart'
