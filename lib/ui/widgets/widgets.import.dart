@@ -22,6 +22,8 @@ export 'package:punch_clock_photo_grapher_app/ui/widgets/home.widget.dart'
     show HomeWidget;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/home.widget.dart'
     show tableRowHeight;
+export 'package:punch_clock_photo_grapher_app/ui/widgets/text_l10n.widget.dart'
+    show getTextG, getTextL;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/theme_option.widget.dart'
     show ThemeOptionWidget;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/time.widget.dart'

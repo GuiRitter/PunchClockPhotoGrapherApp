@@ -1,13 +1,17 @@
 import 'dart:typed_data' show Uint8List;
 
 import 'package:flutter/material.dart' show ThemeMode, TimeOfDay, ValueGetter;
+import 'package:flutter_guiritter/common/common.import.dart'
+    as common_gui_ritter show AppLocalizationsGuiRitter;
+import 'package:flutter_guiritter/model/models.import.dart' as model_gui_ritter
+    show StateModel;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show StateEnum;
+    show AppLocalizations, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, ListModel;
 import 'package:redux/redux.dart' show Store;
 
-class StateModel {
+class StateModel extends model_gui_ritter.StateModel<AppLocalizations> {
   final List<LoadingTagModel> loadingTagList;
   final ThemeMode themeMode;
   final String? token;
@@ -17,6 +21,8 @@ class StateModel {
   final Uint8List? photoBytes;
 
   StateModel({
+    super.l10n,
+    super.l10nGuiRitter,
     required this.loadingTagList,
     required this.themeMode,
     required String? token,
@@ -28,7 +34,10 @@ class StateModel {
         list = (token?.isNotEmpty ?? false) ? list : null,
         photoBytes = (token?.isNotEmpty ?? false) ? photoBytes : null;
 
+  @override
   StateModel copyWith({
+    ValueGetter<AppLocalizations?>? l10n,
+    ValueGetter<common_gui_ritter.AppLocalizationsGuiRitter?>? l10nGuiRitter,
     ValueGetter<List<LoadingTagModel>>? loadingTagList,
     ValueGetter<ThemeMode>? themeMode,
     ValueGetter<String?>? token,
@@ -37,6 +46,11 @@ class StateModel {
     ValueGetter<DateTime>? dateTime,
     ValueGetter<Uint8List?>? photoBytes,
   }) {
+    final newL10n = (l10n != null) ? l10n.call() : this.l10n;
+
+    final newL10nGuiRitter =
+        (l10nGuiRitter != null) ? l10nGuiRitter.call() : this.l10nGuiRitter;
+
     final newLoadingTagList =
         (loadingTagList != null) ? loadingTagList.call() : this.loadingTagList;
 
@@ -68,6 +82,8 @@ class StateModel {
             : this.photoBytes;
 
     return StateModel(
+      l10n: newL10n,
+      l10nGuiRitter: newL10nGuiRitter,
       loadingTagList: newLoadingTagList,
       themeMode: newThemeMode,
       token: newToken,
@@ -124,6 +140,11 @@ class StateModel {
                 hour: time.hour,
                 minute: time.minute,
               ));
+
+  static bool selectIsL10nLoaded(
+    Store<StateModel> store,
+  ) =>
+      (store.state.l10nGuiRitter != null) && (store.state.l10n != null);
 
   static bool selectIsLoading(
     Store<StateModel> store,

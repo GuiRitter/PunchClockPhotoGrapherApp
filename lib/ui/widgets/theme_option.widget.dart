@@ -6,7 +6,6 @@ import 'package:flutter/material.dart'
         ListTile,
         Navigator,
         StatelessWidget,
-        Text,
         ThemeMode,
         Widget;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
@@ -15,7 +14,7 @@ import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show getDispatch;
+    show dispatch;
 import 'package:punch_clock_photo_grapher_app/redux/theme.action.dart'
     as theme_action;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
@@ -27,7 +26,7 @@ final _log = logger('ThemeOptionWidget');
 
 class ThemeOptionWidget extends StatelessWidget {
   final ThemeMode themeMode;
-  final String title;
+  final Widget title;
 
   const ThemeOptionWidget({
     super.key,
@@ -54,9 +53,7 @@ class ThemeOptionWidget extends StatelessWidget {
             context: context,
             themeMode: themeMode,
           ),
-          title: Text(
-            title,
-          ),
+          title: title,
           trailing: Icon(
             (themeModeCurrent == themeMode)
                 ? Icons.radio_button_checked
@@ -70,10 +67,6 @@ class ThemeOptionWidget extends StatelessWidget {
     required ThemeMode themeMode,
   }) {
     _log('onThemeTapped').enum_('themeMode', themeMode).print();
-
-    final dispatch = getDispatch(
-      context: context,
-    );
 
     dispatch(
       theme_action.ThemeAction(

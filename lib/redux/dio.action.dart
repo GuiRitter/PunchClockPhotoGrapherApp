@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart' show CancelToken;
-import 'package:punch_clock_photo_grapher_app/main.dart' show showSnackBar;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show HTTPMethod, l10n, ResultStatus, Settings;
+    show HTTPMethod, ResultStatus, Settings;
+import 'package:punch_clock_photo_grapher_app/main.dart' show showSnackBar;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show BaseRequestModel, LoadingTagModel, Result, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/loading.action.dart'
@@ -277,7 +277,7 @@ ThunkAction<StateModel> _treatResult({
           // do nothing
         } else if (result.message == null) {
           showSnackBar(
-            message: l10n.unexpectedError,
+            message: store.state.l10nGuiRitter!.unexpectedError,
           );
         } else {
           showSnackBar(

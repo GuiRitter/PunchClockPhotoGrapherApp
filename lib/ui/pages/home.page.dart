@@ -9,15 +9,15 @@ import 'package:flutter/material.dart'
         Widget;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show l10n, StateEnum;
+    show StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show ListModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show getDispatch;
+    show dispatch;
 import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show AppBarHomeWidget, BodyWidget, BottomAppBarWidget, HomeWidget;
+    show AppBarHomeWidget, BodyWidget, BottomAppBarWidget, getTextL, HomeWidget;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
           ),
           BottomAppBarWidget(
             onButtonPressed: onPhotoButtonPressed,
-            label: l10n.takePhoto,
+            label: getTextL((l) => l!.takePhoto),
           ),
         ],
       ),
@@ -80,9 +80,7 @@ class HomePage extends StatelessWidget {
   goToPhotoPage({
     required BuildContext context,
   }) {
-    final dispatch = getDispatch(
-      context: context,
-    );
+    _log('goToPhotoPage').print();
 
     dispatch(
       navigation_action.go(

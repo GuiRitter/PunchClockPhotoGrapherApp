@@ -8,11 +8,11 @@ import 'package:flutter/material.dart'
         Widget,
         kToolbarHeight;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show AppBarPopupMenuEnum, l10n;
+    show AppBarPopupMenuEnum;
 import 'package:punch_clock_photo_grapher_app/redux/data.action.dart'
     as data_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show getDispatch;
+    show dispatch;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarSignedInWidget, buildPopupMenuItem;
 
@@ -30,10 +30,6 @@ class AppBarHomeWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(
     BuildContext context,
   ) {
-    final dispatch = getDispatch(
-      context: context,
-    );
-
     return AppBarSignedInWidget(
       onHomePopupMenuItemPressedMap: {
         AppBarPopupMenuEnum.reload: (
@@ -45,7 +41,7 @@ class AppBarHomeWidget extends StatelessWidget implements PreferredSizeWidget {
       },
       popupMenuItemList: [
         buildPopupMenuItem(
-          label: l10n.reload,
+          l10nSelector: (l) => l!.reload,
           icon: Icons.replay,
           menuEnum: AppBarPopupMenuEnum.reload,
         ),

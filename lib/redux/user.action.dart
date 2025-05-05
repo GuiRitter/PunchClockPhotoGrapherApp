@@ -1,5 +1,5 @@
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show ApiUrl, l10n, Settings;
+    show ApiUrl, Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show Result, SignInRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
@@ -83,7 +83,8 @@ ThunkAction<StateModel> signIn({
         dio_action.post(
           url: ApiUrl.signIn.path,
           data: signInModel,
-          userFriendlyName: l10n.loadingTag_validateAndSetToken,
+          userFriendlyName:
+              store.state.l10nGuiRitter!.loadingTag_validateAndSetToken,
           thenFunction: signInSuccess,
           catchFunction: signInFailure,
         ),
@@ -145,7 +146,8 @@ ThunkAction<StateModel> validateAndSetToken({
       store.dispatch(
         dio_action.get(
           url: ApiUrl.checkToken.path,
-          userFriendlyName: l10n.loadingTag_validateAndSetToken,
+          userFriendlyName:
+              store.state.l10nGuiRitter!.loadingTag_validateAndSetToken,
           thenFunction: checkTokenSuccess,
           catchFunction: checkTokenFailure,
         ),

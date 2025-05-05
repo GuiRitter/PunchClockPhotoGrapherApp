@@ -8,7 +8,7 @@ import 'package:image/image.dart'
 import 'package:image_picker/image_picker.dart'
     show ImagePicker, ImageSource, XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show ApiUrl, base64Prefix, StateEnum, l10n;
+    show ApiUrl, base64Prefix, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show ListModel, Result, SavePhotoRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
@@ -44,7 +44,7 @@ ThunkAction<StateModel> getList() => (
       store.dispatch(
         dio_action.get(
           url: ApiUrl.photo.path,
-          userFriendlyName: l10n.loadingTag_getList,
+          userFriendlyName: store.state.l10n!.loadingTag_getList,
           thenFunction: getListSuccess,
         ),
       );
@@ -88,7 +88,7 @@ ThunkAction<StateModel> savePhoto() => (
         dio_action.post(
           url: ApiUrl.photo.path,
           data: requestData,
-          userFriendlyName: l10n.loadingTag_savePhoto,
+          userFriendlyName: store.state.l10n!.loadingTag_savePhoto,
           thenFunction: savePhotoSuccess,
         ),
       );

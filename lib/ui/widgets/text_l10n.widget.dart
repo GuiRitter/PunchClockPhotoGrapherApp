@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart' show TextAlign, TextStyle, Widget;
+import 'package:flutter_guiritter/common/common.import.dart' as common_guiritter
+    show AppLocalizationsGuiRitter;
+import 'package:flutter_guiritter/ui/widget/text_l10n.widget.dart'
+    as widget_guiritter show TextL10n;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show AppLocalizations;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show StateModel;
+
+Widget getTextG(
+  final String Function(
+    common_guiritter.AppLocalizationsGuiRitter?,
+  ) l10nGuiRitterSelector, {
+  TextStyle? style,
+  TextAlign? textAlign,
+}) =>
+    widget_guiritter.TextL10n<AppLocalizations, StateModel>.g(
+      l10nGuiRitterSelector,
+      style: style,
+    );
+
+Widget getTextL(
+  final String Function(
+    AppLocalizations?,
+  )? l10nSelector, {
+  TextStyle? style,
+  TextAlign? textAlign,
+}) =>
+    widget_guiritter.TextL10n<AppLocalizations, StateModel>.l(
+      l10nSelector,
+      style: style,
+    );
