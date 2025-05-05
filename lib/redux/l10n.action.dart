@@ -1,7 +1,7 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
 import 'package:flutter_guiritter/common/common.import.dart'
-    as common_gui_ritter show AppLocalizationsGuiRitter;
+    as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
 import 'package:redux/redux.dart' show Store;
@@ -13,13 +13,16 @@ ThunkAction<StateModel> setL10n({
 }) =>
     (
       Store<StateModel> store,
-    ) async =>
-        store.dispatch(
-          L10nAction(
-            l10n: l10n,
-            l10nGuiRitter: l10nGuiRitter,
-          ),
-        );
+    ) async {
+      common_gui_ritter.l10nGuiRitter = l10nGuiRitter;
+
+      return store.dispatch(
+        L10nAction(
+          l10n: l10n,
+          l10nGuiRitter: l10nGuiRitter,
+        ),
+      );
+    };
 
 class L10nAction {
   final AppLocalizations? l10n;
