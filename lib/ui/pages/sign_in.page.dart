@@ -19,7 +19,8 @@ import 'package:flutter/services.dart'
 import 'package:flutter_guiritter/ui/widget/widget.import.dart'
     show TextFormFieldL10n;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart';
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show AppLocalizations;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show SignInModel, SignInRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
