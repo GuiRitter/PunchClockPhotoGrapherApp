@@ -3,8 +3,20 @@ import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show LoadingTagModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show DateTimeNullableExtension;
-import 'package:redux/redux.dart' show Store;
+import 'package:redux/redux.dart' show Store, TypedReducer;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
+
+final addLoadingTypedReducer = TypedReducer<StateModel, AddLoadingAction>(
+  addLoadingReducer,
+).call;
+
+final cancelLoadingTypedReducer = TypedReducer<StateModel, CancelLoadingAction>(
+  cancelLoadingReducer,
+).call;
+
+final removeLoadingTypedReducer = TypedReducer<StateModel, RemoveLoadingAction>(
+  removeLoadingReducer,
+).call;
 
 ThunkAction<StateModel> add({
   required List<LoadingTagModel> list,
@@ -17,6 +29,14 @@ ThunkAction<StateModel> add({
             list: list,
           ),
         );
+
+StateModel addLoadingReducer(
+  StateModel stateModel,
+  AddLoadingAction action,
+) =>
+    stateModel.withLoadingTagList(
+      newLoadingTagList: action.list,
+    );
 
 LoadingTagModel buildTag({
   required String userFriendlyName,
@@ -43,6 +63,16 @@ ThunkAction<StateModel> cancel({
       loadingTag.cancelToken.cancel();
     };
 
+StateModel cancelLoadingReducer(
+  StateModel stateModel,
+  CancelLoadingAction action,
+) =>
+    stateModel.withoutLoadingTagList(
+      idList: [
+        action.id,
+      ],
+    );
+
 ThunkAction<StateModel> remove({
   required List<String> idList,
 }) =>
@@ -54,6 +84,14 @@ ThunkAction<StateModel> remove({
             idList: idList,
           ),
         );
+
+StateModel removeLoadingReducer(
+  StateModel stateModel,
+  RemoveLoadingAction action,
+) =>
+    stateModel.withoutLoadingTagList(
+      idList: action.idList,
+    );
 
 class AddLoadingAction {
   final List<LoadingTagModel> list;

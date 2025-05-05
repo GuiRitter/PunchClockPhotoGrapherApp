@@ -19,10 +19,11 @@ import 'package:flutter/services.dart'
     show SystemChrome, SystemUiOverlayStyle, Color;
 import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter;
+import 'package:flutter_guiritter/redux/redux.import.dart' as redux_gui_ritter
+    show dispatch;
 import 'package:flutter_redux/flutter_redux.dart'
     show StoreConnector, StoreProvider;
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
-import 'package:provider/provider.dart' show MultiProvider, Provider;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations, navigatorState, Settings, snackState, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
@@ -117,6 +118,7 @@ FutureOr initializeApp(
   );
 
   dispatch = store.dispatch;
+  redux_gui_ritter.dispatch = store.dispatch;
 
   runApp(
     MyApp(
@@ -182,8 +184,6 @@ class MyApp extends StatelessWidget {
   ) {
     _log('build').print();
 
-    final dispatch = store.dispatch;
-
     final themeLight = light(
       context: context,
     );
@@ -192,41 +192,31 @@ class MyApp extends StatelessWidget {
       context: context,
     );
 
-    return MultiProvider(
-      providers: [
-        Provider<
-            dynamic Function(
-              dynamic,
-            )>.value(
-          value: dispatch,
-        ),
-      ],
-      child: StoreProvider<StateModel>(
-        store: store,
-        child: StoreConnector<StateModel, ThemeMode>(
-          distinct: true,
-          converter: (
-            store,
-          ) =>
-              store.state.themeMode,
-          builder: (
-            context,
-            themeMode,
-          ) =>
-              MaterialApp(
-            title: 'Punch Clock Photo Grapher',
-            onGenerateTitle: getTitleLocalized,
-            localeResolutionCallback: populateL10nNotifier,
-            theme: themeLight,
-            darkTheme: themeDark,
-            themeMode: themeMode,
-            home: const RootPage(),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            // TODO implement l10n switching
-            supportedLocales: AppLocalizations.supportedLocales,
-            navigatorKey: navigatorState,
-            scaffoldMessengerKey: snackState,
-          ),
+    return StoreProvider<StateModel>(
+      store: store,
+      child: StoreConnector<StateModel, ThemeMode>(
+        distinct: true,
+        converter: (
+          store,
+        ) =>
+            store.state.themeMode,
+        builder: (
+          context,
+          themeMode,
+        ) =>
+            MaterialApp(
+          title: 'Punch Clock Photo Grapher',
+          onGenerateTitle: getTitleLocalized,
+          localeResolutionCallback: populateL10nNotifier,
+          theme: themeLight,
+          darkTheme: themeDark,
+          themeMode: themeMode,
+          home: const RootPage(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          // TODO implement l10n switching
+          supportedLocales: AppLocalizations.supportedLocales,
+          navigatorKey: navigatorState,
+          scaffoldMessengerKey: snackState,
         ),
       ),
     );

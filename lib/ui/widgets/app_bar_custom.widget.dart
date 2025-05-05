@@ -32,12 +32,12 @@ import 'package:flutter/services.dart'
     show Size, SystemUiOverlayStyle, TextAlign;
 import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter;
+import 'package:flutter_guiritter/util/util.import.dart'
+    show logger, onDialogCancelPressed;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppBarPopupMenuEnum, navigatorState;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show getTextG, getTextL, ThemeOptionWidget;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger, onDialogCancelPressed;
 
 double? appBarElevation;
 
@@ -231,7 +231,7 @@ class AppBarCustomWidget extends StatelessWidget
           builder: (
             context,
           ) {
-            final optionList = [
+            final optionList = <Widget>[
               ThemeOptionWidget(
                 themeMode: ThemeMode.dark,
                 title: getTextG((l) => l!.darkTheme),

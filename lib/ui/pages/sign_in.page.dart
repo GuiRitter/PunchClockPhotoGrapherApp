@@ -17,7 +17,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter/services.dart'
     show AutofillHints, TextInput, TextInputType;
 import 'package:flutter_guiritter/ui/widget/widget.import.dart'
-    show TextFormFieldL10n;
+    show AppBarSignedOutWidget, TextFormFieldL10n;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations;
@@ -28,7 +28,7 @@ import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
 import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
     as user_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show AppBarSignedOutWidget, BodyWidget, getTextG;
+    show BodyWidget, getTextG, getTextL;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
 
@@ -64,7 +64,9 @@ class SignInPage extends StatelessWidget {
         );
 
     return BodyWidget(
-      appBar: const AppBarSignedOutWidget(),
+      appBar: AppBarSignedOutWidget<AppLocalizations, StateModel>(
+        title: getTextL((l) => l!.title),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(
           Theme.of(

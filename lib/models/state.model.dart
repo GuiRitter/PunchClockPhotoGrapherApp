@@ -3,7 +3,7 @@ import 'dart:typed_data' show Uint8List;
 import 'package:flutter/material.dart' show ThemeMode, TimeOfDay, ValueGetter;
 import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter;
-import 'package:flutter_guiritter/model/models.import.dart' as model_gui_ritter
+import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations, StateEnum;
@@ -13,7 +13,6 @@ import 'package:redux/redux.dart' show Store;
 
 class StateModel extends model_gui_ritter.StateModel<AppLocalizations> {
   final List<LoadingTagModel> loadingTagList;
-  final ThemeMode themeMode;
   final String? token;
   final ListModel? list;
   final StateEnum state;
@@ -23,8 +22,8 @@ class StateModel extends model_gui_ritter.StateModel<AppLocalizations> {
   StateModel({
     super.l10n,
     super.l10nGuiRitter,
+    required super.themeMode,
     required this.loadingTagList,
-    required this.themeMode,
     required String? token,
     required ListModel? list,
     required this.state,

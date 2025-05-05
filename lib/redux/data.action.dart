@@ -17,10 +17,34 @@ import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
     show NavigationAction;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show DateTimeNullableExtension, logger;
-import 'package:redux/redux.dart' show Store;
+import 'package:redux/redux.dart' show Store, TypedReducer;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
+final dataTypedReducer = TypedReducer<StateModel, DataAction>(
+  dataReducer,
+).call;
+
+final setDateTypedReducer = TypedReducer<StateModel, SetDateAction>(
+  setDateReducer,
+).call;
+
+final setPhotoTypedReducer = TypedReducer<StateModel, SetPhotoAction>(
+  setPhotoReducer,
+).call;
+
+final setTimeTypedReducer = TypedReducer<StateModel, SetTimeAction>(
+  setTimeReducer,
+).call;
+
 final _log = logger('data.action');
+
+StateModel dataReducer(
+  StateModel stateModel,
+  DataAction action,
+) =>
+    stateModel.copyWith(
+      list: () => action.list,
+    );
 
 ThunkAction<StateModel> getList() => (
       Store<StateModel> store,
@@ -111,6 +135,14 @@ ThunkAction<StateModel> setDate({
       );
     };
 
+StateModel setDateReducer(
+  StateModel stateModel,
+  SetDateAction action,
+) =>
+    stateModel.withDate(
+      date: action.date,
+    );
+
 ThunkAction<StateModel> setPhotoImage() => (
       Store<StateModel> store,
     ) async {
@@ -172,6 +204,14 @@ ThunkAction<StateModel> setPhotoImage() => (
       );
     };
 
+StateModel setPhotoReducer(
+  StateModel stateModel,
+  SetPhotoAction action,
+) =>
+    stateModel.copyWith(
+      photoBytes: () => action.photoBytes,
+    );
+
 ThunkAction<StateModel> setTime({
   required TimeOfDay? time,
 }) =>
@@ -188,6 +228,14 @@ ThunkAction<StateModel> setTime({
         ),
       );
     };
+
+StateModel setTimeReducer(
+  StateModel stateModel,
+  SetTimeAction action,
+) =>
+    stateModel.withTime(
+      time: action.time,
+    );
 
 class DataAction {
   final ListModel? list;

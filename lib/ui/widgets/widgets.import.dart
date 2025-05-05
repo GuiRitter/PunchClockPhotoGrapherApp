@@ -8,8 +8,6 @@ export 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_home.widget.dar
     show AppBarHomeWidget;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_in.widget.dart'
     show AppBarSignedInWidget;
-export 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_signed_out.widget.dart'
-    show AppBarSignedOutWidget;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/body.widget.dart'
     show BodyWidget;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/bottom_app_bar.widget.dart'

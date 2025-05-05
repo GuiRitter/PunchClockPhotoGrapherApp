@@ -4,8 +4,12 @@ import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter, l10nGuiRitter;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
-import 'package:redux/redux.dart' show Store;
+import 'package:redux/redux.dart' show Store, TypedReducer;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
+
+final setL10nTypedReducer = TypedReducer<StateModel, L10nAction>(
+  setL10nReducer,
+).call;
 
 ThunkAction<StateModel> setL10n({
   required AppLocalizations? l10n,
@@ -23,6 +27,15 @@ ThunkAction<StateModel> setL10n({
         ),
       );
     };
+
+StateModel setL10nReducer(
+  StateModel stateModel,
+  L10nAction action,
+) =>
+    stateModel.copyWith(
+      l10n: () => action.l10n,
+      l10nGuiRitter: () => action.l10nGuiRitter,
+    );
 
 class L10nAction {
   final AppLocalizations? l10n;

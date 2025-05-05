@@ -6,10 +6,14 @@ import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
     as dio_action;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show logger;
-import 'package:redux/redux.dart' show Store;
+import 'package:redux/redux.dart' show Store, TypedReducer;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
+
+final setTokenTypedReducer = TypedReducer<StateModel, AuthenticationAction>(
+  setTokenReducer,
+).call;
 
 final _log = logger('user.action');
 
@@ -32,6 +36,14 @@ ThunkAction<StateModel> clearToken() => (
         ),
       );
     };
+
+StateModel setTokenReducer(
+  StateModel stateModel,
+  AuthenticationAction action,
+) =>
+    stateModel.copyWith(
+      token: () => action.token,
+    );
 
 ThunkAction<StateModel> signIn({
   required SignInRequestModel signInModel,
