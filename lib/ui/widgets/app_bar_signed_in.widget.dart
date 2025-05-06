@@ -8,11 +8,10 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         Widget,
         kToolbarHeight;
+import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
 import 'package:flutter_guiritter/redux/user/action.dart' as user_action;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show OldAppBarPopupMenuEnum;
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show dispatch;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarCustomWidget, buildPopupMenuItem;
 

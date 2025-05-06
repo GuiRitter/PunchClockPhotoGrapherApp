@@ -15,10 +15,6 @@ import 'package:punch_clock_photo_grapher_app/redux/user/reducer.dart'
     show userCombinedReducer;
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
 
-late dynamic Function(
-  dynamic,
-) dispatch;
-
 final noActionTypedReducer = TypedReducer<StateModel, NoAction>(
   noActionReducer,
 ).call;
