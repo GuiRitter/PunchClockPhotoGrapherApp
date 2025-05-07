@@ -7,19 +7,31 @@
 		{
 			"name": "punch_clock_photo_grapher_app",
 			"request": "launch",
-			"type": "dart"
+			"type": "dart",
+			"toolArgs": [
+				"--dart-define",
+				"APP_NAME=punch_clock_photo_grapher"
+			]
 		},
 		{
 			"name": "punch_clock_photo_grapher_app (profile mode)",
 			"request": "launch",
 			"type": "dart",
-			"flutterMode": "profile"
+			"flutterMode": "profile",
+			"toolArgs": [
+				"--dart-define",
+				"APP_NAME=punch_clock_photo_grapher"
+			]
 		},
 		{
 			"name": "punch_clock_photo_grapher_app (release mode)",
 			"request": "launch",
 			"type": "dart",
-			"flutterMode": "release"
+			"flutterMode": "release",
+			"toolArgs": [
+				"--dart-define",
+				"APP_NAME=punch_clock_photo_grapher"
+			]
 		}
 	]
 }

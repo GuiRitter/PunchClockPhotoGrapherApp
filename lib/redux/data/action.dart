@@ -3,20 +3,21 @@ import 'dart:math' show min;
 import 'dart:typed_data' show Uint8List;
 
 import 'package:flutter/material.dart' show TimeOfDay;
+import 'package:flutter_guiritter/common/common.import.dart' show base64Prefix;
+import 'package:flutter_guiritter/model/model.import.dart' show Result;
+import 'package:flutter_guiritter/redux/api/action.dart' as api_action;
+import 'package:flutter_guiritter/util/util.import.dart'
+    show DateTimeNullableExtension, logger;
 import 'package:image/image.dart'
     show copyCrop, copyResize, decodeJpg, encodePng;
 import 'package:image_picker/image_picker.dart'
     show ImagePicker, ImageSource, XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show ApiUrl, base64Prefix, StateEnum;
+    show ApiUrl, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show ListModel, Result, SavePhotoRequestModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
-    as dio_action;
-import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
-    show NavigationAction;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show DateTimeNullableExtension, logger;
+    show ListModel, SavePhotoRequestModel, StateModel;
+import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
+    as navigation_action;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
@@ -42,7 +43,7 @@ ThunkAction<StateModel> getList() => (
       }
 
       store.dispatch(
-        dio_action.get(
+        api_action.get(
           url: ApiUrl.photo.path,
           userFriendlyName: store.state.l10n!.loadingTag_getList,
           thenFunction: getListSuccess,
@@ -73,7 +74,7 @@ ThunkAction<StateModel> savePhoto() => (
         );
 
         store.dispatch(
-          const NavigationAction(
+          navigation_action.go(
             state: StateEnum.list,
           ),
         );
@@ -85,7 +86,7 @@ ThunkAction<StateModel> savePhoto() => (
       );
 
       store.dispatch(
-        dio_action.post(
+        api_action.post(
           url: ApiUrl.photo.path,
           data: requestData,
           userFriendlyName: store.state.l10n!.loadingTag_savePhoto,

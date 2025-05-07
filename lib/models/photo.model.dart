@@ -1,11 +1,11 @@
 import 'dart:typed_data' show Uint8List;
 
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show LoggableModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/utils/logger.dart'
-    show getExistsMark;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
+import 'package:flutter_guiritter/model/model.import.dart' show LoggableModel;
+import 'package:flutter_guiritter/util/util.import.dart'
     show DateTimeNullableExtension;
+import 'package:flutter_guiritter/util/util.import.dart' show getExistsMark;
+import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+    show StateModel;
 import 'package:redux/redux.dart' show Store;
 
 class PhotoModel implements LoggableModel {

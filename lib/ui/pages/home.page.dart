@@ -7,19 +7,17 @@ import 'package:flutter/material.dart'
         SizedBox,
         StatelessWidget,
         Widget;
+import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show ListModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show dispatch;
-import 'package:punch_clock_photo_grapher_app/redux/navigation.action.dart'
+import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show AppBarHomeWidget, BodyWidget, BottomAppBarWidget, getTextL, HomeWidget;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger;
 
 final _log = logger('HomePage');
 

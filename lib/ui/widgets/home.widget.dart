@@ -19,12 +19,13 @@ import 'package:flutter/material.dart'
         Text,
         Theme,
         Widget;
+import 'package:flutter_guiritter/ui/widget/widget.import.dart'
+    show getAppBarElevation;
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show ListModel, WeekModel;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show getAppBarElevation, getTextL, WeekWidget;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger;
+    show getTextL, WeekWidget;
 
 double? tableRowHeight;
 

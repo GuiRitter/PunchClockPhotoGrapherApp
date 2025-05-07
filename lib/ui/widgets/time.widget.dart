@@ -11,9 +11,8 @@ import 'package:flutter/material.dart'
         Widget,
         Wrap,
         WrapCrossAlignment;
+import 'package:flutter_guiritter/common/common.import.dart' show Settings;
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show Settings;
 
 class TimeWidget extends StatelessWidget {
   final DateTime dateTime;

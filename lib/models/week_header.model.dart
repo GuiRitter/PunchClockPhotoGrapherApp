@@ -1,10 +1,8 @@
+import 'package:flutter_guiritter/common/common.import.dart' show Settings;
+import 'package:flutter_guiritter/util/util.import.dart' show DateTimeExtension;
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show DateModel;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show DateTimeExtension;
 
 get dayFormat => DateFormat(
       'dd',

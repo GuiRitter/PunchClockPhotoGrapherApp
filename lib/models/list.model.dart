@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart' show setEquals;
+import 'package:flutter_guiritter/common/common.import.dart' show Settings;
+import 'package:flutter_guiritter/model/model.import.dart'
+    show LoggableModel, LoggableSetExtension;
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show Settings;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show DateModel, LoggableModel, LoggableSetExtension, StateModel, WeekModel;
+    show DateModel, StateModel, WeekModel;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show MapExtension;
 import 'package:redux/redux.dart' show Store;

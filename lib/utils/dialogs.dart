@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' show BuildContext, Navigator;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger;
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 
 final _log = logger('utils/dialogs');
 

@@ -1,6 +1,5 @@
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_test/flutter_test.dart' show test;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger;
 
 void main() {
   test('log of map', () async {

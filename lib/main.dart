@@ -1,16 +1,13 @@
 import 'dart:async' show FutureOr;
 import 'dart:io' show HttpOverrides;
 
-import 'package:dio/dio.dart' show DioException;
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart'
     show
         BuildContext,
         Locale,
         MaterialApp,
-        SnackBar,
         StatelessWidget,
-        Text,
         ThemeMode,
         Widget,
         WidgetsFlutterBinding,
@@ -19,28 +16,32 @@ import 'package:flutter/services.dart'
     show SystemChrome, SystemUiOverlayStyle, Color;
 import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter;
+import 'package:flutter_guiritter/common/common.import.dart'
+    show navigatorState, Settings, snackState;
+import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
+    show LoadingTagModel;
+import 'package:flutter_guiritter/redux/api/action.dart' as api_action;
+import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
+import 'package:flutter_guiritter/service/dio/my_http_overrides.dart'
+    show MyHttpOverrides;
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart'
     show StoreConnector, StoreProvider;
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
-import 'package:provider/provider.dart' show MultiProvider, Provider;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
-    show AppLocalizations, navigatorState, Settings, snackState, StateEnum;
+    show AppLocalizations, StateEnum;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show LoadingTagModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/dio.action.dart'
-    as dio_action;
-import 'package:punch_clock_photo_grapher_app/redux/l10n.action.dart'
+    show StateModel;
+import 'package:punch_clock_photo_grapher_app/redux/l10n/action.dart'
     as l10n_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show dispatch, reducer;
-import 'package:punch_clock_photo_grapher_app/services/dio/my_http_overrides.dart'
-    show MyHttpOverrides;
+    show reducer;
 import 'package:punch_clock_photo_grapher_app/themes/themes.import.dart'
     show dark, light;
 import 'package:punch_clock_photo_grapher_app/ui/pages/pages.import.dart'
     show RootPage;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger, StringExtension;
+    show StringExtension;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show thunkMiddleware;
 import 'package:shared_preferences/shared_preferences.dart'
@@ -94,7 +95,7 @@ FutureOr initializeApp(
       )
       .nullIfEmpty;
 
-  dio_action.toggleToken(
+  api_action.toggleToken(
     token: token,
   );
 
@@ -103,7 +104,7 @@ FutureOr initializeApp(
     initialState: StateModel(
       l10n: null,
       l10nGuiRitter: null,
-      loadingTagList: <LoadingTagModel>[],
+      loadingTagList: <model_gui_ritter.LoadingTagModel>[],
       themeMode: theme,
       token: token,
       list: null,
@@ -125,49 +126,6 @@ FutureOr initializeApp(
   );
 }
 
-void showSnackBar({
-  required String? message,
-}) {
-  _log('showSnackBar').raw('message', message).print();
-
-  snackState.currentState!.showSnackBar(
-    SnackBar(
-      showCloseIcon: true,
-      content: Text(
-        message ?? '',
-      ),
-    ),
-  );
-}
-
-String treatDioResponse({
-  required dynamic response,
-}) {
-  if (response!.data is Map) {
-    if ((response!.data as Map).containsKey(
-      Settings.errorKey,
-    )) {
-      return response!.data[Settings.errorKey];
-    }
-  }
-  return response!.data.toString();
-}
-
-String treatException({
-  required dynamic exception,
-}) {
-  if (exception is DioException) {
-    if (exception.response != null) {
-      return treatDioResponse(
-        response: exception.response,
-      );
-    } else if (exception.message != null) {
-      return exception.message!;
-    }
-  }
-  return exception.toString();
-}
-
 class MyApp extends StatelessWidget {
   final Store<StateModel> store;
 
@@ -182,8 +140,6 @@ class MyApp extends StatelessWidget {
   ) {
     _log('build').print();
 
-    final dispatch = store.dispatch;
-
     final themeLight = light(
       context: context,
     );
@@ -192,41 +148,31 @@ class MyApp extends StatelessWidget {
       context: context,
     );
 
-    return MultiProvider(
-      providers: [
-        Provider<
-            dynamic Function(
-              dynamic,
-            )>.value(
-          value: dispatch,
-        ),
-      ],
-      child: StoreProvider<StateModel>(
-        store: store,
-        child: StoreConnector<StateModel, ThemeMode>(
-          distinct: true,
-          converter: (
-            store,
-          ) =>
-              store.state.themeMode,
-          builder: (
-            context,
-            themeMode,
-          ) =>
-              MaterialApp(
-            title: 'Punch Clock Photo Grapher',
-            onGenerateTitle: getTitleLocalized,
-            localeResolutionCallback: populateL10nNotifier,
-            theme: themeLight,
-            darkTheme: themeDark,
-            themeMode: themeMode,
-            home: const RootPage(),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            // TODO implement l10n switching
-            supportedLocales: AppLocalizations.supportedLocales,
-            navigatorKey: navigatorState,
-            scaffoldMessengerKey: snackState,
-          ),
+    return StoreProvider<StateModel>(
+      store: store,
+      child: StoreConnector<StateModel, ThemeMode>(
+        distinct: true,
+        converter: (
+          store,
+        ) =>
+            store.state.themeMode,
+        builder: (
+          context,
+          themeMode,
+        ) =>
+            MaterialApp(
+          title: 'Punch Clock Photo Grapher',
+          onGenerateTitle: getTitleLocalized,
+          localeResolutionCallback: populateL10nNotifier,
+          theme: themeLight,
+          darkTheme: themeDark,
+          themeMode: themeMode,
+          home: const RootPage(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          // TODO implement l10n switching
+          supportedLocales: AppLocalizations.supportedLocales,
+          navigatorKey: navigatorState,
+          scaffoldMessengerKey: snackState,
         ),
       ),
     );

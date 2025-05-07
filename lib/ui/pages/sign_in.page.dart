@@ -16,21 +16,20 @@ import 'package:flutter/material.dart'
         Widget;
 import 'package:flutter/services.dart'
     show AutofillHints, TextInput, TextInputType;
+import 'package:flutter_guiritter/model/model.import.dart'
+    show SignInRequestModel;
+import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
+import 'package:flutter_guiritter/redux/user/action.dart' as user_action;
 import 'package:flutter_guiritter/ui/widget/widget.import.dart'
-    show TextFormFieldL10n;
+    show AppBarSignedOutWidget, TextFormFieldL10n;
+import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show SignInModel, SignInRequestModel, StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
-    show dispatch;
-import 'package:punch_clock_photo_grapher_app/redux/user.action.dart'
-    as user_action;
+    show SignInModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show AppBarSignedOutWidget, BodyWidget, getTextG;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show logger;
+    show BodyWidget, getTextG, getTextL;
 
 final _log = logger('SignInPage');
 
@@ -64,7 +63,9 @@ class SignInPage extends StatelessWidget {
         );
 
     return BodyWidget(
-      appBar: const AppBarSignedOutWidget(),
+      appBar: AppBarSignedOutWidget<AppLocalizations, StateModel>(
+        title: getTextL((l) => l!.title),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(
           Theme.of(
