@@ -4,7 +4,5 @@ export 'package:punch_clock_photo_grapher_app/common/api_url.enum.dart'
     show ApiUrl;
 export 'package:punch_clock_photo_grapher_app/common/app_bar_popup_menu.enum.dart'
     show AppBarPopupMenuEnum;
-export 'package:punch_clock_photo_grapher_app/common/old_app_bar_popup_menu.enum.dart'
-    show OldAppBarPopupMenuEnum;
 export 'package:punch_clock_photo_grapher_app/common/state.enum.dart'
     show StateEnum;

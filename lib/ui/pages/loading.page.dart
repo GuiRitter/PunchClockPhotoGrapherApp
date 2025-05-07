@@ -22,12 +22,14 @@ import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
     show LoadingTagModel;
 import 'package:flutter_guiritter/redux/loading/action.dart' as loading_action;
 import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
+import 'package:flutter_guiritter/ui/widget/widget.import.dart'
+    show AppBarCustomWidget;
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show AppBarCustomWidget;
+    show getTextL;
 
 final _log = logger('LoadingPage');
 
@@ -57,7 +59,9 @@ class LoadingPage extends StatelessWidget {
     _log('connectorBuilder').mapList('loadingTagList', loadingTagList).print();
 
     return Scaffold(
-      appBar: const AppBarCustomWidget(),
+      appBar: AppBarCustomWidget(
+        title: getTextL((l) => l!.title),
+      ),
       body: SizedBox(
         height: mediaSize.height,
         width: mediaSize.width,
