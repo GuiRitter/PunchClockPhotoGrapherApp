@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart'
     show BuildContext, StatelessWidget, Widget;
+import 'package:flutter_guiritter/model/model.import.dart' show InitModel;
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show InitModel, StateModel;
+    show StateModel;
 import 'package:punch_clock_photo_grapher_app/ui/pages/pages.import.dart'
     show SplashPage, TabsPage;
 

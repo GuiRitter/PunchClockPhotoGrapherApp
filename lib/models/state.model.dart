@@ -138,11 +138,6 @@ class StateModel extends model_gui_ritter.StateModel<AppLocalizations> {
                 minute: time.minute,
               ));
 
-  static bool selectIsL10nLoaded(
-    Store<StateModel> store,
-  ) =>
-      (store.state.l10nGuiRitter != null) && (store.state.l10n != null);
-
   static bool selectIsLoading(
     Store<StateModel> store,
   ) =>

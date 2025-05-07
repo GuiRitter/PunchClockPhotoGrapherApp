@@ -1,7 +1,5 @@
 export 'package:punch_clock_photo_grapher_app/models/date.model.dart'
     show DateModel;
-export 'package:punch_clock_photo_grapher_app/models/init.model.dart'
-    show InitModel;
 export 'package:punch_clock_photo_grapher_app/models/list.model.dart'
     show ListModel;
 export 'package:punch_clock_photo_grapher_app/models/photo.model.dart'
