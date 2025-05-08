@@ -30,7 +30,7 @@ import 'package:flutter_redux/flutter_redux.dart'
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations, StateEnum;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/l10n/action.dart'
     as l10n_action;

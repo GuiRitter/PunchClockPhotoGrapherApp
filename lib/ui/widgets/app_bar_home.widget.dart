@@ -14,7 +14,7 @@ import 'package:flutter_guiritter/ui/widget/widget.import.dart'
 import 'package:flutter_guiritter/util/util.import.dart';
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppBarPopupMenuEnum, AppLocalizations;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/data/action.dart'
     as data_action;

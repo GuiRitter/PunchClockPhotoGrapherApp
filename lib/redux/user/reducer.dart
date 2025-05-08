@@ -1,6 +1,6 @@
 import 'package:flutter_guiritter/redux/user/action.dart'
     show AuthenticationAction;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show StateModel;
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
 

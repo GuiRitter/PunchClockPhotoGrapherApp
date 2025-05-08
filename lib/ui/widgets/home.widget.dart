@@ -22,7 +22,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter_guiritter/ui/widget/widget.import.dart'
     show getAppBarElevation;
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show ListModel, WeekModel;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show getTextL, WeekWidget;

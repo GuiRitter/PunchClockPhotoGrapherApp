@@ -5,7 +5,7 @@ import 'package:flutter_guiritter/ui/widget/text_l10n.widget.dart'
     as widget_guiritter show TextL10n;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show StateModel;
 
 Widget getTextG(

@@ -14,7 +14,7 @@ import 'package:image_picker/image_picker.dart'
     show ImagePicker, ImageSource, XFile;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show ApiUrl, StateEnum;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show ListModel, SavePhotoRequestModel, StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
     as navigation_action;

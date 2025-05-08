@@ -1,4 +1,4 @@
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/data/action.dart'
     show DataAction, SetDateAction, SetPhotoAction, SetTimeAction;

@@ -7,7 +7,7 @@ import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show StateModel, TabsModel;
 import 'package:punch_clock_photo_grapher_app/ui/pages/pages.import.dart'
     show HomePage, LoadingPage, PhotoPage, SignInPage;
