@@ -20,6 +20,7 @@ import 'package:flutter_guiritter/common/common.import.dart'
     show navigatorState, Settings, snackState;
 import 'package:flutter_guiritter/model/model.import.dart' show LoadingTagModel;
 import 'package:flutter_guiritter/redux/api/action.dart' as api_action;
+import 'package:flutter_guiritter/redux/l10n/action.dart' as l10n_action;
 import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
 import 'package:flutter_guiritter/service/dio/my_http_overrides.dart'
     show MyHttpOverrides;
@@ -31,8 +32,6 @@ import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations, StateEnum;
 import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/l10n/action.dart'
-    as l10n_action;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show reducer;
 import 'package:punch_clock_photo_grapher_app/themes/themes.import.dart'
