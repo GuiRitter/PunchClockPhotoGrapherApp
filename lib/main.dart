@@ -18,8 +18,7 @@ import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter;
 import 'package:flutter_guiritter/common/common.import.dart'
     show navigatorState, Settings, snackState;
-import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
-    show LoadingTagModel;
+import 'package:flutter_guiritter/model/model.import.dart' show LoadingTagModel;
 import 'package:flutter_guiritter/redux/api/action.dart' as api_action;
 import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
 import 'package:flutter_guiritter/service/dio/my_http_overrides.dart'
@@ -104,7 +103,7 @@ FutureOr initializeApp(
     initialState: StateModel(
       l10n: null,
       l10nGuiRitter: null,
-      loadingTagList: <model_gui_ritter.LoadingTagModel>[],
+      loadingTagList: <LoadingTagModel>[],
       themeMode: theme,
       token: token,
       list: null,

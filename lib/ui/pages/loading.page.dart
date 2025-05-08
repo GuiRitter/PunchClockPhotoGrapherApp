@@ -18,8 +18,7 @@ import 'package:flutter/material.dart'
         StatelessWidget,
         Text,
         Widget;
-import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
-    show LoadingTagModel;
+import 'package:flutter_guiritter/model/model.import.dart' show LoadingTagModel;
 import 'package:flutter_guiritter/redux/loading/action.dart' as loading_action;
 import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
 import 'package:flutter_guiritter/ui/widget/widget.import.dart'
@@ -42,7 +41,7 @@ class LoadingPage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) =>
-      StoreConnector<StateModel, List<model_gui_ritter.LoadingTagModel>>(
+      StoreConnector<StateModel, List<LoadingTagModel>>(
         distinct: true,
         converter: StateModel.selectLoadingTagList,
         builder: connectorBuilder,
@@ -50,7 +49,7 @@ class LoadingPage extends StatelessWidget {
 
   Widget connectorBuilder(
     BuildContext context,
-    List<model_gui_ritter.LoadingTagModel> loadingTagList,
+    List<LoadingTagModel> loadingTagList,
   ) {
     final mediaSize = MediaQuery.of(
       context,

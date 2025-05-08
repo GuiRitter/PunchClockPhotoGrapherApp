@@ -6,8 +6,6 @@ export 'package:punch_clock_photo_grapher_app/model/photo.model.dart'
     show PhotoModel;
 export 'package:punch_clock_photo_grapher_app/model/save_photo.request.model.dart'
     show SavePhotoRequestModel;
-export 'package:punch_clock_photo_grapher_app/model/sign_in.model.dart'
-    show SignInModel;
 export 'package:punch_clock_photo_grapher_app/model/state.model.dart'
     show StateModel;
 export 'package:punch_clock_photo_grapher_app/model/tabs.model.dart'

@@ -17,7 +17,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter/services.dart'
     show AutofillHints, TextInput, TextInputType;
 import 'package:flutter_guiritter/model/model.import.dart'
-    show SignInRequestModel;
+    show SignInModel, SignInRequestModel;
 import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
 import 'package:flutter_guiritter/redux/user/action.dart' as user_action;
 import 'package:flutter_guiritter/ui/widget/widget.import.dart'
@@ -27,7 +27,7 @@ import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations;
 import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show SignInModel, StateModel;
+    show StateModel;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show BodyWidget, getTextG, getTextL;
 
@@ -46,7 +46,7 @@ class SignInPage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) =>
-      StoreConnector(
+      StoreConnector<StateModel, SignInModel<AppLocalizations, StateModel>>(
         distinct: true,
         converter: SignInModel.select,
         builder: connectorBuilder,
@@ -54,7 +54,7 @@ class SignInPage extends StatelessWidget {
 
   Widget connectorBuilder(
     BuildContext context,
-    SignInModel signInModel,
+    SignInModel<AppLocalizations, StateModel> signInModel,
   ) {
     _log('connectorBuilder').map('signInModel', signInModel).print();
 
