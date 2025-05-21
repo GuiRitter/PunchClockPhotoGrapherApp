@@ -235,16 +235,6 @@ class StateModelWrapper
     return state.token?.isNotEmpty ?? false;
   }
 
-  static List<LoadingTagModel> selectLoadingTagList(
-    Store<Map<String, dynamic>> store,
-  ) {
-    final state = StateModelWrapper(
-      storeStateMap: store.state,
-    );
-
-    return state.loadingTagList;
-  }
-
   static StateEnum selectState(
     Store<Map<String, dynamic>> store,
   ) {
