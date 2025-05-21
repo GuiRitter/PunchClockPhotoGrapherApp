@@ -2,7 +2,7 @@ import 'package:flutter_guiritter/model/model.import.dart' show LoggableModel;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
 import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show StateModel;
+    show StateModelWrapper;
 import 'package:redux/redux.dart' show Store;
 
 class TabsModel implements LoggableModel {
@@ -43,16 +43,16 @@ class TabsModel implements LoggableModel {
       };
 
   static TabsModel select(
-    Store<StateModel> store,
+    Store<Map<String, dynamic>> store,
   ) =>
       TabsModel(
-        isSignedIn: StateModel.selectIsSignedIn(
+        isSignedIn: StateModelWrapper.selectIsSignedIn(
           store,
         ),
-        isLoading: StateModel.selectIsLoading(
+        isLoading: StateModelWrapper.selectIsLoading(
           store,
         ),
-        state: StateModel.selectState(
+        state: StateModelWrapper.selectState(
           store,
         ),
       );

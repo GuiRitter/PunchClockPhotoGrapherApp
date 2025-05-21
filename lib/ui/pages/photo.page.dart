@@ -38,7 +38,7 @@ import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
 import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show PhotoModel, StateModel;
+    show PhotoModel;
 import 'package:punch_clock_photo_grapher_app/redux/data/action.dart'
     as data_action;
 import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
@@ -55,7 +55,7 @@ class PhotoPage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) =>
-      StoreConnector<StateModel, PhotoModel>(
+      StoreConnector<Map<String, dynamic>, PhotoModel>(
         distinct: true,
         converter: PhotoModel.select,
         builder: connectorBuilder,

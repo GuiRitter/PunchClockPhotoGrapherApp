@@ -26,8 +26,6 @@ import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show StateModel;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show BodyWidget, getTextG, getTextL;
 
@@ -46,7 +44,7 @@ class SignInPage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) =>
-      StoreConnector<StateModel, SignInModel<AppLocalizations, StateModel>>(
+      StoreConnector<Map<String, dynamic>, SignInModel<AppLocalizations>>(
         distinct: true,
         converter: SignInModel.select,
         builder: connectorBuilder,
@@ -54,7 +52,7 @@ class SignInPage extends StatelessWidget {
 
   Widget connectorBuilder(
     BuildContext context,
-    SignInModel<AppLocalizations, StateModel> signInModel,
+    SignInModel<AppLocalizations> signInModel,
   ) {
     _log('connectorBuilder').map('signInModel', signInModel).print();
 
@@ -63,7 +61,7 @@ class SignInPage extends StatelessWidget {
         );
 
     return BodyWidget(
-      appBar: AppBarSignedOutWidget<AppLocalizations, StateModel>(
+      appBar: AppBarSignedOutWidget<AppLocalizations>(
         title: getTextL((l) => l!.title),
       ),
       body: SingleChildScrollView(
@@ -78,14 +76,14 @@ class SignInPage extends StatelessWidget {
           child: AutofillGroup(
             child: Column(
               children: [
-                TextFormFieldL10n<AppLocalizations, StateModel>(
+                TextFormFieldL10n<AppLocalizations>(
                   autofillHint: AutofillHints.username,
                   controller: userIdController,
                   invalidMessageL10nGuiRitter: (l) => l!.invalidUserID,
                   keyboardType: TextInputType.text,
                   labelL10nGuiRitter: (l) => l!.userID,
                 ),
-                TextFormFieldL10n<AppLocalizations, StateModel>(
+                TextFormFieldL10n<AppLocalizations>(
                   autofillHint: AutofillHints.password,
                   controller: passwordController,
                   invalidMessageL10nGuiRitter: (l) => l!.invalidPassword,

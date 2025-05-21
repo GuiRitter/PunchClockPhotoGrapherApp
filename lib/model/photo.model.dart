@@ -5,7 +5,7 @@ import 'package:flutter_guiritter/util/util.import.dart'
     show DateTimeNullableExtension;
 import 'package:flutter_guiritter/util/util.import.dart' show getExistsMark;
 import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show StateModel;
+    show StateModelWrapper;
 import 'package:redux/redux.dart' show Store;
 
 class PhotoModel implements LoggableModel {
@@ -47,10 +47,15 @@ class PhotoModel implements LoggableModel {
       };
 
   static PhotoModel select(
-    Store<StateModel> store,
-  ) =>
-      PhotoModel(
-        dateTime: store.state.dateTime,
-        photoBytes: store.state.photoBytes,
-      );
+    Store<Map<String, dynamic>> store,
+  ) {
+    final state = StateModelWrapper(
+      storeStateMap: store.state,
+    );
+
+    return PhotoModel(
+      dateTime: state.dateTime,
+      photoBytes: state.photoByteList,
+    );
+  }
 }

@@ -1,6 +1,4 @@
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/data/reducer.dart'
     show dataCombinedReducer;
 import 'package:punch_clock_photo_grapher_app/redux/l10n/reducer.dart'
@@ -15,25 +13,25 @@ import 'package:punch_clock_photo_grapher_app/redux/user/reducer.dart'
     show userCombinedReducer;
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
 
-final noActionTypedReducer = TypedReducer<StateModel, NoAction>(
+final noActionTypedReducer = TypedReducer<Map<String, dynamic>, NoAction>(
   noActionReducer,
 ).call;
 
 final _log = logger('main.reducer');
 
-StateModel noActionReducer(
-  StateModel stateModel,
+Map<String, dynamic> noActionReducer(
+  Map<String, dynamic> stateModelMap,
   NoAction action,
 ) =>
-    stateModel;
+    stateModelMap;
 
-StateModel reducer(
-  StateModel stateModel,
+Map<String, dynamic> reducer(
+  Map<String, dynamic> stateModelMap,
   dynamic action,
 ) {
   _log('reducer').asString('action', action.runtimeType).print();
 
-  final reducerCombined = combineReducers<StateModel>(
+  final reducerCombined = combineReducers<Map<String, dynamic>>(
     [
       dataCombinedReducer,
       l10nCombinedReducer,
@@ -46,7 +44,7 @@ StateModel reducer(
   );
 
   return reducerCombined(
-    stateModel,
+    stateModelMap,
     action,
   );
 }

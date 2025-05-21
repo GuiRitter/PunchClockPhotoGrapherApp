@@ -26,7 +26,7 @@ import 'package:flutter_guiritter/ui/widget/widget.import.dart'
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show StateModel;
+    show StateModelWrapper;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show getTextL;
 
@@ -41,9 +41,9 @@ class LoadingPage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) =>
-      StoreConnector<StateModel, List<LoadingTagModel>>(
+      StoreConnector<Map<String, dynamic>, List<LoadingTagModel>>(
         distinct: true,
-        converter: StateModel.selectLoadingTagList,
+        converter: StateModelWrapper.selectLoadingTagList,
         builder: connectorBuilder,
       );
 

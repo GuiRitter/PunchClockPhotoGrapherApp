@@ -4,7 +4,7 @@ import 'package:flutter_guiritter/model/model.import.dart'
     show LoggableModel, LoggableSetExtension;
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show DateModel, StateModel, WeekModel;
+    show DateModel, StateModelWrapper, WeekModel;
 import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
     show MapExtension;
 import 'package:redux/redux.dart' show Store;
@@ -19,6 +19,10 @@ class ListModel implements LoggableModel {
         );
 
   ListModel.empty() : weekList = Set.identity();
+
+  ListModel._({
+    required this.weekList,
+  });
 
   @override
   int get hashCode => weekList.hashCode;
@@ -39,6 +43,14 @@ class ListModel implements LoggableModel {
   Map<String, dynamic> asLog() => <String, dynamic>{
         'weekList': weekList.asLog(),
       };
+
+  ListModel clone() => ListModel._(
+        weekList: weekList
+            .map<WeekModel>(
+              WeekModel.clone,
+            )
+            .toSet(),
+      );
 
   static Map<String, Set<String>> buildDateList() =>
       Map<String, Set<String>>.identity();
@@ -118,7 +130,12 @@ class ListModel implements LoggableModel {
   }
 
   static ListModel? select(
-    Store<StateModel> store,
-  ) =>
-      store.state.list;
+    Store<Map<String, dynamic>> store,
+  ) {
+    final state = StateModelWrapper(
+      storeStateMap: store.state,
+    );
+
+    return state.list;
+  }
 }

@@ -1,23 +1,26 @@
 import 'package:flutter_guiritter/redux/user/action.dart'
     show AuthenticationAction;
 import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show StateModel;
+    show StateModelWrapper;
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
 
-final setTokenTypedReducer = TypedReducer<StateModel, AuthenticationAction>(
+final setTokenTypedReducer =
+    TypedReducer<Map<String, dynamic>, AuthenticationAction>(
   setTokenReducer,
 ).call;
 
-final userCombinedReducer = combineReducers<StateModel>(
+final userCombinedReducer = combineReducers<Map<String, dynamic>>(
   [
     setTokenTypedReducer,
   ],
 );
 
-StateModel setTokenReducer(
-  StateModel stateModel,
+Map<String, dynamic> setTokenReducer(
+  Map<String, dynamic> stateModelMap,
   AuthenticationAction action,
 ) =>
-    stateModel.copyWith(
+    StateModelWrapper(
+      storeStateMap: stateModelMap,
+    ).copyWith(
       token: () => action.token,
     );

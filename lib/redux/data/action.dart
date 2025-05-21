@@ -15,7 +15,7 @@ import 'package:image_picker/image_picker.dart'
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show ApiUrl, StateEnum;
 import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show ListModel, SavePhotoRequestModel, StateModel;
+    show ListModel, SavePhotoRequestModel, StateModelWrapper;
 import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
     as navigation_action;
 import 'package:redux/redux.dart' show Store;
@@ -23,10 +23,14 @@ import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
 final _log = logger('data.action');
 
-ThunkAction<StateModel> getList() => (
-      Store<StateModel> store,
+ThunkAction<Map<String, dynamic>> getList() => (
+      Store<Map<String, dynamic>> store,
     ) async {
       _log('getList').print();
+
+      final state = StateModelWrapper(
+        storeStateMap: store.state,
+      );
 
       Future<void> getListSuccess({
         required Result result,
@@ -45,21 +49,25 @@ ThunkAction<StateModel> getList() => (
       store.dispatch(
         api_action.get(
           url: ApiUrl.photo.path,
-          userFriendlyName: store.state.l10n!.loadingTag_getList,
+          userFriendlyName: state.l10n!.loadingTag_getList,
           thenFunction: getListSuccess,
         ),
       );
     };
 
-ThunkAction<StateModel> savePhoto() => (
-      Store<StateModel> store,
+ThunkAction<Map<String, dynamic>> savePhoto() => (
+      Store<Map<String, dynamic>> store,
     ) async {
       _log('savePhoto').print();
 
-      if (store.state.photoBytes == null) return;
+      final state = StateModelWrapper(
+        storeStateMap: store.state,
+      );
+
+      if (state.photoByteList == null) return;
 
       final photoBase64 = base64Encode(
-        store.state.photoBytes!,
+        state.photoByteList!,
       );
 
       final photoURI = '$base64Prefix$photoBase64';
@@ -81,7 +89,7 @@ ThunkAction<StateModel> savePhoto() => (
       }
 
       final requestData = SavePhotoRequestModel(
-        dateTime: store.state.dateTime.getISO8601()!,
+        dateTime: state.dateTime.getISO8601()!,
         imageURI: photoURI,
       );
 
@@ -89,17 +97,17 @@ ThunkAction<StateModel> savePhoto() => (
         api_action.post(
           url: ApiUrl.photo.path,
           data: requestData,
-          userFriendlyName: store.state.l10n!.loadingTag_savePhoto,
+          userFriendlyName: state.l10n!.loadingTag_savePhoto,
           thenFunction: savePhotoSuccess,
         ),
       );
     };
 
-ThunkAction<StateModel> setDate({
+ThunkAction<Map<String, dynamic>> setDate({
   required DateTime? date,
 }) =>
     (
-      Store<StateModel> store,
+      Store<Map<String, dynamic>> store,
     ) async {
       _log('setDate').asString('date', date).print();
 
@@ -112,8 +120,8 @@ ThunkAction<StateModel> setDate({
       );
     };
 
-ThunkAction<StateModel> setPhotoImage() => (
-      Store<StateModel> store,
+ThunkAction<Map<String, dynamic>> setPhotoImage() => (
+      Store<Map<String, dynamic>> store,
     ) async {
       _log('setPhotoImage').print();
 
@@ -168,16 +176,16 @@ ThunkAction<StateModel> setPhotoImage() => (
 
       store.dispatch(
         SetPhotoAction(
-          photoBytes: photoBytes,
+          photoByteList: photoBytes,
         ),
       );
     };
 
-ThunkAction<StateModel> setTime({
+ThunkAction<Map<String, dynamic>> setTime({
   required TimeOfDay? time,
 }) =>
     (
-      Store<StateModel> store,
+      Store<Map<String, dynamic>> store,
     ) async {
       _log('setDate').asString('time', time).print();
 
@@ -207,10 +215,10 @@ class SetDateAction {
 }
 
 class SetPhotoAction {
-  final Uint8List photoBytes;
+  final Uint8List photoByteList;
 
   const SetPhotoAction({
-    required this.photoBytes,
+    required this.photoByteList,
   });
 }
 
