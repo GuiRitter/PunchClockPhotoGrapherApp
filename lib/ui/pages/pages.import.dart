@@ -4,7 +4,5 @@ export 'package:punch_clock_photo_grapher_app/ui/pages/photo.page.dart'
     show PhotoPage;
 export 'package:punch_clock_photo_grapher_app/ui/pages/root.page.dart'
     show RootPage;
-export 'package:punch_clock_photo_grapher_app/ui/pages/splash.page.dart'
-    show SplashPage;
 export 'package:punch_clock_photo_grapher_app/ui/pages/tabs.page.dart'
     show TabsPage;
