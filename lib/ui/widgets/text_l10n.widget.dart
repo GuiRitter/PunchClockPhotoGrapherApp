@@ -5,8 +5,6 @@ import 'package:flutter_guiritter/ui/widget/text_l10n.widget.dart'
     as widget_guiritter show TextL10n;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show StateModel;
 
 Widget getTextG(
   final String Function(
@@ -15,7 +13,7 @@ Widget getTextG(
   TextStyle? style,
   TextAlign? textAlign,
 }) =>
-    widget_guiritter.TextL10n<AppLocalizations, StateModel>.g(
+    widget_guiritter.TextL10n<AppLocalizations>.g(
       l10nGuiRitterSelector,
       style: style,
     );
@@ -27,7 +25,7 @@ Widget getTextL(
   TextStyle? style,
   TextAlign? textAlign,
 }) =>
-    widget_guiritter.TextL10n<AppLocalizations, StateModel>.l(
+    widget_guiritter.TextL10n<AppLocalizations>.l(
       l10nSelector,
       style: style,
     );

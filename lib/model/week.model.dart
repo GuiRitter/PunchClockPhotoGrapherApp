@@ -65,4 +65,16 @@ class WeekModel implements Comparable, LoggableModel {
             ? 1
             : 0;
   }
+
+  static WeekModel clone(
+    WeekModel weekModel,
+  ) =>
+      WeekModel(
+        number: weekModel.number,
+        dateList: weekModel.dateList
+            .map(
+              DateModel.clone,
+            )
+            .toSet(),
+      );
 }

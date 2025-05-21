@@ -1,18 +1,16 @@
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show StateModel;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;
 
 final _log = logger('navigation.action');
 
-ThunkAction<StateModel> go({
+ThunkAction<Map<String, dynamic>> go({
   required StateEnum state,
 }) =>
     (
-      Store<StateModel> store,
+      Store<Map<String, dynamic>> store,
     ) async {
       _log('navigate').print();
 
