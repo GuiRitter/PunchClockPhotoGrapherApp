@@ -2,6 +2,8 @@ import 'package:flutter_guiritter/redux/l10n/reducer.dart'
     show buildL10nCombinedReducer;
 import 'package:flutter_guiritter/redux/loading/reducer.dart'
     show loadingCombinedReducer;
+import 'package:flutter_guiritter/redux/theme/reducer.dart'
+    show themeCombinedReducer;
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations;
@@ -9,8 +11,6 @@ import 'package:punch_clock_photo_grapher_app/redux/data/reducer.dart'
     show dataCombinedReducer;
 import 'package:punch_clock_photo_grapher_app/redux/navigation/reducer.dart'
     show navigationCombinedReducer;
-import 'package:punch_clock_photo_grapher_app/redux/theme/reducer.dart'
-    show themeCombinedReducer;
 import 'package:punch_clock_photo_grapher_app/redux/user/reducer.dart'
     show userCombinedReducer;
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
