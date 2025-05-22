@@ -1,7 +1,5 @@
 export 'package:punch_clock_photo_grapher_app/ui/widgets/app_bar_home.widget.dart'
     show AppBarHomeWidget;
-export 'package:punch_clock_photo_grapher_app/ui/widgets/bottom_app_bar.widget.dart'
-    show BottomAppBarWidget;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/date.widget.dart'
     show DateWidget;
 export 'package:punch_clock_photo_grapher_app/ui/widgets/dialog.widget.dart'

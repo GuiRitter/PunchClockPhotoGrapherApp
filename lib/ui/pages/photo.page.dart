@@ -33,7 +33,7 @@ import 'package:flutter/material.dart'
         showTimePicker;
 import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
 import 'package:flutter_guiritter/ui/widget/widget.import.dart'
-    show AppBarSignedInWidget;
+    show AppBarSignedInWidget, BottomAppBarWidget;
 import 'package:flutter_guiritter/ui/widget/widget.import.dart' show BodyWidget;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
@@ -45,7 +45,7 @@ import 'package:punch_clock_photo_grapher_app/redux/data/action.dart'
 import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
     as navigation_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
-    show BottomAppBarWidget, getTextL;
+    show getTextL;
 
 class PhotoPage extends StatelessWidget {
   const PhotoPage({
