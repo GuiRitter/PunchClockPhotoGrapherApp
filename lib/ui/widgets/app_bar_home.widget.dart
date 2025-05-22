@@ -11,11 +11,10 @@ import 'package:flutter/material.dart'
 import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
 import 'package:flutter_guiritter/ui/widget/widget.import.dart'
     show AppBarSignedInWidget;
-import 'package:flutter_guiritter/util/util.import.dart';
+import 'package:flutter_guiritter/util/util.import.dart'
+    show buildPopupMenuItem;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppBarPopupMenuEnum, AppLocalizations;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show StateModel;
 import 'package:punch_clock_photo_grapher_app/redux/data/action.dart'
     as data_action;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
@@ -35,7 +34,7 @@ class AppBarHomeWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(
     BuildContext context,
   ) =>
-      AppBarSignedInWidget<AppLocalizations, StateModel>(
+      AppBarSignedInWidget<AppLocalizations>(
         title: getTextL((l) => l!.title),
         onHomePopupMenuItemPressedMap: {
           AppBarPopupMenuEnum.reload.name: (

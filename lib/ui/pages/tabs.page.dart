@@ -3,14 +3,20 @@ import 'package:flutter/material.dart'
 import 'package:flutter_guiritter/common/common.import.dart' show Settings;
 import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
 import 'package:flutter_guiritter/redux/user/action.dart' as user_action;
+import 'package:flutter_guiritter/ui/page/page.import.dart' show SignInPage;
+import 'package:flutter_guiritter/ui/page/page.import.dart' show LoadingPage;
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show AppLocalizations;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show StateEnum;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show StateModel, TabsModel;
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
+    show TabsModel;
 import 'package:punch_clock_photo_grapher_app/ui/pages/pages.import.dart'
-    show HomePage, LoadingPage, PhotoPage, SignInPage;
+    show HomePage, PhotoPage;
+import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+    show getTextL;
 
 final _log = logger('TabsPage');
 
@@ -29,7 +35,7 @@ class TabsPage extends StatelessWidget {
       ),
     );
 
-    return StoreConnector<StateModel, TabsModel>(
+    return StoreConnector<Map<String, dynamic>, TabsModel>(
       distinct: true,
       converter: TabsModel.select,
       builder: connectorBuilder,
@@ -43,11 +49,15 @@ class TabsPage extends StatelessWidget {
     _log('connectorBuilder').map('tabsModel', tabsModel).print();
 
     return tabsModel.isLoading
-        ? const LoadingPage()
+        ? LoadingPage(
+            title: getTextL((l) => l!.title),
+          )
         : tabsModel.isSignedIn
             ? (tabsModel.state == StateEnum.photo)
                 ? const PhotoPage()
                 : const HomePage()
-            : SignInPage();
+            : SignInPage<AppLocalizations>(
+                title: getTextL((l) => l!.title),
+              );
   }
 }

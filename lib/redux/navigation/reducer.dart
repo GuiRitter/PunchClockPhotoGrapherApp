@@ -1,23 +1,25 @@
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show StateModel;
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
+    show StateModelWrapper;
 import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
     show NavigationAction;
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
 
-final goTypedReducer = TypedReducer<StateModel, NavigationAction>(
+final goTypedReducer = TypedReducer<Map<String, dynamic>, NavigationAction>(
   goReducer,
 ).call;
 
-final navigationCombinedReducer = combineReducers<StateModel>(
+final navigationCombinedReducer = combineReducers<Map<String, dynamic>>(
   [
     goTypedReducer,
   ],
 );
 
-StateModel goReducer(
-  StateModel stateModel,
+Map<String, dynamic> goReducer(
+  Map<String, dynamic> stateModelMap,
   NavigationAction action,
 ) =>
-    stateModel.copyWith(
+    StateModelWrapper(
+      storeStateMap: stateModelMap,
+    ).copyWith(
       state: () => action.state,
     );

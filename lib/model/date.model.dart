@@ -39,6 +39,16 @@ class DateModel implements LoggableModel {
         'timeList': timeList.toList(),
       };
 
+  static DateModel clone(
+    DateModel model,
+  ) =>
+      DateModel(
+        weekDay: model.weekDay,
+        timeList: Set<String>.from(
+          model.timeList,
+        ),
+      );
+
   static int toTimeCount(
     DateModel model,
   ) =>

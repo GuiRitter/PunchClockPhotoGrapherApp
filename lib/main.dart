@@ -18,10 +18,11 @@ import 'package:flutter_guiritter/common/common.import.dart'
     as common_gui_ritter show AppLocalizationsGuiRitter;
 import 'package:flutter_guiritter/common/common.import.dart'
     show navigatorState, Settings, snackState;
-import 'package:flutter_guiritter/model/model.import.dart' as model_gui_ritter
-    show LoadingTagModel;
+import 'package:flutter_guiritter/model/model.import.dart' show LoadingTagModel;
 import 'package:flutter_guiritter/redux/api/action.dart' as api_action;
+import 'package:flutter_guiritter/redux/l10n/action.dart' as l10n_action;
 import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
+import 'package:flutter_guiritter/redux/theme/selector.dart' show themeSelector;
 import 'package:flutter_guiritter/service/dio/my_http_overrides.dart'
     show MyHttpOverrides;
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
@@ -30,10 +31,8 @@ import 'package:flutter_redux/flutter_redux.dart'
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
 import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
     show AppLocalizations, StateEnum;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show StateModel;
-import 'package:punch_clock_photo_grapher_app/redux/l10n/action.dart'
-    as l10n_action;
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
+    show StateModelWrapper;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show reducer;
 import 'package:punch_clock_photo_grapher_app/themes/themes.import.dart'
@@ -99,19 +98,19 @@ FutureOr initializeApp(
     token: token,
   );
 
-  final store = Store<StateModel>(
+  final store = Store<Map<String, dynamic>>(
     reducer,
-    initialState: StateModel(
+    initialState: StateModelWrapper.init(
       l10n: null,
       l10nGuiRitter: null,
-      loadingTagList: <model_gui_ritter.LoadingTagModel>[],
+      loadingTagList: <LoadingTagModel>[],
       themeMode: theme,
       token: token,
       list: null,
       state: StateEnum.list,
       dateTime: DateTime.now(),
-      photoBytes: null,
-    ),
+      photoByteList: null,
+    ).storeStateMap,
     middleware: [
       thunkMiddleware,
     ],
@@ -127,7 +126,7 @@ FutureOr initializeApp(
 }
 
 class MyApp extends StatelessWidget {
-  final Store<StateModel> store;
+  final Store<Map<String, dynamic>> store;
 
   const MyApp({
     super.key,
@@ -148,14 +147,11 @@ class MyApp extends StatelessWidget {
       context: context,
     );
 
-    return StoreProvider<StateModel>(
+    return StoreProvider<Map<String, dynamic>>(
       store: store,
-      child: StoreConnector<StateModel, ThemeMode>(
+      child: StoreConnector<Map<String, dynamic>, ThemeMode>(
         distinct: true,
-        converter: (
-          store,
-        ) =>
-            store.state.themeMode,
+        converter: themeSelector,
         builder: (
           context,
           themeMode,

@@ -1,42 +1,42 @@
+import 'package:flutter_guiritter/redux/l10n/reducer.dart'
+    show buildL10nCombinedReducer;
+import 'package:flutter_guiritter/redux/loading/reducer.dart'
+    show loadingCombinedReducer;
+import 'package:flutter_guiritter/redux/theme/reducer.dart'
+    show themeCombinedReducer;
+import 'package:flutter_guiritter/redux/user/reducer.dart'
+    show userCombinedReducer;
 import 'package:flutter_guiritter/util/util.import.dart' show logger;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
-    show StateModel;
+import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+    show AppLocalizations;
 import 'package:punch_clock_photo_grapher_app/redux/data/reducer.dart'
     show dataCombinedReducer;
-import 'package:punch_clock_photo_grapher_app/redux/l10n/reducer.dart'
-    show l10nCombinedReducer;
-import 'package:punch_clock_photo_grapher_app/redux/loading/reducer.dart'
-    show loadingCombinedReducer;
 import 'package:punch_clock_photo_grapher_app/redux/navigation/reducer.dart'
     show navigationCombinedReducer;
-import 'package:punch_clock_photo_grapher_app/redux/theme/reducer.dart'
-    show themeCombinedReducer;
-import 'package:punch_clock_photo_grapher_app/redux/user/reducer.dart'
-    show userCombinedReducer;
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
 
-final noActionTypedReducer = TypedReducer<StateModel, NoAction>(
+final noActionTypedReducer = TypedReducer<Map<String, dynamic>, NoAction>(
   noActionReducer,
 ).call;
 
 final _log = logger('main.reducer');
 
-StateModel noActionReducer(
-  StateModel stateModel,
+Map<String, dynamic> noActionReducer(
+  Map<String, dynamic> stateModelMap,
   NoAction action,
 ) =>
-    stateModel;
+    stateModelMap;
 
-StateModel reducer(
-  StateModel stateModel,
+Map<String, dynamic> reducer(
+  Map<String, dynamic> stateModelMap,
   dynamic action,
 ) {
   _log('reducer').asString('action', action.runtimeType).print();
 
-  final reducerCombined = combineReducers<StateModel>(
+  final reducerCombined = combineReducers<Map<String, dynamic>>(
     [
       dataCombinedReducer,
-      l10nCombinedReducer,
+      buildL10nCombinedReducer<AppLocalizations>(),
       loadingCombinedReducer,
       navigationCombinedReducer,
       noActionTypedReducer,
@@ -46,7 +46,7 @@ StateModel reducer(
   );
 
   return reducerCombined(
-    stateModel,
+    stateModelMap,
     action,
   );
 }

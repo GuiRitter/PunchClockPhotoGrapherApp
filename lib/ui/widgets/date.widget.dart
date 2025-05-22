@@ -8,7 +8,7 @@ import 'package:flutter/material.dart'
         Widget,
         Wrap,
         WrapCrossAlignment;
-import 'package:punch_clock_photo_grapher_app/models/models.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
     show DateModel;
 import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
     show TimeWidget;
