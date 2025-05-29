@@ -1,10 +1,10 @@
 import 'dart:typed_data' show Uint8List;
 
-import 'package:flutter_guiritter/model/model.import.dart' show LoggableModel;
-import 'package:flutter_guiritter/util/util.import.dart'
+import 'package:flutter_guiritter/extension/_import.dart'
     show DateTimeNullableExtension;
-import 'package:flutter_guiritter/util/util.import.dart' show getExistsMark;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
+import 'package:flutter_guiritter/model/_import.dart' show LoggableModel;
+import 'package:flutter_guiritter/util/_import.dart' show getExistsMark;
+import 'package:punch_clock_photo_grapher_app/model/_import.dart'
     show StateModelWrapper;
 import 'package:redux/redux.dart' show Store;
 

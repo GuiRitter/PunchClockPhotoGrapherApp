@@ -1,7 +1,7 @@
-import 'package:flutter_guiritter/model/model.import.dart' show LoggableModel;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+import 'package:flutter_guiritter/model/_import.dart' show LoggableModel;
+import 'package:punch_clock_photo_grapher_app/common/_import.dart'
     show StateEnum;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/_import.dart'
     show StateModelWrapper;
 import 'package:redux/redux.dart' show Store;
 

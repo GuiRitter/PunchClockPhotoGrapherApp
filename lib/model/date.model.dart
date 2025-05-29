@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart' show setEquals;
-import 'package:flutter_guiritter/model/model.import.dart' show LoggableModel;
+import 'package:flutter_guiritter/model/_import.dart' show LoggableModel;
 
 class DateModel implements LoggableModel {
   final String weekDay;

@@ -1,5 +1,4 @@
-import 'package:flutter_guiritter/common/common.import.dart'
-    as common_gui_ritter;
+import 'package:flutter_guiritter/common/_import.dart' as common_gui_ritter;
 
 class StateKey extends common_gui_ritter.StateKey {
   static const dateTime = 'dateTime';

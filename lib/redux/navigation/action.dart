@@ -1,5 +1,5 @@
-import 'package:flutter_guiritter/util/util.import.dart' show logger;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+import 'package:flutter_guiritter/util/_import.dart' show logger;
+import 'package:punch_clock_photo_grapher_app/common/_import.dart'
     show StateEnum;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show ThunkAction;

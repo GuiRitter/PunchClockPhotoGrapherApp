@@ -2,27 +2,24 @@ import 'package:flutter/material.dart'
     show
         Axis,
         BuildContext,
-        ElevatedButton,
-        Icon,
-        Icons,
         StatelessWidget,
         Text,
         Theme,
         Widget,
         Wrap,
         WrapCrossAlignment;
-import 'package:flutter_guiritter/common/common.import.dart' show Settings;
-import 'package:intl/intl.dart' show DateFormat;
+import 'package:punch_clock_photo_grapher_app/model/_import.dart'
+    show DateModel;
+import 'package:punch_clock_photo_grapher_app/ui/widget/_import.dart'
+    show TimeWidget;
 
-class TimeWidget extends StatelessWidget {
-  final DateTime dateTime;
+class DateWidget extends StatelessWidget {
+  final DateModel date;
 
-  TimeWidget({
+  const DateWidget({
     super.key,
-    required String dateTime,
-  }) : dateTime = DateTime.parse(
-          dateTime,
-        ).toLocal();
+    required this.date,
+  });
 
   @override
   Widget build(
@@ -41,19 +38,16 @@ class TimeWidget extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
-          DateFormat.Hm(
-            Settings.locale,
-          ).format(
-            dateTime,
-          ),
+          date.weekDay,
         ),
-        const ElevatedButton(
-          // TODO
-          onPressed: null,
-          child: Icon(
-            Icons.delete,
+        ...date.timeList.map(
+          (
+            time,
+          ) =>
+              TimeWidget(
+            dateTime: time,
           ),
-        ),
+        )
       ],
     );
   }

@@ -3,18 +3,19 @@ import 'dart:math' show min;
 import 'dart:typed_data' show Uint8List;
 
 import 'package:flutter/material.dart' show TimeOfDay;
-import 'package:flutter_guiritter/common/common.import.dart' show base64Prefix;
-import 'package:flutter_guiritter/model/model.import.dart' show Result;
+import 'package:flutter_guiritter/common/_import.dart' show base64Prefix;
+import 'package:flutter_guiritter/extension/_import.dart'
+    show DateTimeNullableExtension;
+import 'package:flutter_guiritter/model/_import.dart' show Result;
 import 'package:flutter_guiritter/redux/api/action.dart' as api_action;
-import 'package:flutter_guiritter/util/util.import.dart'
-    show DateTimeNullableExtension, logger;
+import 'package:flutter_guiritter/util/_import.dart' show logger;
 import 'package:image/image.dart'
     show copyCrop, copyResize, decodeJpg, encodePng;
 import 'package:image_picker/image_picker.dart'
     show ImagePicker, ImageSource, XFile;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+import 'package:punch_clock_photo_grapher_app/common/_import.dart'
     show ApiUrl, StateEnum;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/_import.dart'
     show ListModel, SavePhotoRequestModel, StateModelWrapper;
 import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
     as navigation_action;

@@ -28,19 +28,18 @@ import 'package:flutter/material.dart'
         TextAlign,
         Theme,
         Widget;
-import 'package:flutter_guiritter/common/common.import.dart' show Settings;
-import 'package:flutter_guiritter/ui/widget/widget.import.dart'
-    show appBarElevation;
-import 'package:flutter_guiritter/util/util.import.dart' show logger;
+import 'package:flutter_guiritter/common/_import.dart' show Settings;
+import 'package:flutter_guiritter/extension/_import.dart' show MapExtension;
+import 'package:flutter_guiritter/ui/widget/_import.dart' show appBarElevation;
+import 'package:flutter_guiritter/util/_import.dart'
+    show buildIntrinsicColumnWidthMap, logger;
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:punch_clock_photo_grapher_app/model/_import.dart'
+    show WeekModel;
 import 'package:punch_clock_photo_grapher_app/model/date.model.dart'
     show DateModel;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
-    show WeekModel;
-import 'package:punch_clock_photo_grapher_app/ui/widgets/widgets.import.dart'
+import 'package:punch_clock_photo_grapher_app/ui/widget/_import.dart'
     show tableRowHeight;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show buildIntrinsicColumnWidthMap, MapExtension;
 
 double? dataTableWidth;
 

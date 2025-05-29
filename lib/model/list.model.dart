@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart' show setEquals;
-import 'package:flutter_guiritter/common/common.import.dart' show Settings;
-import 'package:flutter_guiritter/model/model.import.dart'
+import 'package:flutter_guiritter/common/_import.dart' show Settings;
+import 'package:flutter_guiritter/extension/_import.dart' show MapExtension;
+import 'package:flutter_guiritter/model/_import.dart'
     show LoggableModel, LoggableSetExtension;
 import 'package:intl/intl.dart' show DateFormat;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/_import.dart'
     show DateModel, StateModelWrapper, WeekModel;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show MapExtension;
 import 'package:redux/redux.dart' show Store;
 
 class ListModel implements LoggableModel {

@@ -1,9 +1,9 @@
 import 'dart:math' show max;
 
 import 'package:flutter/foundation.dart' show setEquals;
-import 'package:flutter_guiritter/model/model.import.dart'
+import 'package:flutter_guiritter/model/_import.dart'
     show LoggableModel, LoggableSetExtension;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/_import.dart'
     show DateModel, WeekHeaderModel;
 
 class WeekModel implements Comparable, LoggableModel {

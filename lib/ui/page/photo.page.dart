@@ -1,0 +1,257 @@
+import 'dart:typed_data' show Uint8List;
+
+import 'package:flutter/material.dart'
+    show
+        Alignment,
+        AspectRatio,
+        AsyncSnapshot,
+        BackButton,
+        BuildContext,
+        Center,
+        CircularProgressIndicator,
+        Column,
+        ConnectionState,
+        Container,
+        CrossAxisAlignment,
+        EdgeInsets,
+        ElevatedButton,
+        Expanded,
+        FutureBuilder,
+        Icon,
+        Icons,
+        Image,
+        MainAxisAlignment,
+        Padding,
+        Row,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        Theme,
+        TimeOfDay,
+        Widget,
+        showDatePicker,
+        showTimePicker;
+import 'package:flutter_guiritter/redux/_import.dart' show dispatch;
+import 'package:flutter_guiritter/ui/widget/_import.dart'
+    show AppBarSignedInWidget, BottomAppBarWidget;
+import 'package:flutter_guiritter/ui/widget/_import.dart' show BodyWidget;
+import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
+import 'package:punch_clock_photo_grapher_app/common/_import.dart'
+    show StateEnum;
+import 'package:punch_clock_photo_grapher_app/model/_import.dart'
+    show PhotoModel;
+import 'package:punch_clock_photo_grapher_app/redux/data/action.dart'
+    as data_action;
+import 'package:punch_clock_photo_grapher_app/redux/navigation/action.dart'
+    as navigation_action;
+import 'package:punch_clock_photo_grapher_app/ui/widget/_import.dart'
+    show getTextL;
+
+class PhotoPage extends StatelessWidget {
+  const PhotoPage({
+    super.key,
+  });
+
+  @override
+  Widget build(
+    BuildContext context,
+  ) =>
+      StoreConnector<Map<String, dynamic>, PhotoModel>(
+        distinct: true,
+        converter: PhotoModel.select,
+        builder: connectorBuilder,
+      );
+
+  Widget buildImage(
+    context,
+    AsyncSnapshot<Image?> snapshot,
+  ) =>
+      ((snapshot.connectionState == ConnectionState.done) &&
+              (snapshot.data != null))
+          ? snapshot.data!
+          : const Center(
+              child: CircularProgressIndicator(),
+            );
+
+  Widget connectorBuilder(
+    BuildContext context,
+    PhotoModel photoModel,
+  ) {
+    final theme = Theme.of(
+      context,
+    );
+
+    final fieldPadding = theme.textTheme.labelLarge?.fontSize ?? 0.0;
+
+    onDatePressed() => pickDate(
+          context: context,
+          initialDate: photoModel.dateTime,
+        );
+
+    onTimePressed() => pickTime(
+          context: context,
+          initialDate: photoModel.dateTime,
+        );
+
+    onTakePhotoPressed() => takePhoto(
+          context: context,
+        );
+
+    final takePhotoButton = ElevatedButton(
+      onPressed: onTakePhotoPressed,
+      child: const Icon(
+        Icons.camera,
+      ),
+    );
+
+    Future<Image?> buildImageFuture() async => loadImage(
+          photoBytes: photoModel.photoBytes,
+        );
+
+    onSavePhotoPressed() {
+      savePhoto(
+        context: context,
+      );
+    }
+
+    return BodyWidget(
+      usePadding: false,
+      appBar: AppBarSignedInWidget(
+        title: getTextL((l) => l!.title),
+        appBarLeading: BackButton(
+          onPressed: () => dispatch(
+            navigation_action.go(
+              state: StateEnum.list,
+            ),
+          ),
+        ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: fieldPadding,
+                right: fieldPadding,
+                top: fieldPadding,
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: (photoModel.photoBytes != null)
+                        ? FutureBuilder<Image?>(
+                            future: buildImageFuture(),
+                            builder: buildImage,
+                          )
+                        : Container(
+                            alignment: Alignment.center,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: takePhotoButton,
+                            ),
+                          ),
+                  ),
+                  (photoModel.photoBytes != null)
+                      ? takePhotoButton
+                      : const SizedBox.shrink(),
+                  SizedBox.square(
+                    dimension: fieldPadding,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: onDatePressed,
+                        child: Text(
+                          photoModel.dateString,
+                        ),
+                      ),
+                      SizedBox.square(
+                        dimension: fieldPadding,
+                      ),
+                      ElevatedButton(
+                        onPressed: onTimePressed,
+                        child: Text(
+                          photoModel.timeString,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          BottomAppBarWidget(
+            onButtonPressed: onSavePhotoPressed,
+            label: getTextL((l) => l!.savePhoto),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<Image?> loadImage({
+    required Uint8List? photoBytes,
+  }) async {
+    if (photoBytes == null) return null;
+
+    return Image.memory(
+      photoBytes,
+    );
+  }
+
+  pickDate({
+    required BuildContext context,
+    required DateTime initialDate,
+  }) async {
+    final date = await showDatePicker(
+      context: context,
+      firstDate: DateTime.fromMicrosecondsSinceEpoch(
+        0,
+      ),
+      lastDate: DateTime.now(),
+      initialDate: initialDate,
+    );
+
+    dispatch(
+      data_action.setDate(
+        date: date,
+      ),
+    );
+  }
+
+  pickTime({
+    required BuildContext context,
+    required DateTime initialDate,
+  }) async {
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(
+        initialDate,
+      ),
+    );
+
+    dispatch(
+      data_action.setTime(
+        time: time,
+      ),
+    );
+  }
+
+  savePhoto({
+    required BuildContext context,
+  }) {
+    dispatch(
+      data_action.savePhoto(),
+    );
+  }
+
+  takePhoto({
+    required BuildContext context,
+  }) async {
+    dispatch(
+      data_action.setPhotoImage(),
+    );
+  }
+}

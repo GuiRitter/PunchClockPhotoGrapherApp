@@ -1,6 +1,5 @@
-import 'package:flutter_guiritter/model/model.import.dart'
-    show BaseRequestModel;
-import 'package:flutter_guiritter/util/util.import.dart' show hideSecret;
+import 'package:flutter_guiritter/model/_import.dart' show BaseRequestModel;
+import 'package:flutter_guiritter/util/_import.dart' show hideSecret;
 
 class SavePhotoRequestModel implements BaseRequestModel {
   final String dateTime;

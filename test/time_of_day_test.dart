@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' show TimeOfDay;
-import 'package:flutter_guiritter/util/util.import.dart'
+import 'package:flutter_guiritter/extension/_import.dart'
     show TimeOfDayNullableExtension;
 import 'package:flutter_test/flutter_test.dart' show expect, test;
 

@@ -14,33 +14,31 @@ import 'package:flutter/material.dart'
         runApp;
 import 'package:flutter/services.dart'
     show SystemChrome, SystemUiOverlayStyle, Color;
-import 'package:flutter_guiritter/common/common.import.dart'
-    as common_gui_ritter show AppLocalizationsGuiRitter;
-import 'package:flutter_guiritter/common/common.import.dart'
+import 'package:flutter_guiritter/common/_import.dart'
     show navigatorState, Settings, snackState;
-import 'package:flutter_guiritter/model/model.import.dart' show LoadingTagModel;
+import 'package:flutter_guiritter/common/_import.dart' as common_gui_ritter;
+import 'package:flutter_guiritter/extension/_import.dart' show StringExtension;
+import 'package:flutter_guiritter/model/_import.dart' show LoadingTagModel;
+import 'package:flutter_guiritter/redux/_import.dart' show dispatch;
 import 'package:flutter_guiritter/redux/api/action.dart' as api_action;
 import 'package:flutter_guiritter/redux/l10n/action.dart' as l10n_action;
-import 'package:flutter_guiritter/redux/redux.import.dart' show dispatch;
 import 'package:flutter_guiritter/redux/theme/selector.dart' show themeSelector;
 import 'package:flutter_guiritter/service/dio/my_http_overrides.dart'
     show MyHttpOverrides;
-import 'package:flutter_guiritter/util/util.import.dart' show logger;
+import 'package:flutter_guiritter/util/_import.dart' show logger;
 import 'package:flutter_redux/flutter_redux.dart'
     show StoreConnector, StoreProvider;
 import 'package:intl/date_symbol_data_local.dart' show initializeDateFormatting;
-import 'package:punch_clock_photo_grapher_app/common/common.import.dart'
+import 'package:punch_clock_photo_grapher_app/common/_import.dart'
     show AppLocalizations, StateEnum;
-import 'package:punch_clock_photo_grapher_app/model/model.import.dart'
+import 'package:punch_clock_photo_grapher_app/model/_import.dart'
     show StateModelWrapper;
 import 'package:punch_clock_photo_grapher_app/redux/main.reducer.dart'
     show reducer;
-import 'package:punch_clock_photo_grapher_app/themes/themes.import.dart'
+import 'package:punch_clock_photo_grapher_app/theme/_import.dart'
     show dark, light;
-import 'package:punch_clock_photo_grapher_app/ui/pages/pages.import.dart'
+import 'package:punch_clock_photo_grapher_app/ui/page/_import.dart'
     show RootPage;
-import 'package:punch_clock_photo_grapher_app/utils/utils.import.dart'
-    show StringExtension;
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_thunk/redux_thunk.dart' show thunkMiddleware;
 import 'package:shared_preferences/shared_preferences.dart'
@@ -217,13 +215,22 @@ class MyApp extends StatelessWidget {
     ).then(
       (
         _,
-      ) =>
+      ) {
+        Future.delayed(Duration(seconds: 30), () {
           dispatch(
-        l10n_action.setL10n(
-          l10n: newL10n,
-          l10nGuiRitter: newL10nGuiRitter,
-        ),
-      ),
+            l10n_action.setL10n(
+              l10n: newL10n,
+              l10nGuiRitter: newL10nGuiRitter,
+            ),
+          );
+        });
+        // return dispatch(
+        //   l10n_action.setL10n(
+        //     l10n: newL10n,
+        //     l10nGuiRitter: newL10nGuiRitter,
+        //   ),
+        // );
+      },
     );
 
     return locale;
