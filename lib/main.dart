@@ -215,22 +215,13 @@ class MyApp extends StatelessWidget {
     ).then(
       (
         _,
-      ) {
-        Future.delayed(Duration(seconds: 30), () {
+      ) =>
           dispatch(
-            l10n_action.setL10n(
-              l10n: newL10n,
-              l10nGuiRitter: newL10nGuiRitter,
-            ),
-          );
-        });
-        // return dispatch(
-        //   l10n_action.setL10n(
-        //     l10n: newL10n,
-        //     l10nGuiRitter: newL10nGuiRitter,
-        //   ),
-        // );
-      },
+        l10n_action.setL10n(
+          l10n: newL10n,
+          l10nGuiRitter: newL10nGuiRitter,
+        ),
+      ),
     );
 
     return locale;

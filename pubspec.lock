@@ -164,7 +164,7 @@ packages:
       git: "https://github.com/GuiRitter/FlutterGuiRitter"
       relative: false
     source: path
-    version: "1.6.3+11"
+    version: "1.6.4+12"
   flutter_lints:
     dependency: "direct dev"
     description:

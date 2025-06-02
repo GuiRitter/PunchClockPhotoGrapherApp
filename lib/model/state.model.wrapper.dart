@@ -1,9 +1,9 @@
 import 'dart:typed_data' show Uint8List;
 
 import 'package:flutter/material.dart' show ThemeMode, TimeOfDay, ValueGetter;
-import 'package:flutter_guiritter/common/_import.dart' as common_gui_ritter;
 import 'package:flutter_guiritter/common/_import.dart'
     show AppLocalizationsGuiRitter;
+import 'package:flutter_guiritter/common/_import.dart' as common_gui_ritter;
 import 'package:flutter_guiritter/model/_import.dart' as model_gui_ritter;
 import 'package:flutter_guiritter/model/_import.dart' show LoadingTagModel;
 import 'package:punch_clock_photo_grapher_app/common/_import.dart'
